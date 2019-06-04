@@ -10,33 +10,45 @@ const Main = styled.main`
     padding: 20px;
 
     &.toHide {
-        z-index: -1;
+        z-index: 9001;
     }
 `;
 
 
 class Layout extends Component {
     state = {
-        showSideMenu: false
+        showSideMenu: false,
+        backdropInVisible: true
     }
 
     toggleMenuState = () => {
-        let menuState = this.state.showSideMenu;
-        this.setState({showSideMenu: !menuState})
+        let backdropState = this.state.backdropInVisible;
+        this.setState({backdropInVisible: !backdropState})
     }
 
     render() {
+        
+        let mainView = <>
+            <Sidemenu 
+            opened={!this.state.backdropInVisible}
+            open={this.toggleMenuState}>
+                back
+            </Sidemenu>
+            <Main className={this.state.backdropInVisible ? 'toHide' : ''}>
+                {this.props.children}
+            </Main>
+        </>
+        if(!this.state.backdropInVisible) {
+            mainView = <>
+            {mainView}
+            <Backdrop menuOpened={this.state.backdropInVisible} closeMenu={this.toggleMenuState}/>
+            </>
+        }
+
         return (
             <>
-            <Sidemenu 
-            opened={this.state.showSideMenu}
-            open={this.toggleMenuState}>
-            </Sidemenu>
-            <Main className={this.state.showSideMenu ? 'toHide' : ''}>
-                {this.props.children}
-                <Backdrop menuOpened={this.state.showSideMenu} closeMenu={this.toggleMenuState}/>
-            </Main>
-            </>
+           {mainView}
+           </>
         )
     }
 }

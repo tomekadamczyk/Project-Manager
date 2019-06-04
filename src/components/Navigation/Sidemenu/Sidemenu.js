@@ -8,6 +8,7 @@ const Container = styled.aside`
     height: 100vh;
     max-width: 400px;
     position: fixed;
+    z-index: 9000;
 `;
 
 const BasicColumn = styled.div`

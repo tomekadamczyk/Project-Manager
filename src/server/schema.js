@@ -1,4 +1,4 @@
-const {Task, Project, Client, Message, Note} = require('./connector');
+const {Task, Project, Client, Message, Note, Status, Priority} = require('./connector');
 const {
     GraphQLObjectType,
     GraphQLString,
@@ -13,12 +13,22 @@ const TaskType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLInt },
         name: { type: GraphQLString },
-        status: { type: GraphQLString },
-        priority: { type: GraphQLString },
         createdAt: { type: GraphQLInt },
         updatedAt: { type: GraphQLInt },
         projectId: {type: GraphQLInt},
-        projects: {
+        statusId: { 
+            type: StatusType,
+            resolve(project) {
+                return project.getStatus();
+            }
+        },
+        priorityId: { 
+            type: PriorityType,
+            resolve(project) {
+                return project.getPriority();
+            }
+        },
+        projectsId: {
             type: ProjectType,
             resolve(task) {
                 return task.getProject();
@@ -32,10 +42,20 @@ const ProjectType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLInt },
         name: { type: GraphQLString },
-        status: { type: GraphQLString },
-        priority: { type: GraphQLString },
         createdAt: { type: GraphQLInt },
         updatedAt: { type: GraphQLInt },
+        statusId: { 
+            type: StatusType,
+            resolve(project) {
+                return project.getStatus();
+            }
+        },
+        priorityId: { 
+            type: PriorityType,
+            resolve(project) {
+                return project.getPriority();
+            }
+        },
         tasks: {
             type: new GraphQLList(TaskType),
             resolve(project) {
@@ -48,7 +68,7 @@ const ProjectType = new GraphQLObjectType({
                 return project.getNotes();
             }
         },
-        client: {
+        clientId: {
             type: ClientType,
             resolve(project) {
                 return project.getClient();
@@ -109,6 +129,22 @@ const NoteType = new GraphQLObjectType({
                 return note.getProject();
             }
         }
+    })
+})
+
+const StatusType = new GraphQLObjectType({
+    name: 'Status',
+    fields: () => ({
+        id: { type: GraphQLInt },
+        name: { type: GraphQLString}
+    })
+})
+
+const PriorityType = new GraphQLObjectType({
+    name: 'Priority',
+    fields: () => ({
+        id: { type: GraphQLInt },
+        name: { type: GraphQLString}
     })
 })
 
@@ -199,10 +235,84 @@ const rootQuery = new GraphQLObjectType({
             resolve(obj, args) {
                 return Note.findByPk(args.id)
             }
+        },
+        statuses: {
+            type: new GraphQLList(StatusType),
+            resolve(obj, args) {
+                return Status.findAll({where: args})
+            }
+        },
+        status: {
+            type: StatusType,
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLInt)
+                }
+            },
+            resolve(obj, args) {
+                return Status.findByPk(args.id)
+            }
+        },
+        priorities: {
+            type: new GraphQLList(PriorityType),
+            resolve(obj, args) {
+                return Priority.findAll({where: args})
+            }
+        },
+        priority: {
+            type: PriorityType,
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLInt)
+                }
+            },
+            resolve(obj, args) {
+                return Priority.findByPk(args.id)
+            }
+        }
+    }
+})
+
+const mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        addProject: {
+            type: ProjectType,
+            args: {
+                name: {type: new GraphQLNonNull(GraphQLString)},
+                statusId: {type: new GraphQLNonNull(GraphQLInt)},
+                priorityId: {type: new GraphQLNonNull(GraphQLInt)},
+                clientId: {type: new GraphQLNonNull(GraphQLInt)}
+            },
+            resolve(obj, {name, statusId, priorityId, clientId}, context) {
+                return Project.create({
+                    name,
+                    statusId,
+                    priorityId,
+                    clientId
+                })
+            }
+        },
+        updateProject: {
+            type: ProjectType,
+            args: {
+                id: {type: new GraphQLNonNull(GraphQLInt)},
+                name: {type: GraphQLString},
+                statusId: {type: GraphQLInt},
+                priorityId: {type: GraphQLInt}
+            },
+            resolve: async (obj, {id, name, statusId, priorityId, clientId}, context) => {
+                const project = await Project.findByPk(id);
+                project.set('name', name);
+                project.set('statusId', statusId);
+                project.set('priorityId', priorityId);
+                return project.save();
+            }
         }
     }
 })
 
 module.exports = new GraphQLSchema({
-    query: rootQuery
+    query: rootQuery,
+    mutation: mutation
 })
