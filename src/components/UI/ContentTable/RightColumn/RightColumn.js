@@ -3,8 +3,7 @@ import styled from 'styled-components';
 
 
 const Wrapper = styled.div`
-    margin-top: 70px;
-    padding: 20px 20px 0;
+    padding: 20px 50px 0 20px;
     border-top: 1px solid #ddd;
 
     @media (min-width: 1024px) {

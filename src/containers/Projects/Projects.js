@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import ProjectRow from './ProjectRow';
-import { NavLink, Route } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import FullProject from './FullProject';
 import Spinner from '../../components/UI/Spinner/Spinner';

@@ -137,7 +137,6 @@ class FullProject extends Component {
         // }
         return(
             <ContentTable>
-                <CloseButton onClick={this.closeProjectModal}>X</CloseButton>
                 <LeftColumn>
                     <h2>Project name</h2>
                     <Input onBlur={this.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
