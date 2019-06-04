@@ -171,7 +171,7 @@ class FullProject extends Component {
                     if(loading) return <Spinner />;
                     if(error) return <p>Nie mogę pobrać projektu</p>;
                     const tasks = data.project.tasks.map((task, index) => {
-                        return <ListElement key={index}>{task.name}</ListElement>;
+                        return <ListElement key={index}>{index + 1}. {task.name}</ListElement>;
                     })
                     console.log(data.project.tasks.name)
                     return(

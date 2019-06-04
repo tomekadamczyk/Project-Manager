@@ -9,6 +9,7 @@ const Wrapper = styled.div`
         border-top: none;
         border-left: 1px solid #ddd;
         transform: translateX(-100px);
+        width: 45%;
     }
 `;
 
