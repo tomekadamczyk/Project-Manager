@@ -3,9 +3,12 @@ import {graphql, Query} from 'react-apollo';
 import gql from "graphql-tag";
 import styled from 'styled-components';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Modal from '../../components/UI/Modal/Modal';
 import Statuses from './Statuses';
 import Priorities from './Priorities';
+import ContentTable from '../../components/UI/ContentTable/ContentTable';
+import LeftColumn from '../../components/UI/ContentTable/LeftColumn/LeftColumn';
+import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterColumn';
+import RightColumn from '../../components/UI/ContentTable/RightColumn/RightColumn';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES
@@ -83,32 +86,7 @@ const CloseButton = styled.button`
     }
 `;
 
-const RightColumn = styled.div`
-    margin-top: 70px;
-    padding: 20px 20px 0;
-    border-top: 1px solid #ddd;
 
-    @media (min-width: 1024px) {
-        padding-top: 0;
-        border-top: none;
-        border-left: 1px solid #ddd;
-    }
-`;
-
-const CenterColumn = styled.div`
-    padding: 0 20px;
-    border-top: 1px solid #ddd;
-
-    @media (min-width: 1024px) {
-        border-top: none;
-        border-left: 1px solid #ddd;
-        transform: translateX(-100px);
-    }
-`;
-
-const Leftcolumn = styled.div`
-    padding: 20px;
-`;
 
 class FullProject extends Component {
     constructor(props) {
@@ -158,14 +136,12 @@ class FullProject extends Component {
         //     </>
         // }
         return(
-            <>
+            <ContentTable>
                 <CloseButton onClick={this.closeProjectModal}>X</CloseButton>
-                <Leftcolumn>
-                    <div>
-                        <h2>Project name</h2>
-                        <Input onBlur={this.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
-                    </div>
-                </Leftcolumn>
+                <LeftColumn>
+                    <h2>Project name</h2>
+                    <Input onBlur={this.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
+                </LeftColumn>
                 <CenterColumn>
                     <h2>List of tasks</h2>
                     <div>
@@ -185,7 +161,7 @@ class FullProject extends Component {
                     <h3>Client</h3>
                     <p>{props.client}</p>
                 </RightColumn>
-            </>
+            </ContentTable>
         )
     }
         return (

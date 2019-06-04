@@ -14,15 +14,6 @@ const ModalContainer = styled.div`
     right: 0;
     margin: auto;
     box-shadow: 1px 4px 17px 5px #ccc;
-
-    display: flex;
-    justify-content: space-between;
-    flex-flow: column;
-
-    @media (min-width: 1024px) {
-        flex-flow: row;
-        height: 83%;
-    }
 `;
 
 const Modal = (props) => {
