@@ -9,6 +9,8 @@ import ContentTable from '../../components/UI/ContentTable/ContentTable';
 import LeftColumn from '../../components/UI/ContentTable/LeftColumn/LeftColumn';
 import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterColumn';
 import RightColumn from '../../components/UI/ContentTable/RightColumn/RightColumn';
+import UnorderedList from '../../components/UI/List/UnorderedList/UnorderedList';
+import ListElement from '../../components/UI/List/UnorderedList/ListElement';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES
@@ -144,9 +146,9 @@ class FullProject extends Component {
                 <CenterColumn>
                     <h2>List of tasks</h2>
                     <div>
-                        <ul>
-                            <li>{props.tasks}</li>
-                        </ul>
+                        <UnorderedList>
+                            {props.tasks}
+                        </UnorderedList>
                     </div>
                 </CenterColumn>
                 <RightColumn>
@@ -168,12 +170,16 @@ class FullProject extends Component {
                 {({loading, error, data, refetch} ) => {
                     if(loading) return <Spinner />;
                     if(error) return <p>Nie mogę pobrać projektu</p>;
+                    const tasks = data.project.tasks.map((task, index) => {
+                        return <ListElement key={index}>{task.name}</ListElement>;
+                    })
+                    console.log(data.project.tasks.name)
                     return(
                         <FullProjectData 
                         key={data.project.id}
                         id={data.project.id} 
                         name={data.project.name}
-                        tasks={data.project.tasks.name}
+                        tasks={tasks}
                         status={data.project.statusId.name}
                         statusId={data.project.statusId.id}
                         priority={data.project.priorityId.name}

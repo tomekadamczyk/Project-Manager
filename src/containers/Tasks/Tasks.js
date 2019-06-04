@@ -66,7 +66,7 @@ class Tasks extends Component {
     render() {
         return (
             <>
-            <div>PROJECTS</div>
+            <div>TASKS</div>
             <Table>
                 <TableHead>
                     <TableRow>
