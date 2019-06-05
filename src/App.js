@@ -14,11 +14,11 @@ function App() {
     <div>
       <Layout>
         <Switch>
+          <Route path="/tasks/:id" component={FullTask} />
+          <Route path="/tasks" component={Tasks} />
           <Route path="/projects/add-project" component={AddProject} />
           <Route path="/projects/:id" component={FullProject} />
           <Route path="/projects" component={Projects} />
-          <Route path="/tasks" exact component={Tasks} />
-          <Route path="/tasks/:id" component={FullTask} />
           <Route path="/clients" component={Clients} />
           <Route path="/" exact component={Dashboard} />
         </Switch>

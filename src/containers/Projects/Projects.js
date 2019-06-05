@@ -9,7 +9,6 @@ import gql from "graphql-tag";
 import ProjectRow from './ProjectRow';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import FullProject from './FullProject';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 const GET_PROJECTS = gql`

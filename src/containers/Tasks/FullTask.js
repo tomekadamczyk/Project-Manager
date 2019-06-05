@@ -14,8 +14,8 @@ import ListElement from '../../components/UI/List/UnorderedList/ListElement';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES
-const updateProjectMutation = gql`
-    mutation updateProject($id: Int!, $name: String, $statusId: Int, $priorityId: Int) {
+const updateTaskMutation = gql`
+    mutation updateTask($id: Int!, $name: String, $statusId: Int, $priorityId: Int) {
         updateProject(id: $id, name: $name, statusId: $statusId, priorityId: $priorityId) {
             name,
             statusId {
@@ -36,7 +36,8 @@ const GET_TASK = gql`
             statusId{
                 name
             },
-            projectsId {
+            projectsId {,
+                id,
                 name
             }
         }
@@ -82,7 +83,7 @@ const CloseButton = styled.button`
 
 
 
-class FullProject extends Component {
+class FullTask extends Component {
     constructor(props) {
         super(props);
 
@@ -91,7 +92,7 @@ class FullProject extends Component {
     }
 
     updateProject = () => {
-        this.props.UpdateProject({
+        this.props.UpdateTask({
             variables: {
                 id: Number(this.props.match.params.id),
                 name: this.name.value,
@@ -121,7 +122,7 @@ class FullProject extends Component {
 
     render() {
         
-    const FullProjectData = (props) => {    
+    const FullTaskData = (props) => {    
         // if(!this.state.backdropInVisible) {
         //     wrapper = 
         //     <>
@@ -138,9 +139,6 @@ class FullProject extends Component {
                 <CenterColumn>
                     <h2>List of tasks</h2>
                     <div>
-                        <UnorderedList>
-                            {props.tasks}
-                        </UnorderedList>
                     </div>
                 </CenterColumn>
                 <RightColumn>
@@ -164,7 +162,7 @@ class FullProject extends Component {
                     if(error) return <p>Nie mogę pobrać listy zadań</p>;
                     
                     return(
-                        <FullProjectData 
+                        <FullTaskData 
                         key={data.task.id}
                         id={data.task.id} 
                         name={data.task.name}
@@ -182,11 +180,11 @@ class FullProject extends Component {
 }
 
 
-export default graphql(updateProjectMutation, {
-    name: 'UpdateProject',
+export default graphql(updateTaskMutation, {
+    name: 'UpdateTask',
     options: {
         refetchQueries: [
             'Tasks'
         ]
     }
-})(FullProject);
+})(FullTask);
