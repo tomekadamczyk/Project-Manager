@@ -21,9 +21,11 @@ const GET_TASKS = gql`
                 name
             },
             statusId {
+                id,
                 name
             },
             priorityId {
+                id,
                 name
             }
         }

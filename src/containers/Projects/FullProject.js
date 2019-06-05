@@ -3,8 +3,8 @@ import {graphql, Query} from 'react-apollo';
 import gql from "graphql-tag";
 import styled from 'styled-components';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Statuses from './Statuses';
-import Priorities from './Priorities';
+import Statuses from '../../Data/Statuses/Statuses';
+import Priorities from '../../Data/Priorities/Priorities';
 import ContentTable from '../../components/UI/ContentTable/ContentTable';
 import LeftColumn from '../../components/UI/ContentTable/LeftColumn/LeftColumn';
 import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterColumn';
@@ -20,7 +20,7 @@ const updateProjectMutation = gql`
         updateProject(id: $id, name: $name, statusId: $statusId, priorityId: $priorityId) {
             name,
             statusId {
-                id
+                name
             },
             priorityId {
                 name
@@ -122,6 +122,7 @@ class FullProject extends Component {
     }
 
     updateName = () => {
+        this.updateProject();
         alert('You updated name successfully')
     }
     
@@ -208,7 +209,7 @@ export default graphql(updateProjectMutation, {
     name: 'UpdateProject',
     options: {
         refetchQueries: [
-            'Projects'
+            'Project', 'Projects'
         ]
     }
 })(FullProject);

@@ -301,12 +301,28 @@ const mutation = new GraphQLObjectType({
                 statusId: {type: GraphQLInt},
                 priorityId: {type: GraphQLInt}
             },
-            resolve: async (obj, {id, name, statusId, priorityId, clientId}, context) => {
+            resolve: async (obj, {id, name, statusId, priorityId}, context) => {
                 const project = await Project.findByPk(id);
                 project.set('name', name);
                 project.set('statusId', statusId);
                 project.set('priorityId', priorityId);
                 return project.save();
+            }
+        },
+        updateTask: {
+            type: TaskType,
+            args: {
+                id: {type: new GraphQLNonNull(GraphQLInt)},
+                name: {type: GraphQLString},
+                statusId: {type: GraphQLInt},
+                priorityId: {type: GraphQLInt}
+            },
+            resolve: async (obj, {id, name, statusId, priorityId}, context) => {
+                const task = await Task.findByPk(id);
+                task.set('name', name);
+                task.set('statusId', statusId);
+                task.set('priorityId', priorityId);
+                return task.save();
             }
         }
     }
