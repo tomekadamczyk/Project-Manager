@@ -1,6 +1,7 @@
 import React from 'react';
 import {Query} from 'react-apollo';
 import gql from "graphql-tag";
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 
 const GET_STATUSES = gql`
@@ -17,7 +18,7 @@ const Statuses = React.forwardRef((props, ref) => {
 
         <Query query={GET_STATUSES} variables={{id: props.url}}>
         {({loading, error, data, refetch}) => {
-            if(loading) return <p>Pobieram listę statusów...</p>;
+            if(loading) return <Spinner />;
             if(error) return <p>Nie mogę pobrać statusów</p>;
             
             return(

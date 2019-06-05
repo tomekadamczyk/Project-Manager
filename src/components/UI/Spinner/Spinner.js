@@ -2,14 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 
 const SpinnerIcon = styled.div`
-    color: #ffffff;
-    font-size: 90px;
+    color: #fc3;
+    font-size: 50px;
     text-indent: -9999em;
     overflow: hidden;
-    width: 1em;
-    height: 1em;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    margin: 72px auto;
+    margin: 20px auto;
     position: relative;
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
