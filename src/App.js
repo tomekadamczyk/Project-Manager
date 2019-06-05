@@ -7,6 +7,7 @@ import Tasks from './containers/Tasks/Tasks';
 import Dashboard from './containers/Dashboard/Dashboard';
 import AddProject from './components/Projects/AddProject';
 import FullProject from './containers/Projects/FullProject';
+import FullTask from './containers/Tasks/FullTask';
 
 function App() {
   return (
@@ -16,8 +17,9 @@ function App() {
           <Route path="/projects/add-project" component={AddProject} />
           <Route path="/projects/:id" component={FullProject} />
           <Route path="/projects" component={Projects} />
+          <Route path="/tasks" exact component={Tasks} />
+          <Route path="/tasks/:id" component={FullTask} />
           <Route path="/clients" component={Clients} />
-          <Route path="/tasks" component={Tasks} />
           <Route path="/" exact component={Dashboard} />
         </Switch>
       </Layout>

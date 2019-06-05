@@ -16,7 +16,8 @@ const GET_TASKS = gql`
         tasks {
             id,
             name,
-            projectsId {
+            projectsId {,
+                id,
                 name
             },
             statusId {
@@ -60,7 +61,7 @@ const Link = styled(NavLink)`
 class Tasks extends Component {
     
     taskSelected = (id) => {
-        this.props.history.push({pathname: '/projects/' + id})
+        this.props.history.push({pathname: '/tasks/' + id})
     }
 
     render() {
@@ -90,9 +91,10 @@ class Tasks extends Component {
                                         id={task.id} 
                                         name={task.name}
                                         project={task.projectsId.name}
+                                        projectId={task.projectsId.id}
                                         status={task.statusId.name}
                                         priority={task.priorityId.name}
-                                        clicked={() => this.projectSelected(task.id)} 
+                                        clicked={() => this.taskSelected(task.id)} 
                                         />
                                     })}
                                 </>

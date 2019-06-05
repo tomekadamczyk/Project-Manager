@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Toggler from '../Toggler/Toggler';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import NavigationIcons from '../NavigationItems/NavigationIcons/NavigationIcons';
+import Backdrop from '../../UI/Backdrop/Backdrop';
 
 const Container = styled.aside`
     height: 100vh;
@@ -15,9 +16,8 @@ const BasicColumn = styled.div`
     height: 100%
     background: #fc3;
     width: 65px;
-    z-index: 100;
+    z-index: 9002;
     position: relative;
-    transition-duration: .4s;
 `;
 
 const SlidingColumn = styled.div`
@@ -25,21 +25,30 @@ const SlidingColumn = styled.div`
     background: #fff;
     width: 300px;
     position: absolute;
-    left: -500%;
+    transform: translateX(-500%);
+    left: 65px;
     top: 0;
-    transition-duration: .5s;
+    transition: transform 1s;
     z-index: 90;
     padding: 94px 0;
 
     &.active {
-        left: 65px;
+        transform: translateX(0);
+        z-index: 9001;
         box-shadow: 1px 1px 45px 5px #ccc;
     }
 `;
 
 const Sidemenu = (props) => {
+    let backdrop = null;
+
+    if(props.opened) {
+        backdrop = <Backdrop menuOpened={props.opened} closeMenu={props.open}/>;
+    }
+
     return (
         <Container>
+        {backdrop}
             <BasicColumn>
                 <Toggler isMenuOpened={props.opened} openMenu={props.open} />
                 <NavigationIcons />

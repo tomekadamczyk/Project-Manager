@@ -3,8 +3,8 @@ import {graphql, Query} from 'react-apollo';
 import gql from "graphql-tag";
 import styled from 'styled-components';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Statuses from './Statuses';
-import Priorities from './Priorities';
+//import Statuses from './Statuses';
+//import Priorities from './Priorities';
 import ContentTable from '../../components/UI/ContentTable/ContentTable';
 import LeftColumn from '../../components/UI/ContentTable/LeftColumn/LeftColumn';
 import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterColumn';
@@ -28,23 +28,15 @@ const updateProjectMutation = gql`
     }
 `;
 
-const GET_PROJECT = gql`
-    query Project ($id: Int!){
-        project (id: $id){
+const GET_TASK = gql`
+    query Task ($id: Int!){
+        task (id: $id){
             id,
             name,
-            tasks {
+            statusId{
                 name
             },
-            statusId {
-                id,
-                name
-            },
-            priorityId {
-                id,
-                name
-            },
-            clientId {
+            projectsId {
                 name
             }
         }
@@ -154,10 +146,10 @@ class FullProject extends Component {
                 <RightColumn>
 
                     <h3>Status</h3>
-                    <Statuses updateStatus={props.updateStatus} statusId={props.statusId} status={props.status} ref={input => this.statusId = input}/>
+                    {/* <Statuses updateStatus={props.updateStatus} statusId={props.statusId} status={props.status} ref={input => this.statusId = input}/> */}
 
                     <h3>Priority</h3>
-                    <Priorities updatePriority={props.updatePriority} priorityId={props.priorityId} priority={props.priority} ref={input => this.priorityId = input}/>
+                    {/* <Priorities updatePriority={props.updatePriority} priorityId={props.priorityId} priority={props.priority} ref={input => this.priorityId = input}/> */}
 
                     <h3>Client</h3>
                     <p>{props.client}</p>
@@ -166,27 +158,21 @@ class FullProject extends Component {
         )
     }
         return (
-            <Query query={GET_PROJECT} variables={{id: Number(this.props.match.params.id)}}>
+            <Query query={GET_TASK} variables={{id: Number(this.props.match.params.id)}}>
                 {({loading, error, data, refetch} ) => {
                     if(loading) return <Spinner />;
-                    if(error) return <p>Nie mogę pobrać projektu</p>;
-                    const tasks = data.project.tasks.map((task, index) => {
-                        return <ListElement key={index}>{index + 1}. {task.name}</ListElement>;
-                    })
+                    if(error) return <p>Nie mogę pobrać listy zadań</p>;
+                    
                     return(
                         <FullProjectData 
-                        key={data.project.id}
-                        id={data.project.id} 
-                        name={data.project.name}
-                        tasks={tasks}
-                        status={data.project.statusId.name}
-                        statusId={data.project.statusId.id}
-                        priority={data.project.priorityId.name}
-                        priorityId={data.project.priorityId.id}
-                        client={data.project.clientId.name} 
+                        key={data.task.id}
+                        id={data.task.id} 
+                        name={data.task.name}
+                        status={data.task.statusId.name}
+                        statusId={data.task.statusId.id}
+                        // priority={data.task.priorityId.name}
+                        // priorityId={data.task.priorityId.id}
                         url={Number(this.props.match.params.id)}
-                        updateStatus={this.updateStatus}
-                        updatePriority={this.updatePriority}
                         />
                     )
                 }}
@@ -200,7 +186,7 @@ export default graphql(updateProjectMutation, {
     name: 'UpdateProject',
     options: {
         refetchQueries: [
-            'Projects'
+            'Tasks'
         ]
     }
 })(FullProject);

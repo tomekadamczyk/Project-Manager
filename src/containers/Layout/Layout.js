@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import Sidemenu from '../../components/Navigation/Sidemenu/Sidemenu';
 import styled from 'styled-components';
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Header from '../../components/Header/Header';
 
 const Main = styled.main`
@@ -27,9 +26,13 @@ class Layout extends Component {
         this.setState({backdropInVisible: !backdropState})
     }
 
+    componentDidUpdate() {
+        console.log(this.props)
+    }
+
     render() {
-        
-        let mainView = <>
+        return (
+            <>
             <Sidemenu 
             opened={!this.state.backdropInVisible}
             open={this.toggleMenuState}>
@@ -39,17 +42,6 @@ class Layout extends Component {
             <Main className={this.state.backdropInVisible ? 'toHide' : ''}>
                 {this.props.children}
             </Main>
-        </>
-        if(!this.state.backdropInVisible) {
-            mainView = <>
-            {mainView}
-            <Backdrop menuOpened={this.state.backdropInVisible} closeMenu={this.toggleMenuState}/>
-            </>
-        }
-
-        return (
-            <>
-           {mainView}
            </>
         )
     }
