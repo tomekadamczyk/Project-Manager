@@ -11,6 +11,7 @@ import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterCo
 import RightColumn from '../../components/UI/ContentTable/RightColumn/RightColumn';
 import UnorderedList from '../../components/UI/List/UnorderedList/UnorderedList';
 import ListElement from '../../components/UI/List/UnorderedList/ListElement';
+import {NavLink} from 'react-router-dom';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES
@@ -34,6 +35,7 @@ const GET_PROJECT = gql`
             id,
             name,
             tasks {
+                id,
                 name
             },
             statusId {
@@ -127,6 +129,10 @@ class FullProject extends Component {
         this.props.history.goBack();
     }
 
+    goToTask(id) {
+        this.props.history.replace('/tasks/' + id)
+    }
+
     render() {
         
     const FullProjectData = (props) => {    
@@ -171,7 +177,9 @@ class FullProject extends Component {
                     if(loading) return <Spinner />;
                     if(error) return <p>Nie mogę pobrać projektu</p>;
                     const tasks = data.project.tasks.map((task, index) => {
-                        return <ListElement key={index}>{index + 1}. {task.name}</ListElement>;
+                        return <NavLink key={index} to={`/tasks/${task.id}`}>
+                                <ListElement id={task.id}>{index + 1}. {task.name}</ListElement>
+                            </NavLink>;
                     })
                     return(
                         <FullProjectData 

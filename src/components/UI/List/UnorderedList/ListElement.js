@@ -7,7 +7,7 @@ const LI = styled.li`
     transition: background .3s;
 
     &:hover {
-        background: #f1f1f1;
+        background: #fff8f2;
     }
 `;
 

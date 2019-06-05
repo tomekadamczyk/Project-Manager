@@ -19,10 +19,12 @@ const GET_PROJECTS = gql`
             tasks {
                 name
             },
-            statusId {
+            statusId {,
+                id,
                 name
             },
             priorityId {
+                id,
                 name
             },
             clientId {
@@ -86,7 +88,9 @@ class Projects extends Component {
                     <Query query={GET_PROJECTS}>
                         {({loading, error, data, refetch}) => {
                             if(loading) return <TableRow><TableCell><Spinner/></TableCell></TableRow>;
-                            if(error) return <TableRow><TableCell>Nie mogę pobrać projektów</TableCell></TableRow>;
+                            if(error) {
+                                console.log(error)
+                                return <TableRow><TableCell>Nie mogę pobrać projektów</TableCell></TableRow>};
 
                             return(
                                 <>
