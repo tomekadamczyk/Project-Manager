@@ -53,14 +53,6 @@ const GET_PROJECT = gql`
     }
 `;
 
-// STYLED COMPONENTS
-const Select = styled.select`
-`;
-
-const Form = styled.form`
-`;
-
-
 const Input = styled.input`
     border: none;
     color: #000;
@@ -73,24 +65,6 @@ const Input = styled.input`
         color: #000;
     }
 `;
-
-const CloseButton = styled.button`
-    border: none;
-    background: f1f1f1;
-    color: #00f;
-    font-size: 30px;
-    cursor: pointer;
-    transition-duration: .3s;
-    position: absolute;
-    right: 20px;
-
-    &:hover {
-        background: #dad;
-        color: #fff;
-    }
-`;
-
-
 
 class FullProject extends Component {
     constructor(props) {
@@ -113,17 +87,14 @@ class FullProject extends Component {
 
     updateStatus = () => {
         this.updateProject();
-        alert('You updated status successfully')
     }
 
     updatePriority = () => {
         this.updateProject();
-        alert('You updated priority successfully')
     }
 
     updateName = () => {
         this.updateProject();
-        alert('You updated name successfully')
     }
     
     closeProjectModal = () => {
@@ -136,14 +107,8 @@ class FullProject extends Component {
 
     render() {
         
-    const FullProjectData = (props) => {    
-        // if(!this.state.backdropInVisible) {
-        //     wrapper = 
-        //     <>
-        //     {wrapper}
-        //     <Backdrop onClick={this.hideBackdrop}/>
-        //     </>
-        // }
+    const FullProjectData = (props) => { 
+        
         return(
             <ContentTable>
                 <LeftColumn>
@@ -209,7 +174,7 @@ export default graphql(updateProjectMutation, {
     name: 'UpdateProject',
     options: {
         refetchQueries: [
-            'Project', 'Projects'
+            'Project'
         ]
     }
 })(FullProject);

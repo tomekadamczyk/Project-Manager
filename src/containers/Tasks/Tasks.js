@@ -63,7 +63,6 @@ const Link = styled(NavLink)`
 class Tasks extends Component {
     
     taskSelected = (id) => {
-        console.log(this.props)
         this.props.history.push({pathname: '/tasks/' + id})
     }
 

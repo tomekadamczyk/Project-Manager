@@ -9,8 +9,7 @@ import ContentTable from '../../components/UI/ContentTable/ContentTable';
 import LeftColumn from '../../components/UI/ContentTable/LeftColumn/LeftColumn';
 import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterColumn';
 import RightColumn from '../../components/UI/ContentTable/RightColumn/RightColumn';
-import UnorderedList from '../../components/UI/List/UnorderedList/UnorderedList';
-import ListElement from '../../components/UI/List/UnorderedList/ListElement';
+import InfoBox from '../../components/InfoBox/InfoBox';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES
@@ -49,14 +48,6 @@ const GET_TASK = gql`
     }
 `;
 
-// STYLED COMPONENTS
-const Select = styled.select`
-`;
-
-const Form = styled.form`
-`;
-
-
 const Input = styled.input`
     border: none;
     color: #000;
@@ -70,30 +61,17 @@ const Input = styled.input`
     }
 `;
 
-const CloseButton = styled.button`
-    border: none;
-    background: f1f1f1;
-    color: #00f;
-    font-size: 30px;
-    cursor: pointer;
-    transition-duration: .3s;
-    position: absolute;
-    right: 20px;
-
-    &:hover {
-        background: #dad;
-        color: #fff;
-    }
-`;
-
-
-
 class FullTask extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            updateInfo: null,
+            taskName: this.props.name
+        }
 
         this.statusId = React.createRef();
         this.priorityId = React.createRef();
+        this.updateInformation = null;
     }
 
     updateProject = () => {
@@ -109,38 +87,31 @@ class FullTask extends Component {
 
     updateStatus = () => {
         this.updateProject();
-        alert('You updated status successfully')
+        this.updateInformation = 'Status';
+        this.setState({updateInfo: this.updateInformation});
     }
 
     updatePriority = () => {
         this.updateProject();
-        alert('You updated priority successfully')
+        this.updateInformation = 'Priority';
+        this.setState({updateInfo: this.updateInformation});
     }
 
-    updateName = () => {
+    updateName = () => { 
         this.updateProject();
-        alert('You updated name successfully')
-    }
-    
-    closeProjectModal = () => {
-        this.props.history.goBack();
+        this.updateInformation = 'Task name';
+        this.setState({updateInfo: this.updateInformation, taskName: this.name.value});
     }
 
-    render() {
+    render() {   
         
     const FullTaskData = (props) => {    
-        // if(!this.state.backdropInVisible) {
-        //     wrapper = 
-        //     <>
-        //     {wrapper}
-        //     <Backdrop onClick={this.hideBackdrop}/>
-        //     </>
-        // }
         return(
             <ContentTable>
+                {this.updateInformation ? <InfoBox info={this.updateInformation}></InfoBox> : null}
                 <LeftColumn>
-                    <h2>Project name</h2>
-                    <Input onBlur={this.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
+                    <h2>Task</h2>
+                    <Input onBlur={props.updateName} type="text" placeholder={props.name} defaultValue={this.state.taskName} ref={input => this.name = input}/>
                 </LeftColumn>
                 <CenterColumn>
                     <h2>List of tasks</h2>
@@ -180,6 +151,7 @@ class FullTask extends Component {
                         url={Number(this.props.match.params.id)}
                         updateStatus={this.updateStatus}
                         updatePriority={this.updatePriority}
+                        updateName={this.updateName}
                         />
                     )
                 }}
@@ -193,7 +165,7 @@ export default graphql(updateTaskMutation, {
     name: 'UpdateTask',
     options: {
         refetchQueries: [
-            'Task', 'Tasks', 'Projects'
+            'Task'
         ]
     }
 })(FullTask);
