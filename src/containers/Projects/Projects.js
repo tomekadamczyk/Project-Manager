@@ -29,7 +29,7 @@ const GET_PROJECTS = gql`
             },
             clientId {
                 name
-            }
+            },
         }
     }
 `;

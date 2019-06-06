@@ -13,6 +13,7 @@ const TaskType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLInt },
         name: { type: GraphQLString },
+        description: { type: GraphQLString },
         createdAt: { type: GraphQLInt },
         updatedAt: { type: GraphQLInt },
         projectId: {type: GraphQLInt},
@@ -42,6 +43,7 @@ const ProjectType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLInt },
         name: { type: GraphQLString },
+        description: { type: GraphQLString },
         createdAt: { type: GraphQLInt },
         updatedAt: { type: GraphQLInt },
         statusId: { 
@@ -280,13 +282,15 @@ const mutation = new GraphQLObjectType({
             type: ProjectType,
             args: {
                 name: {type: new GraphQLNonNull(GraphQLString)},
+                description: {type: GraphQLString},
                 statusId: {type: new GraphQLNonNull(GraphQLInt)},
                 priorityId: {type: new GraphQLNonNull(GraphQLInt)},
                 clientId: {type: new GraphQLNonNull(GraphQLInt)}
             },
-            resolve(obj, {name, statusId, priorityId, clientId}, context) {
+            resolve(obj, {name, description, statusId, priorityId, clientId}, context) {
                 return Project.create({
                     name,
+                    description,
                     statusId,
                     priorityId,
                     clientId
@@ -307,6 +311,24 @@ const mutation = new GraphQLObjectType({
                 project.set('statusId', statusId);
                 project.set('priorityId', priorityId);
                 return project.save();
+            }
+        },
+        addTask: {
+            type: TaskType,
+            args: {
+                name: {type: new GraphQLNonNull(GraphQLString)},
+                description: {type: GraphQLString},
+                statusId: {type: new GraphQLNonNull(GraphQLInt)},
+                priorityId: {type: new GraphQLNonNull(GraphQLInt)},
+                clientId: {type: new GraphQLNonNull(GraphQLInt)}
+            },
+            resolve(obj, {name, statusId, priorityId, clientId}, context) {
+                return Task.create({
+                    name,
+                    statusId,
+                    priorityId,
+                    clientId
+                })
             }
         },
         updateTask: {

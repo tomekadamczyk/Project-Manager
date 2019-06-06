@@ -12,6 +12,7 @@ const db = new Sequelize('project-management', 'root', '', {
 const TaskModel = db.define('task', {
     id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_tasks'},
     name: {type: Sequelize.STRING, field: 'name'},
+    description: {type: Sequelize.STRING, field: 'description'},
     createdAt: {type: Sequelize.DATE, field: 'createdAt'},
     updatedAt: {type: Sequelize.DATE, field: 'updatedAt'}
 })
@@ -20,6 +21,7 @@ const TaskModel = db.define('task', {
 const ProjectModel = db.define('project', {
     id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_projects'},
     name: {type: Sequelize.STRING, field: 'name'},
+    description: {type: Sequelize.STRING, field: 'description'},
     createdAt: {type: Sequelize.DATE, field: 'createdAt'},
     updatedAt: {type: Sequelize.DATE, field: 'updatedAt'}
 })

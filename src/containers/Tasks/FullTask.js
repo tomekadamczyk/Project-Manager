@@ -32,6 +32,7 @@ const GET_TASK = gql`
         task (id: $id){
             id,
             name,
+            description,
             statusId {
                 id,
                 name

@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import {graphql, Query} from 'react-apollo';
 import gql from 'graphql-tag';
 //import Statuses from '../../Data/Statuses/Statuses';
+import TextArea from '../../components/UI/Textarea/Textarea';
 import styled from 'styled-components';
 
 const addProjectMutation = gql`
-    mutation addProject ($name: String!, $statusId: Int!, $priorityId: Int!, $clientId: Int!) {
-        addProject(name: $name, statusId: $statusId, priorityId: $priorityId, clientId: $clientId){
+    mutation addProject ($name: String!, $description: String, $statusId: Int!, $priorityId: Int!, $clientId: Int!) {
+        addProject(name: $name, description: $description, statusId: $statusId, priorityId: $priorityId, clientId: $clientId){
             name,
+            description,
             statusId {
                 name
             },
@@ -69,6 +71,7 @@ class AddProject extends Component {
         this.props.AddProject({
             variables: {
                 name: this.name.value,
+                description: this.description.value,
                 statusId: Number(this.statusId.value),
                 priorityId: Number(this.priorityId.value),
                 clientId: Number(this.clientId.value)
@@ -77,9 +80,6 @@ class AddProject extends Component {
         this.props.history.goBack();
     }
 
-    componentDidMount() {
-
-    }
 
 
     render() {
@@ -87,6 +87,7 @@ class AddProject extends Component {
             <>
                 <Form>
                     <Input type="text" placeholder="Project name" ref={input => this.name = input}/>
+                    <textarea type="text" placeholder="Project description" ref={input => this.description = input}></textarea>
                     <Query query={GET_STATUSES}>
                         {({loading, error, data, refetch}) => {
                             if(loading) return <p>Pobieram listę statusów...</p>;

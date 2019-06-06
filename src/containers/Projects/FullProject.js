@@ -39,6 +39,7 @@ const GET_PROJECT = gql`
                 id,
                 name
             },
+            description,
             statusId {
                 id,
                 name
@@ -129,6 +130,7 @@ class FullProject extends Component {
                 <LeftColumn>
                     <h2>Project name</h2>
                     <Input onBlur={props.updateName} type="text" placeholder={props.name} defaultValue={this.state.taskName} ref={input => this.name = input}/>
+                    <div>{props.description}</div>
                 </LeftColumn>
                 <CenterColumn>
                     <h2>List of tasks</h2>
@@ -167,6 +169,7 @@ class FullProject extends Component {
                         key={data.project.id}
                         id={data.project.id} 
                         name={data.project.name}
+                        description={data.project.description}
                         tasks={tasks}
                         status={data.project.statusId.name}
                         statusId={data.project.statusId.id}
