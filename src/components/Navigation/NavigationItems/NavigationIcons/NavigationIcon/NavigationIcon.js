@@ -6,6 +6,7 @@ const Icon = styled.div`
     padding: 8px;
     font-size: 20px;
     text-align: center;
+    position: relative;
 
     &:hover {
         background: #dac;

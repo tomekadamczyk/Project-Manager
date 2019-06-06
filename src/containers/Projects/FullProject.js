@@ -12,7 +12,7 @@ import RightColumn from '../../components/UI/ContentTable/RightColumn/RightColum
 import UnorderedList from '../../components/UI/List/UnorderedList/UnorderedList';
 import ListElement from '../../components/UI/List/UnorderedList/ListElement';
 import InfoBox from '../../components/InfoBox/InfoBox';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Route} from 'react-router-dom';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES
@@ -68,6 +68,21 @@ const Input = styled.input`
     }
 `;
 
+const RoundButton = styled.button`
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #ff9900;
+    border: none;
+    margin-top: 30px;
+    transition: background .3s ease-in-out .5s;
+
+    &:hover {
+        background: #0099ff;
+    }
+`;
+
+
 class FullProject extends Component {
     constructor(props) {
         super(props);
@@ -116,10 +131,6 @@ class FullProject extends Component {
         this.props.history.goBack();
     }
 
-    goToTask(id) {
-        this.props.history.replace('/tasks/' + id)
-    }
-
     render() {
         
     const FullProjectData = (props) => { 
@@ -138,6 +149,7 @@ class FullProject extends Component {
                         <UnorderedList>
                             {props.tasks}
                         </UnorderedList>
+                        
                     </div>
                 </CenterColumn>
                 <RightColumn>
@@ -180,6 +192,7 @@ class FullProject extends Component {
                         updateStatus={this.updateStatus}
                         updatePriority={this.updatePriority}
                         updateName={this.updateName}
+                        createTask={this.createTask}
                         />
                     )
                 }}

@@ -8,12 +8,14 @@ import Dashboard from './containers/Dashboard/Dashboard';
 import AddProject from './components/Projects/AddProject';
 import FullProject from './containers/Projects/FullProject';
 import FullTask from './containers/Tasks/FullTask';
+import AddTask from './components/Tasks/AddTask';
 
 function App() {
   return (
     <div>
       <Layout>
         <Switch>
+          <Route path="/tasks/add-task" component={AddTask} />
           <Route path="/tasks/:id" component={FullTask} />
           <Route path="/tasks" component={Tasks} />
           <Route path="/projects/add-project" component={AddProject} />

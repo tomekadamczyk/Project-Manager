@@ -320,15 +320,15 @@ const mutation = new GraphQLObjectType({
                 description: {type: GraphQLString},
                 statusId: {type: new GraphQLNonNull(GraphQLInt)},
                 priorityId: {type: new GraphQLNonNull(GraphQLInt)},
-                clientId: {type: new GraphQLNonNull(GraphQLInt)}
+                projectId: {type: new GraphQLNonNull(GraphQLInt)}
             },
-            resolve(obj, {name, description, statusId, priorityId, clientId}, context) {
+            resolve(obj, {name, description, statusId, priorityId, projectId}, context) {
                 return Task.create({
                     name,
                     description,
                     statusId,
                     priorityId,
-                    clientId
+                    projectId
                 })
             }
         },

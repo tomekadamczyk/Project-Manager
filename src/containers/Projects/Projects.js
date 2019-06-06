@@ -111,9 +111,9 @@ class Projects extends Component {
                     </Query>
                 </TableBody>
             </Table>
-            <RoundButton>
+            {/* <RoundButton>
                 <Link to='/projects/add-project'>+</Link>
-            </RoundButton>
+            </RoundButton> */}
             </>
         )
     }

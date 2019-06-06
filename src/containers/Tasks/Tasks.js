@@ -104,9 +104,6 @@ class Tasks extends Component {
                     </Query>
                 </TableBody>
             </Table>
-            <RoundButton>
-                <Link to='/tasks/add-task'>+</Link>
-            </RoundButton>
             </>
         )
     }
