@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {graphql, Query} from 'react-apollo';
 import gql from "graphql-tag";
-import styled from 'styled-components';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Statuses from '../../Data/Statuses/Statuses';
 import Priorities from '../../Data/Priorities/Priorities';
@@ -11,6 +10,7 @@ import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterCo
 import RightColumn from '../../components/UI/ContentTable/RightColumn/RightColumn';
 import InfoBox from '../../components/InfoBox/InfoBox';
 import TextArea from '../../components/UI/Form/Textarea/Textarea';
+import Input from '../../components/UI/Form/Input/Input';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES
@@ -51,19 +51,6 @@ const GET_TASK = gql`
     }
 `;
 
-const Input = styled.input`
-    border: none;
-    color: #000;
-    font-size: 20px;
-    padding: 7px 10px;
-    display: block;
-
-    &:focus {
-        border: 1px solid #ccc;
-        background: #f9f9f9;
-        color: #000;
-    }
-`;
 
 class FullTask extends Component {
     constructor(props) {
@@ -124,13 +111,11 @@ class FullTask extends Component {
                 {this.updateInformation ? <InfoBox info={this.updateInformation}></InfoBox> : null}
                 <LeftColumn>
                     <h2>Task</h2>
-                    <Input onBlur={props.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
-                <TextArea updateDescription={props.updateDescription} type="text" placeholder={props.description} defaultValue={props.description} ref={input => this.description = input}></TextArea>
+                    <Input blur={props.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
+                    <TextArea updateDescription={props.updateDescription} type="text" placeholder={props.description} defaultValue={props.description} ref={input => this.description = input}></TextArea>
                 </LeftColumn>
                 <CenterColumn>
                     <h2>List of tasks</h2>
-                    <div>
-                    </div>
                 </CenterColumn>
                 <RightColumn>
 
@@ -151,7 +136,6 @@ class FullTask extends Component {
                 {({loading, error, data, refetch} ) => {
                     if(loading) return <Spinner />;
                     if(error) return <p>Nie mogę pobrać listy zadań</p>;
-                    
                     
                     return(
                         <FullTaskData 

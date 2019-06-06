@@ -7,8 +7,6 @@ import TableRow from '@material-ui/core/TableRow';
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import TaskRow from './TaskRow';
-import { NavLink } from 'react-router-dom';
-import styled from 'styled-components';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 const GET_TASKS = gql`
@@ -32,33 +30,6 @@ const GET_TASKS = gql`
     }
 `;
 
-const RoundButton = styled.button`
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #ff9900;
-    border: none;
-    margin-top: 30px;
-    transition: background .3s ease-in-out .5s;
-
-    &:hover {
-        background: #0099ff;
-    }
-`;
-
-const Link = styled(NavLink)`
-    color: #fff;
-    text-decoration: none;
-    display: block;
-    position: relative;
-    top: -2px;
-    transition: transform .5s ease-in-out;
-    font-size: 30px;
-
-    &:hover {
-        transform: rotate(360deg);
-    }
-`;
 
 class Tasks extends Component {
     

@@ -2,6 +2,7 @@ import React from 'react';
 import {Query} from 'react-apollo';
 import gql from "graphql-tag";
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Select from '../../components/UI/Form/Select/Select';
 
 
 const GET_STATUSES = gql`
@@ -22,12 +23,12 @@ const Statuses = React.forwardRef((props, ref) => {
             if(error) return <p>Nie mogę pobrać statusów</p>;
             
             return(
-                <select onChange={props.updateStatus} ref={ref}>
+                <Select update={props.updateStatus} ref={ref}>
                     <option value={props.statusId}>{props.status}</option>
                 {data.statuses.map(status => {
                     return <option key={status.id} value={status.id}>{status.name}</option>
                 })}
-                </select>
+                </Select>
             )
         }}
     </Query>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {graphql, Query} from 'react-apollo';
 import gql from "graphql-tag";
-import styled from 'styled-components';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Statuses from '../../Data/Statuses/Statuses';
 import Priorities from '../../Data/Priorities/Priorities';
@@ -14,6 +13,7 @@ import ListElement from '../../components/UI/List/UnorderedList/ListElement';
 import InfoBox from '../../components/InfoBox/InfoBox';
 import {NavLink} from 'react-router-dom';
 import TextArea from '../../components/UI/Form/Textarea/Textarea';
+import Input from '../../components/UI/Form/Input/Input';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES
@@ -54,34 +54,6 @@ const GET_PROJECT = gql`
                 name
             }
         }
-    }
-`;
-
-const Input = styled.input`
-    border: none;
-    color: #000;
-    font-size: 20px;
-    padding: 7px 10px;
-    display: block;
-
-    &:focus {
-        border: 1px solid #ccc;
-        background: #f9f9f9;
-        color: #000;
-    }
-`;
-
-const RoundButton = styled.button`
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #ff9900;
-    border: none;
-    margin-top: 30px;
-    transition: background .3s ease-in-out .5s;
-
-    &:hover {
-        background: #0099ff;
     }
 `;
 
@@ -150,7 +122,7 @@ class FullProject extends Component {
             {this.updateInformation ? <InfoBox info={this.updateInformation}></InfoBox> : null}
                 <LeftColumn>
                     <h2>Project name</h2>
-                    <Input onBlur={props.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
+                    <Input blur={props.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
                     <TextArea updateDescription={props.updateDescription} type="text" placeholder={props.description} defaultValue={props.description} ref={input => this.description = input}></TextArea>
                 </LeftColumn>
                 <CenterColumn>
@@ -159,7 +131,6 @@ class FullProject extends Component {
                         <UnorderedList>
                             {props.tasks}
                         </UnorderedList>
-                        
                     </div>
                 </CenterColumn>
                 <RightColumn>
@@ -217,7 +188,7 @@ export default graphql(updateProjectMutation, {
     name: 'UpdateProject',
     options: {
         refetchQueries: [
-            'Project', 'Projects'
+            'Project'
         ]
     }
 })(FullProject);

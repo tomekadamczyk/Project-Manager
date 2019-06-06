@@ -3,6 +3,8 @@ import {graphql, Query} from 'react-apollo';
 import gql from 'graphql-tag';
 //import Statuses from '../../Data/Statuses/Statuses';
 import TextArea from '../UI/Form/Textarea/Textarea';
+import Input from '../UI/Form/Input/Input';
+import Select from '../UI/Form/Select/Select';
 import styled from 'styled-components';
 
 const addTaskMutation = gql`
@@ -51,17 +53,25 @@ query Projects {
 `;
 
 const Form = styled.form`
+margin: 20px 0;
+display: flex;
+justify-content: center;
 `;
+const InputsContainer = styled.div`
+width: 45%;
 
-
-const Input = styled.input`
 `;
-
-const Select = styled.select`
+const OptionsContainer = styled.div`
 `;
 
 
 class AddTask extends Component {
+    constructor(props) {
+        super(props);
+
+        this.name = React.createRef();
+        this.description = React.createRef();
+    }
 
     submitTask = (e) => {
         e.preventDefault();
@@ -77,63 +87,74 @@ class AddTask extends Component {
         this.props.history.replace('/tasks');
     }
 
+    componentDidMount() {
+        console.log(this.props)
+    }
+
 
 
     render() {
         return(
             <>
                 <Form>
-                    <Input type="text" placeholder="Task name" ref={input => this.name = input}/>
-                    <textarea type="text" placeholder="Task description" ref={input => this.description = input}></textarea>
-                    <Query query={GET_PROJECTS}>
-                        {({loading, error, data, refetch}) => {
-                            if(loading) return <p>Pobieram listę statusów...</p>;
-                            if(error) return <p>Nie mogę pobrać statusów</p>;
-                            
-                            return(
-                                <>
-                                <Select ref={input => this.projectId = input}>
-                                {data.projects.map(project => {
-                                    return <option key={project.id} value={project.id}>{project.name}</option>
-                                })}
-                                </Select>
-                                </>
-                            )
-                        }}
-                    </Query>
-                    <Query query={GET_STATUSES}>
-                        {({loading, error, data, refetch}) => {
-                            if(loading) return <p>Pobieram listę statusów...</p>;
-                            if(error) return <p>Nie mogę pobrać statusów</p>;
-                            
-                            return(
-                                <>
-                                <Select ref={input => this.statusId = input}>
-                                {data.statuses.map(status => {
-                                    return <option key={status.id} value={status.id}>{status.name}</option>
-                                })}
-                                </Select>
-                                </>
-                            )
-                        }}
-                    </Query>
-                    <Query query={GET_PRIORITIES}>
-                        {({loading, error, data, refetch}) => {
-                            if(loading) return <p>Pobieram listę priorytetów...</p>;
-                            if(error) return <p>Nie mogę pobrać priorytetów</p>;
-                            
-                            return(
-                                <>
-                                <Select ref={input => this.priorityId = input}>
-                                {data.priorities.map(priority => {
-                                    return <option key={priority.id} value={priority.id}>{priority.name}</option>
-                                })}
-                                </Select>
-                                </>
-                            )
-                        }}
-                    </Query>
-                    <button onClick={(e) => this.submitTask(e)}>Assigne new task</button>
+                    <InputsContainer>
+                        <Input type="text" placeholder="Task name" ref={input => this.name = input}/>
+                        <TextArea type="text" placeholder="Task description" ref={input => this.description = input}></TextArea>
+                    </InputsContainer>
+                    <OptionsContainer>
+                        <Query query={GET_PROJECTS}>
+                            {({loading, error, data, refetch}) => {
+                                if(loading) return <p>Pobieram listę projektów...</p>;
+                                if(error) return <p>Nie mogę pobrać projektów</p>;
+                                
+                                return(
+                                    <>
+                                    <h3>Project</h3>
+                                    <Select ref={input => this.projectId = input}>
+                                    {data.projects.map(project => {
+                                        return <option key={project.id} value={project.id}>{project.name}</option>
+                                    })}
+                                    </Select>
+                                    </>
+                                )
+                            }}
+                        </Query>
+                        <Query query={GET_STATUSES}>
+                            {({loading, error, data, refetch}) => {
+                                if(loading) return <p>Pobieram listę statusów...</p>;
+                                if(error) return <p>Nie mogę pobrać statusów</p>;
+                                
+                                return(
+                                    <>
+                                    <h3>Status</h3>
+                                    <Select ref={input => this.statusId = input}>
+                                    {data.statuses.map(status => {
+                                        return <option key={status.id} value={status.id}>{status.name}</option>
+                                    })}
+                                    </Select>
+                                    </>
+                                )
+                            }}
+                        </Query>
+                        <Query query={GET_PRIORITIES}>
+                            {({loading, error, data, refetch}) => {
+                                if(loading) return <p>Pobieram listę priorytetów...</p>;
+                                if(error) return <p>Nie mogę pobrać priorytetów</p>;
+                                
+                                return(
+                                    <>
+                                    <h3>Priority</h3>
+                                    <Select ref={input => this.priorityId = input}>
+                                    {data.priorities.map(priority => {
+                                        return <option key={priority.id} value={priority.id}>{priority.name}</option>
+                                    })}
+                                    </Select>
+                                    </>
+                                )
+                            }}
+                        </Query>
+                        <button onClick={(e) => this.submitTask(e)}>Assigne new task</button>
+                    </OptionsContainer>
                 </Form>
             </>
         )
@@ -144,7 +165,7 @@ export default graphql(addTaskMutation, {
     name: 'AddTask',
     options: {
         refetchQueries: [
-            'Tasks'
+            'Tasks', 'Projects'
         ]
     }
 })(AddTask);

@@ -2,6 +2,7 @@ import React from 'react';
 import {Query} from 'react-apollo';
 import gql from "graphql-tag";
 import Spinner from '../../components/UI/Spinner/Spinner';
+import Select from '../../components/UI/Form/Select/Select';
 
 
 
@@ -22,12 +23,12 @@ const Priorities = React.forwardRef((props, ref) => {
         if(error) return <p>Nie mogę pobrać priorytetów</p>;
         
         return(
-            <select onChange={props.updatePriority} ref={ref}>
+            <Select update={props.updatePriority} ref={ref}>
                 <option value={props.priorityId}>{props.priority}</option>
             {data.priorities.map(priority => {
                 return <option key={priority.id} value={priority.id}>{priority.name}</option>
             })}
-            </select>
+            </Select>
         )
     }}
 </Query>
