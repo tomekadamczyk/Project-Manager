@@ -14,8 +14,8 @@ import InfoBox from '../../components/InfoBox/InfoBox';
 
 // GRAPHQL QUERIES
 const updateTaskMutation = gql`
-    mutation updateTask($id: Int!, $name: String, $statusId: Int, $priorityId: Int) {
-        updateTask(id: $id, name: $name, statusId: $statusId, priorityId: $priorityId) {
+    mutation updateTask($id: Int!, $name: String, $description: String, $statusId: Int, $priorityId: Int) {
+        updateTask(id: $id, name: $name, description: $description, statusId: $statusId, priorityId: $priorityId) {
             name,
             statusId {
                 name
@@ -80,6 +80,7 @@ class FullTask extends Component {
             variables: {
                 id: Number(this.props.match.params.id),
                 name: this.name.value,
+                description: this.description.value,
                 statusId: Number(this.statusId.value),
                 priorityId: Number(this.priorityId.value)
             }
@@ -115,6 +116,7 @@ class FullTask extends Component {
                 <LeftColumn>
                     <h2>Task</h2>
                     <Input onBlur={props.updateName} type="text" placeholder={props.name} defaultValue={this.state.taskName} ref={input => this.name = input}/>
+                    <div>{props.description}</div>
                 </LeftColumn>
                 <CenterColumn>
                     <h2>List of tasks</h2>
@@ -147,6 +149,7 @@ class FullTask extends Component {
                         key={data.task.id}
                         id={data.task.id} 
                         name={data.task.name}
+                        description={data.task.description}
                         status={data.task.statusId.name}
                         statusId={data.task.statusId.id}
                         priority={data.task.priorityId.name}
