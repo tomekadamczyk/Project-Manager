@@ -7,9 +7,17 @@ const Icon = styled.div`
     font-size: 20px;
     text-align: center;
     position: relative;
+    cursor: pointer;
 
     &:hover {
         background: #dac;
+    }
+
+    &:last-child {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 15px;
     }
 `;
 

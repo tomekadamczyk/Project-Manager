@@ -1,8 +1,20 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const Area = styled.textarea`
+    height: 300px;
+    width: 100%;
+    border: none;
+    font-size: 14px;
+
+    &:focus {
+        border: 1px solid #ddd;
+    }
+`;
 
 const TextArea = React.forwardRef((props, ref) => {
     return(
-        <textarea updateDesc={props.updateDesc} type="text" placeholder={props.descritpion} defaultValue={props.descritpion} ref={ref}/>
+        <Area onBlur={props.updateDescription} type="text" placeholder={props.placeholder} defaultValue={props.defaultValue} ref={ref}/>
     )
 })
 

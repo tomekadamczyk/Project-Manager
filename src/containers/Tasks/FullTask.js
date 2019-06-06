@@ -10,6 +10,7 @@ import LeftColumn from '../../components/UI/ContentTable/LeftColumn/LeftColumn';
 import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterColumn';
 import RightColumn from '../../components/UI/ContentTable/RightColumn/RightColumn';
 import InfoBox from '../../components/InfoBox/InfoBox';
+import TextArea from '../../components/UI/Textarea/Textarea';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES
@@ -17,6 +18,7 @@ const updateTaskMutation = gql`
     mutation updateTask($id: Int!, $name: String, $description: String, $statusId: Int, $priorityId: Int) {
         updateTask(id: $id, name: $name, description: $description, statusId: $statusId, priorityId: $priorityId) {
             name,
+            description,
             statusId {
                 name
             },
@@ -54,6 +56,7 @@ const Input = styled.input`
     color: #000;
     font-size: 20px;
     padding: 7px 10px;
+    display: block;
 
     &:focus {
         border: 1px solid #ccc;
@@ -66,12 +69,12 @@ class FullTask extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            updateInfo: null,
-            taskName: this.props.name
+            updateInfo: null
         }
 
         this.statusId = React.createRef();
         this.priorityId = React.createRef();
+        this.description = React.createRef();
         this.updateInformation = null;
     }
 
@@ -103,12 +106,14 @@ class FullTask extends Component {
         if(this.name.value) {
             this.updateTask();
             this.updateInformation = 'Task name';
-            this.setState({updateInfo: this.updateInformation, taskName: this.name.value});
         }
     }
 
-    componentDidMount() {
-        console.log(this.props.match.params.id)
+    updateDescription = () => { 
+        if(this.description.value) {
+            this.updateTask();
+            this.updateInformation = 'Description';
+        }
     }
 
     render() {   
@@ -119,8 +124,8 @@ class FullTask extends Component {
                 {this.updateInformation ? <InfoBox info={this.updateInformation}></InfoBox> : null}
                 <LeftColumn>
                     <h2>Task</h2>
-                    <Input onBlur={props.updateName} type="text" placeholder={props.name} defaultValue={this.state.taskName} ref={input => this.name = input}/>
-                    <div>{props.description}</div>
+                    <Input onBlur={props.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
+                <TextArea updateDescription={props.updateDescription} type="text" placeholder={props.description} defaultValue={props.description} ref={input => this.description = input}></TextArea>
                 </LeftColumn>
                 <CenterColumn>
                     <h2>List of tasks</h2>
@@ -162,6 +167,7 @@ class FullTask extends Component {
                         updateStatus={this.updateStatus}
                         updatePriority={this.updatePriority}
                         updateName={this.updateName}
+                        updateDescription={this.updateDescription}
                         />
                     )
                 }}

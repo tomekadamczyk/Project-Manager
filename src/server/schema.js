@@ -302,12 +302,14 @@ const mutation = new GraphQLObjectType({
             args: {
                 id: {type: new GraphQLNonNull(GraphQLInt)},
                 name: {type: GraphQLString},
+                description: {type: GraphQLString},
                 statusId: {type: GraphQLInt},
                 priorityId: {type: GraphQLInt}
             },
-            resolve: async (obj, {id, name, statusId, priorityId}, context) => {
+            resolve: async (obj, {id, description, name, statusId, priorityId}, context) => {
                 const project = await Project.findByPk(id);
                 project.set('name', name);
+                project.set('description', description);
                 project.set('statusId', statusId);
                 project.set('priorityId', priorityId);
                 return project.save();
@@ -337,12 +339,14 @@ const mutation = new GraphQLObjectType({
             args: {
                 id: {type: new GraphQLNonNull(GraphQLInt)},
                 name: {type: GraphQLString},
+                description: {type: GraphQLString},
                 statusId: {type: GraphQLInt},
                 priorityId: {type: GraphQLInt}
             },
-            resolve: async (obj, {id, name, statusId, priorityId}, context) => {
+            resolve: async (obj, {id, name, description, statusId, priorityId}, context) => {
                 const task = await Task.findByPk(id);
                 task.set('name', name);
+                task.set('description', description);
                 task.set('statusId', statusId);
                 task.set('priorityId', priorityId);
                 return task.save();

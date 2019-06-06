@@ -26,10 +26,6 @@ class Layout extends Component {
         this.setState({backdropInVisible: !backdropState})
     }
 
-    componentDidUpdate() {
-        console.log(this.props)
-    }
-
     render() {
         return (
             <>

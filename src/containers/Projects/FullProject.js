@@ -12,14 +12,16 @@ import RightColumn from '../../components/UI/ContentTable/RightColumn/RightColum
 import UnorderedList from '../../components/UI/List/UnorderedList/UnorderedList';
 import ListElement from '../../components/UI/List/UnorderedList/ListElement';
 import InfoBox from '../../components/InfoBox/InfoBox';
-import {NavLink, Route} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
+import TextArea from '../../components/UI/Textarea/Textarea';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES
 const updateProjectMutation = gql`
-    mutation updateProject($id: Int!, $name: String, $statusId: Int, $priorityId: Int) {
-        updateProject(id: $id, name: $name, statusId: $statusId, priorityId: $priorityId) {
+    mutation updateProject($id: Int!, $name: String, $description: String, $statusId: Int, $priorityId: Int) {
+        updateProject(id: $id, name: $name, description: $description, statusId: $statusId, priorityId: $priorityId) {
             name,
+            description,
             statusId {
                 name
             },
@@ -60,6 +62,7 @@ const Input = styled.input`
     color: #000;
     font-size: 20px;
     padding: 7px 10px;
+    display: block;
 
     &:focus {
         border: 1px solid #ccc;
@@ -87,12 +90,12 @@ class FullProject extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            updateInfo: null,
-            projectName: this.props.name
+            updateInfo: null
         }
 
         this.statusId = React.createRef();
         this.priorityId = React.createRef();
+        this.description = React.createRef();
         this.updateInformation = null;
     }
 
@@ -101,6 +104,7 @@ class FullProject extends Component {
             variables: {
                 id: Number(this.props.match.params.id),
                 name: this.name.value,
+                description: this.description.value,
                 statusId: Number(this.statusId.value),
                 priorityId: Number(this.priorityId.value)
             }
@@ -108,22 +112,28 @@ class FullProject extends Component {
     }
 
     updateStatus = () => {
-        this.updateProject();
         this.updateInformation = 'Status';
+        this.updateProject();
         this.setState({updateInfo: this.updateInformation});
     }
 
     updatePriority = () => {
-        this.updateProject();
         this.updateInformation = 'Priority';
+        this.updateProject();
         this.setState({updateInfo: this.updateInformation});
     }
 
     updateName = () => { 
         if(this.name.value) {
-            this.updateProject();
             this.updateInformation = 'Task name';
-            this.setState({updateInfo: this.updateInformation, projectName: this.name.value});
+            this.updateProject();
+        }
+    }
+
+    updateDescription = () => { 
+        if(this.description.value) {
+            this.updateInformation = 'Description';
+            this.updateProject();
         }
     }
     
@@ -140,8 +150,8 @@ class FullProject extends Component {
             {this.updateInformation ? <InfoBox info={this.updateInformation}></InfoBox> : null}
                 <LeftColumn>
                     <h2>Project name</h2>
-                    <Input onBlur={props.updateName} type="text" placeholder={props.name} defaultValue={this.state.taskName} ref={input => this.name = input}/>
-                    <div>{props.description}</div>
+                    <Input onBlur={props.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
+                    <TextArea updateDescription={props.updateDescription} type="text" placeholder={props.description} defaultValue={props.description} ref={input => this.description = input}></TextArea>
                 </LeftColumn>
                 <CenterColumn>
                     <h2>List of tasks</h2>
@@ -193,6 +203,7 @@ class FullProject extends Component {
                         updatePriority={this.updatePriority}
                         updateName={this.updateName}
                         createTask={this.createTask}
+                        updateDescription={this.updateDescription}
                         />
                     )
                 }}
@@ -206,7 +217,7 @@ export default graphql(updateProjectMutation, {
     name: 'UpdateProject',
     options: {
         refetchQueries: [
-            'Project'
+            'Project', 'Projects'
         ]
     }
 })(FullProject);
