@@ -74,7 +74,7 @@ class FullTask extends Component {
         this.updateInformation = null;
     }
 
-    updateProject = () => {
+    updateTask = () => {
         this.props.UpdateTask({
             variables: {
                 id: Number(this.props.match.params.id),
@@ -86,21 +86,23 @@ class FullTask extends Component {
     }
 
     updateStatus = () => {
-        this.updateProject();
+        this.updateTask();
         this.updateInformation = 'Status';
         this.setState({updateInfo: this.updateInformation});
     }
 
     updatePriority = () => {
-        this.updateProject();
+        this.updateTask();
         this.updateInformation = 'Priority';
         this.setState({updateInfo: this.updateInformation});
     }
 
     updateName = () => { 
-        this.updateProject();
-        this.updateInformation = 'Task name';
-        this.setState({updateInfo: this.updateInformation, taskName: this.name.value});
+        if(this.name.value) {
+            this.updateTask();
+            this.updateInformation = 'Task name';
+            this.setState({updateInfo: this.updateInformation, taskName: this.name.value});
+        }
     }
 
     render() {   
