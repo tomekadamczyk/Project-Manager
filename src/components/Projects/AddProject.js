@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {graphql, Query} from 'react-apollo';
 import gql from 'graphql-tag';
 //import Statuses from '../../Data/Statuses/Statuses';
-import TextArea from '../../components/UI/Textarea/Textarea';
+import TextArea from '../UI/Form/Textarea/Textarea';
 import styled from 'styled-components';
 
 const addProjectMutation = gql`

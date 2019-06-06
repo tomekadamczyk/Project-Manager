@@ -18,6 +18,13 @@ const Icon = styled.div`
         left: 0;
         right: 0;
         bottom: 15px;
+
+        &:hover {
+            ul {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
     }
 `;
 

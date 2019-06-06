@@ -10,7 +10,7 @@ import LeftColumn from '../../components/UI/ContentTable/LeftColumn/LeftColumn';
 import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterColumn';
 import RightColumn from '../../components/UI/ContentTable/RightColumn/RightColumn';
 import InfoBox from '../../components/InfoBox/InfoBox';
-import TextArea from '../../components/UI/Textarea/Textarea';
+import TextArea from '../../components/UI/Form/Textarea/Textarea';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES

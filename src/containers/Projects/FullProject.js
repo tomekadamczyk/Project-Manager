@@ -13,7 +13,7 @@ import UnorderedList from '../../components/UI/List/UnorderedList/UnorderedList'
 import ListElement from '../../components/UI/List/UnorderedList/ListElement';
 import InfoBox from '../../components/InfoBox/InfoBox';
 import {NavLink} from 'react-router-dom';
-import TextArea from '../../components/UI/Textarea/Textarea';
+import TextArea from '../../components/UI/Form/Textarea/Textarea';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // GRAPHQL QUERIES

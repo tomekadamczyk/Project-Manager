@@ -10,6 +10,9 @@ const List = styled.ul`
     border: 1px solid #fa4;
     padding: 0;
     list-style-type: none;
+    opacity: 0;
+    transform: translateX(-200%);
+    transition: transform .3s, opacity 1s;
 `;
 
 const SubmenuItems = (props) => {
