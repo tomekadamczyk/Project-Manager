@@ -3,19 +3,19 @@ import KanbanCard from './KanbanCard/KanbanCard';
 import styled from 'styled-components';
 
 const Column = styled.div`
-    border: 1px solid #ddd;
+    border: 1px solid #f9f9f9;
     background: #f1f1f1;
-    border-radius: 5px;
-    width: 220px;
-    padding: 10px;
+    border-radius: 3px;
+    width: calc((100% / 7) - 25px);
+    padding: 5px;
 `;
 
 const Label = styled.div`
-    background: #000099;
-    color: #fff;
+    background: #fff;
+    color: #000099;
     padding: 5px 0;
-    border-radius: 5px;
-    font-size: 20px;
+    border-radius: 3px;
+    font-size: 14px;
     font-weight: 600;
     text-align: center;
     margin-bottom: 20px;

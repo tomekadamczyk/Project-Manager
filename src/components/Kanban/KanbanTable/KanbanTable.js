@@ -3,6 +3,7 @@ import KanbanColumn from './KanbanColumn/KanbanColumn';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
 import {Query} from 'react-apollo';
+import Spinner from '../../UI/Spinner/Spinner';
 
 const GET_STATUSES = gql`
     query Status {
@@ -27,35 +28,33 @@ const GET_STATUSES = gql`
 const Table = styled.div`
     width: 100%;
     display: flex;
-    border: 1px solid #f9f9f9;
-    border-radius: 5px;
-    background: #0099ff;
-    justify-content: space-around;
-    padding: 15px 0;
+    background: #fff;
+    justify-content: space-between;
+    padding-top: 20px;
 `;
 
 const KanbanTable = (props) => {
 
     return (
-        <Table>
             <Query query={GET_STATUSES}>
                 {({loading, error, data}) => {
-                    if (loading) return <p>Pobieram statusy</p>;
-                    if (error) return <p>Nie mogę pobrać statusów</p>
+                    if (loading) return <Spinner />;
+                    if (error) return <p>Błąd w pobieraniu tabeli</p>
 
                     return (
-                        data.statuses.map((status, index) => {
+                        <Table>
+                        {data.statuses.map((status, index) => {
                             return <KanbanColumn 
                                 key={index} 
                                 id={status.id} 
                                 name={status.name} 
                                 tasks={status.tasks}
                             />
-                        })
+                        })}
+                        </Table>
                     )
                 }}
             </Query>
-        </Table>
     )
 
 }
