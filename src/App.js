@@ -9,12 +9,14 @@ import AddProject from './components/Projects/AddProject';
 import FullProject from './containers/Projects/FullProject';
 import FullTask from './containers/Tasks/FullTask';
 import AddTask from './components/Tasks/AddTask';
+import Kanban from './containers/Kanban/Kanban';
 
 function App() {
   return (
     <div>
       <Layout>
         <Switch>
+          <Route path="/kanban" component={Kanban} />
           <Route path="/tasks/add-task" component={AddTask} />
           <Route path="/tasks/:id" component={FullTask} />
           <Route path="/tasks" component={Tasks} />

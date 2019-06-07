@@ -19,14 +19,14 @@ const TaskType = new GraphQLObjectType({
         projectId: {type: GraphQLInt},
         statusId: { 
             type: StatusType,
-            resolve(project) {
-                return project.getStatus();
+            resolve(task) {
+                return task.getStatus();
             }
         },
         priorityId: { 
             type: PriorityType,
-            resolve(project) {
-                return project.getPriority();
+            resolve(task) {
+                return task.getPriority();
             }
         },
         projectsId: {
@@ -138,7 +138,13 @@ const StatusType = new GraphQLObjectType({
     name: 'Status',
     fields: () => ({
         id: { type: GraphQLInt },
-        name: { type: GraphQLString}
+        name: { type: GraphQLString},
+        tasks: {
+            type: new GraphQLList(TaskType),
+            resolve(status) {
+                return status.getTasks();
+            }
+        }
     })
 })
 
