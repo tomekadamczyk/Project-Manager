@@ -14,6 +14,7 @@ const GET_STATUSES = gql`
                 id,
                 name,
                 priorityId {
+                    id,
                     name
                 },
                 projectsId {
@@ -39,7 +40,7 @@ const KanbanTable = (props) => {
             <Query query={GET_STATUSES}>
                 {({loading, error, data}) => {
                     if (loading) return <Spinner />;
-                    if (error) return <p>Błąd w pobieraniu tabeli</p>
+                    if (error) {console.log(error); return <p>Błąd w pobieraniu tabeli</p>}
 
                     return (
                         <Table>

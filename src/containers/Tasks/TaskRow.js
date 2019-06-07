@@ -34,7 +34,7 @@ const TaskRow = (props) => {
     return (
         <Row>
             <TableCell>{props.id}</TableCell>
-            <LinkedCell onClick={props.clicked}>{props.name} <i class="fas fa-angle-right"></i></LinkedCell>
+            <LinkedCell onClick={props.clicked}>{props.name} <i className="fas fa-angle-right"></i></LinkedCell>
             <TableCell>{props.project}</TableCell>
             <TableCell>{props.status}</TableCell>
             <TableCell>{props.priority}</TableCell>
