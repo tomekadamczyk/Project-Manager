@@ -6,6 +6,7 @@ import TextArea from '../UI/Form/Textarea/Textarea';
 import Input from '../UI/Form/Input/Input';
 import Select from '../UI/Form/Select/Select';
 import styled from 'styled-components';
+import Button from '../UI/Button/Button';
 
 const addProjectMutation = gql`
     mutation addProject ($name: String!, $description: String, $statusId: Int!, $priorityId: Int!, $clientId: Int!) {
@@ -148,7 +149,7 @@ class AddProject extends Component {
                                 )
                             }}
                         </Query>
-                        <button onClick={(e) => this.submitProject(e)}>Create new project</button>
+                        <Button click={(e) => this.submitProject(e)}>Create new project</Button>
                     </OptionsContainer>
                 </Form>
             </>

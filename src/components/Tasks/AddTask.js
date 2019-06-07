@@ -6,6 +6,7 @@ import TextArea from '../UI/Form/Textarea/Textarea';
 import Input from '../UI/Form/Input/Input';
 import Select from '../UI/Form/Select/Select';
 import styled from 'styled-components';
+import Button from '../UI/Button/Button';
 
 const addTaskMutation = gql`
     mutation addTask ($name: String!, $description: String, $statusId: Int!, $priorityId: Int!, $projectId: Int!) {
@@ -153,7 +154,7 @@ class AddTask extends Component {
                                 )
                             }}
                         </Query>
-                        <button onClick={(e) => this.submitTask(e)}>Assigne new task</button>
+                        <Button click={(e) => this.submitTask(e)}>Create new task</Button>
                     </OptionsContainer>
                 </Form>
             </>
