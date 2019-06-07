@@ -25,10 +25,10 @@ const SlidingColumn = styled.div`
     background: #fff;
     width: 300px;
     position: absolute;
-    transform: translateX(-500%);
+    transform: translateX(-150%);
     left: 65px;
     top: 0;
-    transition: transform 1s;
+    transition: transform .7s;
     z-index: 90;
     padding: 94px 0;
 
@@ -54,7 +54,7 @@ const Sidemenu = (props) => {
                 <NavigationIcons />
             </BasicColumn>
             <SlidingColumn className={props.opened ? 'active' : ''}>
-                <NavigationItems></NavigationItems>
+                <NavigationItems closeMenu={props.open}></NavigationItems>
             </SlidingColumn>
         </Container>
     )

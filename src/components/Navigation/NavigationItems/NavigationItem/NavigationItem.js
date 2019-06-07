@@ -19,7 +19,7 @@ const NavItem = styled.div`
 const NavigationItem = (props) => {
     return (
         <NavItem>
-            <NavLink to={props.link} exact={props.exact}>{props.children}</NavLink>
+            <NavLink onClick={props.closeMenu} to={props.link} exact={props.exact}>{props.children}</NavLink>
         </NavItem>
     )
 }
