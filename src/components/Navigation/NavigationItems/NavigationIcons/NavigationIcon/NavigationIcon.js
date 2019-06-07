@@ -10,7 +10,8 @@ const Icon = styled.div`
     cursor: pointer;
 
     &:hover {
-        background: #dac;
+        background: #fff;
+        color: #0099ff;
     }
 
     &:last-child {

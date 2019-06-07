@@ -5,16 +5,16 @@ import styled from 'styled-components';
 const TogglerWrapper = styled.div`
     cursor: pointer;
     padding: 30px 10px;
-    background: #ffa500;
+    background: #0000cc;
     transition-duration: .2s;
     margin-bottom: 30px;
 
     &.active {
-        background: #00ccff;
+        background: #000099;
     }
 
     &:hover {
-        background: #00ccff;
+        background: #000099;
     }
 `;
 

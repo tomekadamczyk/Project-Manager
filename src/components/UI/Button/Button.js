@@ -6,17 +6,13 @@ const Element = styled.button`
     border-radius: 20px;
     padding: 10px 20px;
     color: #fff;
-    background: #fa4;
+    background: #0000cc;
     transition: background .3s;
     cursor: pointer;
     font-weight: bold;
 
     &:hover {
-        background: #f14;
-    }
-
-    &:active {
-        background: #f1f1f1;
+        background: #339933;
     }
 `;
 

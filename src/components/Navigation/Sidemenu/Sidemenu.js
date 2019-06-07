@@ -14,7 +14,7 @@ const Container = styled.aside`
 
 const BasicColumn = styled.div`
     height: 100%
-    background: #fc3;
+    background: #0099ff;
     width: 65px;
     z-index: 9002;
     position: relative;

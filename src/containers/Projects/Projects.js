@@ -51,7 +51,6 @@ class Projects extends Component {
                         <TableCell>Status</TableCell>
                         <TableCell>Priority</TableCell>
                         <TableCell>Client</TableCell>
-                        <TableCell>Notes</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

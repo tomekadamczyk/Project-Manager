@@ -9,7 +9,6 @@ const Area = styled.select`
     background-color: white;
     border: thin solid blue;
     border-radius: 4px;
-    font-weight: 600;
     display: inline-block;
     line-height: 1.5em;
     width: 100%;
@@ -23,7 +22,6 @@ const Area = styled.select`
     background-repeat: no-repeat;
 
     &:focus {
-        color: blue;
         background-image: linear-gradient(45deg, green 50%, transparent 50%), linear-gradient(135deg, transparent 50%, green 50%), linear-gradient(to right, #ccc, #ccc);
         background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em, calc(100% - 2.5em) 0.5em;
         background-size: 5px 5px, 5px 5px, 1px 1.5em;

@@ -6,7 +6,7 @@ const NavItem = styled.div`
     padding: 7px 20px;
 
     &:hover {
-        background: #fa4;
+        background: #000099;
 
         a {
             color: #fff;
