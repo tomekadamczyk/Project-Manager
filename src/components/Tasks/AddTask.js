@@ -88,12 +88,6 @@ class AddTask extends Component {
         this.props.history.replace('/tasks');
     }
 
-    componentDidMount() {
-        console.log(this.props)
-    }
-
-
-
     render() {
         return(
             <>

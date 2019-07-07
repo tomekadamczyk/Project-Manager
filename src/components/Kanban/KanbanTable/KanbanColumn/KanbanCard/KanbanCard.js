@@ -55,10 +55,17 @@ const Name = styled(NavLink)`
     }
 `;
 
-const KanbanCard = (props) => {
 
+const dragstart_handler = (ev) => {
+    // Add the target element's id to the data transfer object
+    ev.dataTransfer.setData("text/plain", ev.target.id);
+    ev.dataTransfer.dropEffect = "move";
+   }
+
+const KanbanCard = (props) => {
+    
     return (
-        <Card>
+        <Card id={props.id} draggable onDragStart={(ev) => dragstart_handler(ev)}>
             <Name to={'/tasks/' + props.id}>{props.name}</Name>
             <Label>{props.priority}</Label>
             <Label1 to={'/projects/' + props.projectId}>{props.project}</Label1>

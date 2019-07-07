@@ -23,6 +23,7 @@ const updateTaskMutation = gql`
                 name
             },
             priorityId {
+                id,
                 name
             }
         }
