@@ -103,7 +103,6 @@ class FullTask extends Component {
             this.updateTask();
             this.updateInformation = 'Description';
             this.setState({description: this.description.value});
-            console.log(this.state)
         }
     }
 
@@ -112,13 +111,6 @@ class FullTask extends Component {
         if (this.state.isFirstRender){
             this.setState({name, description, status, priority, isFirstRender: false})
         }
-    }
-
-    componentDidMount() {
-        console.log(this.state)
-    }
-    componentDidUpdate() {
-        console.log(this.state)
     }
 
     componentWillUnmount() {
