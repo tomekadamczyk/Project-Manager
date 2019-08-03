@@ -61,14 +61,15 @@ const GET_PROJECT = gql`
 class FullProject extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            updateInfo: null
-        }
-
         this.statusId = React.createRef();
         this.priorityId = React.createRef();
         this.description = React.createRef();
+        this.name = React.createRef();
         this.updateInformation = null;
+        this.state = {
+            isFirstRender: true
+        }
+
     }
 
     updateProject = () => {
@@ -84,34 +85,47 @@ class FullProject extends Component {
     }
 
     updateStatus = () => {
-        this.updateInformation = 'Status';
         this.updateProject();
-        this.setState({updateInfo: this.updateInformation});
+        this.updateInformation = 'Status';
+        this.setState({status: this.statusId.value});
     }
 
     updatePriority = () => {
-        this.updateInformation = 'Priority';
         this.updateProject();
-        this.setState({updateInfo: this.updateInformation});
+        this.updateInformation = 'Priority';
+        this.setState({priority: this.priorityId.value});
     }
 
-    updateName = () => { 
-        if(this.name.value) {
-            this.updateInformation = 'Task name';
+    updateName = (e) => { 
+        if(e.target.value !== this.state.name) {
             this.updateProject();
+            this.updateInformation = 'Task name';
+            this.setState({name: this.name.value});
         }
     }
 
-    updateDescription = () => { 
-        if(this.description.value) {
-            this.updateInformation = 'Description';
+    updateDescription = (e) => { 
+        if(e.target.value !== this.state.description) {
             this.updateProject();
+            this.updateInformation = 'Description';
+            this.setState({description: this.description.value})
         }
     }
     
     closeProjectModal = () => {
         this.props.history.goBack();
     }
+
+    setData = (name, description, status, priority) => {
+        if (this.state.isFirstRender){
+            this.setState({name, description, status, priority, isFirstRender: false})
+        }
+    }
+
+    componentWillUnmount() {
+        this.setState({isFirstRender: true})
+    }
+    
 
     render() {
         
@@ -120,11 +134,24 @@ class FullProject extends Component {
         return(
             <ContentTable>
             {this.updateInformation ? <InfoBox info={this.updateInformation}></InfoBox> : null}
+
                 <LeftColumn>
                     <h2>Project name</h2>
-                    <Input blur={props.updateName} type="text" placeholder={props.name} defaultValue={props.name} ref={input => this.name = input}/>
-                    <TextArea updateDescription={props.updateDescription} type="text" placeholder={props.description} defaultValue={props.description} ref={input => this.description = input}></TextArea>
+                    <Input 
+                    blur={props.updateName} 
+                    type="text" 
+                    placeholder={props.name} 
+                    defaultValue={this.state.name ? this.state.name : props.name} 
+                    ref={input => this.name = input}/>
+
+                    <TextArea 
+                    updateDescription={props.updateDescription} 
+                    type="text" 
+                    placeholder={props.description} 
+                    defaultValue={this.state.description ? this.state.description : props.description}  
+                    ref={input => this.description = input}></TextArea>
                 </LeftColumn>
+
                 <CenterColumn>
                     <h2>List of tasks</h2>
                     <div>
@@ -136,10 +163,18 @@ class FullProject extends Component {
                 <RightColumn>
 
                     <h3>Status</h3>
-                    <Statuses updateStatus={props.updateStatus} statusId={props.statusId} status={props.status} ref={input => this.statusId = input}/>
+                    <Statuses 
+                    updateStatus={props.updateStatus} 
+                    statusId={props.statusId} 
+                    status={props.status} 
+                    ref={input => this.statusId = input}/>
 
                     <h3>Priority</h3>
-                    <Priorities updatePriority={props.updatePriority} priorityId={props.priorityId} priority={props.priority} ref={input => this.priorityId = input}/>
+                    <Priorities 
+                    updatePriority={props.updatePriority} 
+                    priorityId={props.priorityId} 
+                    priority={props.priority} 
+                    ref={input => this.priorityId = input}/>
 
                     <h3>Client</h3>
                     <p>{props.client}</p>
@@ -148,7 +183,10 @@ class FullProject extends Component {
         )
     }
         return (
-            <Query query={GET_PROJECT} variables={{id: Number(this.props.match.params.id)}}>
+            <Query 
+                query={GET_PROJECT} 
+                variables={{id: Number(this.props.match.params.id)}}
+                onCompleted={data => this.setData(data.project.name, data.project.description, data.project.statusId.name, data.project.priorityId.name)}>
                 {({loading, error, data, refetch} ) => {
                     if(loading) return <Spinner />;
                     if(error) return <p>Nie mogę pobrać projektu</p>;
