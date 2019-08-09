@@ -26,7 +26,14 @@ const Statuses = React.forwardRef((props, ref) => {
                 <Select update={props.updateStatus} ref={ref}>
                     <option value={props.statusId}>{props.status}</option>
                 {data.statuses.map(status => {
-                    return <option key={status.id} value={status.id}>{status.name}</option>
+                     
+                    if(status.id === props.statusId && status.name === props.status) {
+                        return null;
+                    }
+                    else {
+                        return <option key={status.id} value={status.id}>{status.name}</option>
+                    }
+                    
                 })}
                 </Select>
             )

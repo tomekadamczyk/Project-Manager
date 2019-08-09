@@ -26,7 +26,13 @@ const Priorities = React.forwardRef((props, ref) => {
             <Select update={props.updatePriority} ref={ref}>
                 <option value={props.priorityId}>{props.priority}</option>
             {data.priorities.map(priority => {
-                return <option key={priority.id} value={priority.id}>{priority.name}</option>
+                 
+                 if(priority.id === props.priorityId && priority.name === props.priority) {
+                    return null;
+                }
+                else {
+                    return <option key={priority.id} value={priority.id}>{priority.name}</option>
+                }
             })}
             </Select>
         )
