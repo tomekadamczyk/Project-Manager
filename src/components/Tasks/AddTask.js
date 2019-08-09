@@ -7,6 +7,8 @@ import Input from '../UI/Form/Input/Input';
 import Select from '../UI/Form/Select/Select';
 import styled from 'styled-components';
 import Button from '../UI/Button/Button';
+import AllTasks from '../../Data/Tasks/Tasks';
+import Checkbox from '../UI/Form/Checkbox/Checkbox';
 
 const addTaskMutation = gql`
     mutation addTask ($name: String!, $description: String, $statusId: Int!, $priorityId: Int!, $projectId: Int!) {
@@ -72,6 +74,11 @@ class AddTask extends Component {
 
         this.name = React.createRef();
         this.description = React.createRef();
+        this.checkbox = React.createRef();
+
+        this.state = {
+            showTasks: false
+        }
     }
 
     submitTask = (e) => {
@@ -88,13 +95,23 @@ class AddTask extends Component {
         this.props.history.replace('/tasks');
     }
 
+    checkboxUpdate = (e) => {
+        console.log(this.state.showTasks)
+        const tasks = this.state.showTasks;
+        this.setState({tasks: !tasks})
+    }
+
     render() {
+        const tasks = <AllTasks ref={input => this.tasks = input} />;
         return(
             <>
                 <Form>
                     <InputsContainer>
                         <Input type="text" placeholder="Task name" ref={input => this.name = input}/>
                         <TextArea type="text" placeholder="Task description" ref={input => this.description = input}></TextArea>
+                        
+                        <Checkbox id="addRelation" name="Assign relation to another task" ref={input => this.checkbox = input} update={(e) => this.checkboxUpdate(e)}/>
+                        {this.checkbox.checked ? tasks : null}
                     </InputsContainer>
                     <OptionsContainer>
                         <Query query={GET_PROJECTS}>
