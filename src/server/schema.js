@@ -1,4 +1,4 @@
-const {Task, Project, Client, Message, Note, Status, Priority} = require('./connector');
+const {Task, Project, Client, Message, Note, Status, Priority, User} = require('./connector');
 const {
     GraphQLObjectType,
     GraphQLString,
@@ -7,6 +7,42 @@ const {
     GraphQLList,
     GraphQLNonNull
 } = require('graphql');
+
+const RelatedTaskType = new GraphQLObjectType({
+    name: 'RelatedTask',
+    fields: () => ({
+        id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+        description: { type: GraphQLString },
+        createdAt: { type: GraphQLInt },
+        updatedAt: { type: GraphQLInt },
+        projectId: {type: GraphQLInt},
+        statusId: { 
+            type: StatusType,
+            resolve(task) {
+                return task.getStatus();
+            }
+        },
+        priorityId: { 
+            type: PriorityType,
+            resolve(task) {
+                return task.getPriority();
+            }
+        },
+        projectsId: {
+            type: ProjectType,
+            resolve(task) {
+                return task.getProject();
+            }
+        },
+        mainTask: {
+            type: TaskType,
+            resolve(task) {
+                return task.getTask();
+            }
+        },
+    })
+})
 
 const TaskType = new GraphQLObjectType({
     name: 'Task',
@@ -34,7 +70,13 @@ const TaskType = new GraphQLObjectType({
             resolve(task) {
                 return task.getProject();
             }
-        }
+        },
+        // relatedTasks: {
+        //     type: new GraphQLList(TaskType),
+        //     resolve(relatedTask) {
+        //         return relatedTask.getTasks();
+        //     }
+        // },
     })
 })
 
@@ -156,9 +198,44 @@ const PriorityType = new GraphQLObjectType({
     })
 })
 
+const UserType = new GraphQLObjectType({
+    name: 'User',
+    fields: () => ({
+        id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+        createdAt: { type: GraphQLInt },
+        updatedAt: { type: GraphQLInt },
+        email: { type: GraphQLString },
+        password: { type: GraphQLString },
+        projects: {
+            type: new GraphQLList(ProjectType),
+            resolve(user) {
+                return user.getProjects();
+            }
+        }
+    })
+})
+
 const rootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
+        // relatedTasks: {
+        //     type: new GraphQLList(RelatedTaskType),
+        //     resolve(obj, args) {
+        //         return Task.findAll({where: args})
+        //     }
+        // },
+        // relatedTask: {
+        //     type: RelatedTaskType,
+        //     args: {
+        //         id: {
+        //             type: new GraphQLNonNull(GraphQLInt)
+        //         }
+        //     },
+        //     resolve(obj, args) {
+        //         return Task.findByPk(args.id)
+        //     }
+        // },
         tasks: {
             type: new GraphQLList(TaskType),
             resolve(obj, args) {
@@ -277,6 +354,17 @@ const rootQuery = new GraphQLObjectType({
             resolve(obj, args) {
                 return Priority.findByPk(args.id)
             }
+        },
+        user: {
+            type: UserType,
+            args: {
+                id: {
+                    type: new GraphQLNonNull(GraphQLInt)
+                }
+            },
+            resolve(obj, args) {
+                return User.findByPk(args.id)
+            }
         }
     }
 })
@@ -357,7 +445,22 @@ const mutation = new GraphQLObjectType({
                 task.set('priorityId', priorityId);
                 return task.save();
             }
-        }
+        },
+        addUser: {
+            type: UserType,
+            args: {
+                name: {type: new GraphQLNonNull(GraphQLString)},
+                email: {type: GraphQLString},
+                password: {type: GraphQLString},
+            },
+            resolve(obj, {name, email, password}, context) {
+                return Project.create({
+                    name,
+                    email,
+                    password
+                })
+            }
+        },
     }
 })
 

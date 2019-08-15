@@ -17,6 +17,14 @@ const TaskModel = db.define('task', {
     updatedAt: {type: Sequelize.DATE, field: 'updatedAt'}
 })
 
+const RelatedTaskModel = db.define('relatedtask', {
+    id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_relatedtasks'},
+    name: {type: Sequelize.STRING, field: 'name'},
+    description: {type: Sequelize.STRING, field: 'description'},
+    createdAt: {type: Sequelize.DATE, field: 'createdAt'},
+    updatedAt: {type: Sequelize.DATE, field: 'updatedAt'}
+})
+
 
 const ProjectModel = db.define('project', {
     id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_projects'},
@@ -58,6 +66,18 @@ const PriorityModel = db.define('priority', {
     name: {type: Sequelize.STRING, field: 'name'}
 })
 
+const UserModel = db.define('user', {
+    id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_priorities'},
+    name: {type: Sequelize.STRING, field: 'name'},
+    email: {type: Sequelize.STRING, field: 'email'},
+    password: {type: Sequelize.STRING, field: 'password'},
+    createdAt: {type: Sequelize.DATE, field: 'createdAt'},
+    updatedAt: {type: Sequelize.DATE, field: 'updatedAt'}
+})
+
+TaskModel.hasMany(RelatedTaskModel);
+RelatedTaskModel.belongsTo(TaskModel); //task.getProject();
+
 StatusModel.hasMany(TaskModel);
 TaskModel.belongsTo(StatusModel); //task.getProject();
 StatusModel.hasMany(ProjectModel);
@@ -80,6 +100,9 @@ ClientModel.hasMany(MessageModel); //client.getMessages();
 NoteModel.belongsTo(ProjectModel); //note.getProject();
 ProjectModel.hasMany(NoteModel); //project.getNoted();
 
+UserModel.hasMany(ProjectModel);
+ProjectModel.belongsTo(UserModel); //task.getProject();
+
 const Task = db.models.task;
 const Project = db.models.project;
 const Client = db.models.client;
@@ -87,8 +110,10 @@ const Message = db.models.message;
 const Note = db.models.note;
 const Status = db.models.status;
 const Priority = db.models.priority;
+const RelatedTask = db.models.relatedtask;
+const User = db.models.user;
 
 db.sync();
 
-module.exports = {Task, Project, Client, Message, Note, Status, Priority};
+module.exports = {Task, RelatedTask, Project, Client, Message, Note, Status, Priority, User};
 

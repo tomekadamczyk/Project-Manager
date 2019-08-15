@@ -13,12 +13,6 @@ import Kanban from './containers/Kanban/Kanban';
 import Login from './components/Login/Login';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isAuthenticated: false
-    }
-  }
 
 
   render =() => {
@@ -37,10 +31,9 @@ class App extends Component {
       <Route path="/" exact component={Dashboard} />
     </Switch>
   </Layout>;
-  const needToLogIn = <Login />
     return (
       <div>
-        {this.state.isAuthenticated ? loggedUser : needToLogIn}
+        {loggedUser}
       </div>
     );
   }
