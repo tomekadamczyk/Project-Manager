@@ -7,7 +7,7 @@ import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '../UI/Button/Button';
 
-import {Mutation} from 'react-apollo';
+import {Query, Mutation, graphql} from 'react-apollo';
 import gql from "graphql-tag";
 import { async } from 'q';
 
@@ -27,6 +27,15 @@ const LOGIN_MUTATION = gql`
     }
   }
 `
+
+
+const addUserMutation = gql`
+    mutation addUser ($name: String!, $email: String!, $password: String!) {
+        addUser(name: $name, email: $email, password: $password){
+            name
+        }
+    }
+`;
 
 const Form = styled.form`
     display: flex;
@@ -48,17 +57,26 @@ class Login extends Component {
 
     state = {
         login: false,
+        name: null,
         email: null,
         password: null
     }
 
+    componentDidMount() {
+        console.log(this.props)
+    }
+
     render() {
-        const { login, email, password } = this.state;
+        const { login, name, email, password } = this.state;
         console.log(localStorage)
         return (
             <Wrapper>
                 <h3>{login ? 'Login' : 'Sign Up!'}</h3>
                 <Form>
+                    <FormControl>
+                        <InputLabel htmlFor="name">Name</InputLabel>
+                        <Input id="name" defaultValue={name} onChange={(e) => this.setState({name: e.target.value})}/>
+                    </FormControl>
                     <FormControl>
                         <InputLabel htmlFor="login">Email address</InputLabel>
                         <Input id="login" aria-describedby="login-helper-text" defaultValue={email} onChange={(e) => this.setState({email: e.target.value})}/>
@@ -68,23 +86,26 @@ class Login extends Component {
                         <InputLabel htmlFor="password">Password</InputLabel>
                         <Input id="password" aria-describedby="my-helper-text" defaultValue={password} onChange={(e) => this.setState({password: e.target.value})}/>
                     </WithMargin>
-                    <Button click={() => this._confirm()}>
-                        {login ? 'login' : 'create account'}
-                    </Button>
-                    <Mutation
-                        mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
-                        variables={{ email, password, }}
-                        onCompleted={data => this._confirm(data)}>
-                        {mutation => (
-                        <Button onClick={mutation}>
+                        <Button click={(e) => this.submitSignup(e)}>
                             {login ? 'login' : 'create account'}
                         </Button>
-                        )}
-                    </Mutation>
                     <Button click={() => this.setState({login: !login})}>{login ? 'need to create an account?' : 'already have an account?'}</Button>
                 </Form>
             </Wrapper>
         )
+    }
+
+
+    submitSignup = (e) => {
+        e.preventDefault();
+        this.props.AddUser({
+            variables: {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password
+            }
+        })
+        this.props.history.push(`/`)
     }
 
     _confirm = async data => {
@@ -98,4 +119,6 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default graphql(addUserMutation, {
+    name: 'AddUser'
+})(Login);

@@ -355,6 +355,12 @@ const rootQuery = new GraphQLObjectType({
                 return Priority.findByPk(args.id)
             }
         },
+        users: {
+            type: new GraphQLList(UserType),
+            resolve(obj, args) {
+                return User.findAll({where: args})
+            }
+        },
         user: {
             type: UserType,
             args: {
@@ -450,11 +456,11 @@ const mutation = new GraphQLObjectType({
             type: UserType,
             args: {
                 name: {type: new GraphQLNonNull(GraphQLString)},
-                email: {type: GraphQLString},
-                password: {type: GraphQLString},
+                email: {type: new GraphQLNonNull(GraphQLString)},
+                password: {type: new GraphQLNonNull(GraphQLString)},
             },
             resolve(obj, {name, email, password}, context) {
-                return Project.create({
+                return User.create({
                     name,
                     email,
                     password
