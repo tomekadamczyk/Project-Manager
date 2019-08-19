@@ -2,14 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const graphHTTP = require('express-graphql');
 const mysql = require('mysql');
-const PORT = 3001;
+const PORT = 4000;
 const schema = require('./schema');
 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'project-management'
+    user: 'manager',
+    password: 'manager',
+    database: 'project-manager'
 });
 
 const app = express();

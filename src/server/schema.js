@@ -364,12 +364,15 @@ const rootQuery = new GraphQLObjectType({
         user: {
             type: UserType,
             args: {
-                id: {
-                    type: new GraphQLNonNull(GraphQLInt)
+                email: {
+                    type: new GraphQLNonNull(GraphQLString)
+                },
+                password: {
+                    type: new GraphQLNonNull(GraphQLString)
                 }
             },
             resolve(obj, args) {
-                return User.findByPk(args.id)
+                return User.findByPk(args.email, args.password)
             }
         }
     }

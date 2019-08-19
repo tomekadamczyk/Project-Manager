@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '../UI/Button/Button';
+import Validator from '../Validator/Validator';
 
 import {Query, Mutation, graphql} from 'react-apollo';
 import gql from "graphql-tag";
@@ -53,33 +54,59 @@ const WithMargin = styled(FormControl)`
     margin: 20px 0 30px!important;
 `;
 
+
+
 class Login extends Component {
 
     state = {
         login: false,
         name: null,
         email: null,
-        password: null
+        password: null,
+        showValidator: false
     }
 
-    componentDidMount() {
-        console.log(this.props)
+    validateName = (e) => {
+        var splitStr = e.target.value.toLowerCase().split(' ');
+        for (var i = 0; i < splitStr.length; i++) {
+            splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+        }
+        console.log(splitStr)
+        return splitStr.join(' '); 
+    }
+
+    validateEmail = (e) => {
+        var email = e.target.value;
+        var regex = /[A-z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,4}/
+
+        if(!regex.test(email)){
+            this.setState({showValidator: true})
+            }
+        if(regex.test(email) || email === '') {
+            this.setState({showValidator: false})
+        }
     }
 
     render() {
         const { login, name, email, password } = this.state;
-        console.log(localStorage)
         return (
             <Wrapper>
                 <h3>{login ? 'Login' : 'Sign Up!'}</h3>
                 <Form>
                     <FormControl>
                         <InputLabel htmlFor="name">Name</InputLabel>
-                        <Input id="name" defaultValue={name} onChange={(e) => this.setState({name: e.target.value})}/>
+                        <Input id="name" defaultValue={name} onChange={(e) => {
+                                                                    this.validateName(e);
+                                                                    this.setState({name: e.target.value})}
+                                                                }/>
+                            {this.state.showValidator ? <Validator information={'błąd'}/> : null}
                     </FormControl>
                     <FormControl>
                         <InputLabel htmlFor="login">Email address</InputLabel>
-                        <Input id="login" aria-describedby="login-helper-text" defaultValue={email} onChange={(e) => this.setState({email: e.target.value})}/>
+                        <Input id="login" aria-describedby="login-helper-text" defaultValue={email} onChange={ (e) => {
+                                                                            this.validateEmail(e)
+                                                                            this.setState({email: e.target.value})}
+                                                                        }/>
                         <FormHelperText id="login-helper-text">We'll never share your email.</FormHelperText>
                     </FormControl>
                     <WithMargin>
@@ -89,8 +116,8 @@ class Login extends Component {
                         <Button click={(e) => this.submitSignup(e)}>
                             {login ? 'login' : 'create account'}
                         </Button>
-                    <Button click={() => this.setState({login: !login})}>{login ? 'need to create an account?' : 'already have an account?'}</Button>
                 </Form>
+                    <Button click={() => this.setState({login: !login})}>{login ? 'need to create an account?' : 'already have an account?'}</Button>
             </Wrapper>
         )
     }

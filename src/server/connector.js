@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const db = new Sequelize('project-management', 'root', '', {
+const db = new Sequelize('project-manager', 'manager', 'manager', {
     host: 'localhost',
     dialect: 'mysql',
     pool: {
@@ -67,7 +67,7 @@ const PriorityModel = db.define('priority', {
 })
 
 const UserModel = db.define('user', {
-    id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_priorities'},
+    id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_users'},
     name: {type: Sequelize.STRING, field: 'name'},
     email: {type: Sequelize.STRING, field: 'email'},
     password: {type: Sequelize.STRING, field: 'password'},
