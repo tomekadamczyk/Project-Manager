@@ -21,10 +21,10 @@ const SIGNUP_MUTATION = gql`
 `;
 
 
-const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
+const LOGIN_Q = gql`
+  query LoginMutation($email: String!, $password: String!) {
+    user(email: $email, password: $password) {
+      name
     }
   }
 `
@@ -95,25 +95,36 @@ class Login extends Component {
                 <Form>
                     <FormControl>
                         <InputLabel htmlFor="name">Name</InputLabel>
-                        <Input id="name" defaultValue={name} onChange={(e) => {
-                                                                    this.validateName(e);
-                                                                    this.setState({name: e.target.value})}
-                                                                }/>
-                            {this.state.showValidator ? <Validator information={'błąd'}/> : null}
+                        <Input 
+                            id="name" 
+                            defaultValue={name} 
+                            onChange={(e) => {
+                                this.validateName(e);
+                                this.setState({name: e.target.value})}
+                            }/>
+                            {this.state.showValidator ? <Validator information={'Wpisz poprawny adres e-mail'}/> : null}
                     </FormControl>
                     <FormControl>
                         <InputLabel htmlFor="login">Email address</InputLabel>
-                        <Input id="login" aria-describedby="login-helper-text" defaultValue={email} onChange={ (e) => {
-                                                                            this.validateEmail(e)
-                                                                            this.setState({email: e.target.value})}
-                                                                        }/>
-                        <FormHelperText id="login-helper-text">We'll never share your email.</FormHelperText>
+                        <Input 
+                            id="login" 
+                            aria-describedby="login-helper-text" 
+                            defaultValue={email} 
+                            onChange={ (e) => {
+                                this.validateEmail(e)
+                                this.setState({email: e.target.value})}
+                            }/>
+                        <FormHelperText d="login-helper-text">We'll never share your email.</FormHelperText>
                     </FormControl>
                     <WithMargin>
                         <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input id="password" aria-describedby="my-helper-text" defaultValue={password} onChange={(e) => this.setState({password: e.target.value})}/>
+                        <Input 
+                            id="password" 
+                            aria-describedby="my-helper-text" 
+                            defaultValue={password} 
+                            onChange={(e) => this.setState({password: e.target.value})}/>
                     </WithMargin>
-                        <Button click={(e) => this.submitSignup(e)}>
+                        <Button click={login ? (e) => this.submitLogin(e) : (e) => this.submitSignup(e)}>
                             {login ? 'login' : 'create account'}
                         </Button>
                 </Form>

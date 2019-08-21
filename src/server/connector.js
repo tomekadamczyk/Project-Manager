@@ -100,8 +100,8 @@ ClientModel.hasMany(MessageModel); //client.getMessages();
 NoteModel.belongsTo(ProjectModel); //note.getProject();
 ProjectModel.hasMany(NoteModel); //project.getNoted();
 
-UserModel.hasMany(ProjectModel);
 ProjectModel.belongsTo(UserModel); //task.getProject();
+UserModel.hasMany(ProjectModel);
 
 const Task = db.models.task;
 const Project = db.models.project;
@@ -113,7 +113,61 @@ const Priority = db.models.priority;
 const RelatedTask = db.models.relatedtask;
 const User = db.models.user;
 
-db.sync();
+db.sync().then(() => {
+    // Priority.create({
+    //     id: 1,
+    //     name: 'Low'
+    // }),
+    // Priority.create({
+    //     id: 2,
+    //     name: 'Normal'
+    // }),
+    // Priority.create({
+    //     id: 3,
+    //     name: 'High'
+    // }),
+    // Priority.create({
+    //     id: 4,
+    //     name: 'Urgent'
+    // }),
+    // Priority.create({
+    //     id: 5,
+    //     name: 'Blocker'
+    // }),
+    // Status.create({
+    //     id: 1,
+    //     name: 'To do'
+    // }), 
+    // Status.create({
+    //     id: 2,
+    //     name: 'In progress'
+    // }),
+    // Status.create({
+    //     id: 3,
+    //     name: 'In review'
+    // }),
+    // Status.create({
+    //     id: 4,
+    //     name: 'Adjustments'
+    // }),
+    // Status.create({
+    //     id: 5,
+    //     name: 'Accepted'
+    // }),
+    // Status.create({
+    //     id: 6,
+    //     name: 'Waiting for release'
+    // }),
+    // Status.create({
+    //     id: 7,
+    //     name: 'Closed'
+    // }),
+
+    // Client.create({
+    //     id: 1,
+    //     name: 'Tomek'
+    // })
+});
 
 module.exports = {Task, RelatedTask, Project, Client, Message, Note, Status, Priority, User};
 

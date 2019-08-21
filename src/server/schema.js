@@ -117,6 +117,12 @@ const ProjectType = new GraphQLObjectType({
             resolve(project) {
                 return project.getClient();
             }
+        },
+        userId: {
+            type: UserType,
+            resolve(user) {
+                return user.getClient();
+            }
         }
     })
 })
@@ -372,7 +378,12 @@ const rootQuery = new GraphQLObjectType({
                 }
             },
             resolve(obj, args) {
-                return User.findByPk(args.email, args.password)
+                return User.findOne({
+                    where: {
+                      email: args.email,
+                      password: args.password
+                    }
+                  });
             }
         }
     }
