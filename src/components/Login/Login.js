@@ -109,6 +109,7 @@ class Login extends Component {
                 <Form>
                     <FormControl>
                         <InputLabel htmlFor="name">Name</InputLabel>
+                        {login ? console.log(this.props) : null}
                         <Input 
                             id="name" 
                             defaultValue={name} 
@@ -138,7 +139,7 @@ class Login extends Component {
                             defaultValue={password} 
                             onChange={(e) => this.setState({password: e.target.value})}/>
                     </WithMargin>
-                        <Button click={login ? (e) => this.submitLogin(e) : (e) => this.submitSignup(e)}>
+                        <Button click={login ? (e) => {this.props.onAuthenticate(); this.submitLogin(e)} : (e) => this.submitSignup(e)}>
                             {login ? 'login' : 'create account'}
                         </Button>
                 </Form>
@@ -157,7 +158,6 @@ class Login extends Component {
                 password: this.state.password
             }
         })
-        this.props.history.push(`/`)
     }
 
     submitSignup = (e) => {

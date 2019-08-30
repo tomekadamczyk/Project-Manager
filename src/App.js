@@ -13,13 +13,19 @@ import Kanban from './containers/Kanban/Kanban';
 import Login from './components/Login/Login';
 
 class App extends Component {
+  state = {
+    authenticated: false
+  }
 
+  onAuthenticate = () => {
+    console.log('asdasdadasdas')
+    this.setState({authenticated: true})
+  }
 
   render =() => {
     const loggedUser = 
     <Layout>
     <Switch>
-      <Route path="/login" component={Login} />
       <Route path="/kanban" component={Kanban} />
       <Route path="/tasks/add-task" component={AddTask} />
       <Route path="/tasks/:id" component={FullTask} />
@@ -31,9 +37,10 @@ class App extends Component {
       <Route path="/" exact component={Dashboard} />
     </Switch>
   </Layout>;
+  const notLoggedIn = <Route path="/login" component={() => <Switch><Login onAuthenticate={this.onAuthenticate} authenticated={this.state.authenticated}/></Switch>} />;
     return (
       <div>
-        {loggedUser}
+        {this.state.authenticated ? loggedUser : notLoggedIn}
       </div>
     );
   }
