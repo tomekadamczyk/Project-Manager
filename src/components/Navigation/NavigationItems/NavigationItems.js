@@ -9,6 +9,7 @@ const Nav = styled.nav`
 
 const NavigationItems = (props) => {
     const authToken = localStorage.getItem(AUTH_TOKEN)
+    console.log(authToken)
 
     return (
         <Nav>

@@ -9,6 +9,14 @@ const db = new Sequelize('project-manager', 'manager', 'manager', {
     }
 })
 
+db.authenticate()
+    .then(() => {
+        console.log(`Cnnection established`)
+    })
+    .catch(err => {
+        console.error(`Unable to connect:`, err)
+    })
+
 const TaskModel = db.define('task', {
     id: {type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, field: 'id_tasks'},
     name: {type: Sequelize.STRING, field: 'name'},

@@ -8,7 +8,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '../UI/Button/Button';
 import Validator from '../Validator/Validator';
 
-import {Query, Mutation, graphql} from 'react-apollo';
+import {Query, Mutation, graphql, compose} from 'react-apollo';
 import gql from "graphql-tag";
 import { async } from 'q';
 
@@ -21,13 +21,20 @@ const SIGNUP_MUTATION = gql`
 `;
 
 
-const LOGIN_Q = gql`
-  query LoginMutation($email: String!, $password: String!) {
-    user(email: $email, password: $password) {
+const LOGIN_MUTATION = gql`
+  mutation LoginMutation($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
       name
     }
   }
 `
+
+const getUserId = () => {
+    console.log(LOGIN_MUTATION)
+    
+}
+
+getUserId()
 
 
 const addUserMutation = gql`
@@ -66,6 +73,11 @@ class Login extends Component {
         showValidator: false
     }
 
+    error = {
+        email: null,
+        password: null
+    }
+
     validateName = (e) => {
         var splitStr = e.target.value.toLowerCase().split(' ');
         for (var i = 0; i < splitStr.length; i++) {
@@ -81,9 +93,11 @@ class Login extends Component {
 
         if(!regex.test(email)){
             this.setState({showValidator: true})
+            this.error.email = 'Wpisz poprawny adres e-mail';
             }
         if(regex.test(email) || email === '') {
             this.setState({showValidator: false})
+            this.error.email = null;
         }
     }
 
@@ -102,7 +116,7 @@ class Login extends Component {
                                 this.validateName(e);
                                 this.setState({name: e.target.value})}
                             }/>
-                            {this.state.showValidator ? <Validator information={'Wpisz poprawny adres e-mail'}/> : null}
+                            <Validator information={this.error.email}/>
                     </FormControl>
                     <FormControl>
                         <InputLabel htmlFor="login">Email address</InputLabel>
@@ -132,7 +146,19 @@ class Login extends Component {
             </Wrapper>
         )
     }
+    
 
+    submitLogin = (e) => {
+        e.preventDefault();
+        this.props.LoginMutation({
+            variables: {
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password
+            }
+        })
+        this.props.history.push(`/`)
+    }
 
     submitSignup = (e) => {
         e.preventDefault();
@@ -157,6 +183,7 @@ class Login extends Component {
     }
 }
 
-export default graphql(addUserMutation, {
-    name: 'AddUser'
-})(Login);
+export default compose(
+    graphql(addUserMutation, {name: 'AddUser'}),
+    graphql(LOGIN_MUTATION, {name: 'LoginMutation'})
+)(Login);

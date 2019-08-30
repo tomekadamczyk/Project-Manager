@@ -222,6 +222,13 @@ const UserType = new GraphQLObjectType({
     })
 })
 
+const Token = new GraphQLObjectType({
+    name: 'Token',
+    fields: () => ({
+        token: { type: GraphQLString }
+    })
+})
+
 const rootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
@@ -481,10 +488,37 @@ const mutation = new GraphQLObjectType({
                 })
             }
         },
+        login: {
+            type: UserType,
+            args: {
+                email: {type: new GraphQLNonNull(GraphQLString)},
+                password: {type: new GraphQLNonNull(GraphQLString)},
+            },
+            resolve: async (obj, {email, password}, context) => {
+                const user = await User.findOne({
+                    where: {
+                        email: email,
+                        password: password
+                    }
+                });
+                return user;
+            }
+        }
     }
 })
 
-module.exports = new GraphQLSchema({
+const getUser = async (obj, args) => {
+    return User.findOne({
+        where: {
+            email: args.email,
+            password: args.password
+        }
+    });
+}
+
+const schema = new GraphQLSchema({
     query: rootQuery,
     mutation: mutation
 })
+
+module.exports = schema,getUser
