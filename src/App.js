@@ -14,11 +14,10 @@ import Login from './components/Login/Login';
 
 class App extends Component {
   state = {
-    authenticated: false
+    authenticated: true
   }
 
   onAuthenticate = () => {
-    console.log('asdasdadasdas')
     this.setState({authenticated: true})
   }
 

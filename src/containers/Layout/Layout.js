@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Header from '../../components/Header/Header';
 
 const Main = styled.main`
-    width: calc(100% - 85px);
+    width: calc(100% - 65px);
     position: relative;
     left: 65px;
     padding: 10px;

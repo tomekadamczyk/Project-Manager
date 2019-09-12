@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
+import AreaChart from '../../components/Charts/AreaCharts/AreaChart';
 
 class Dashboard extends Component {
 
     render() {
         return (
-            <div></div>
+            <div>
+                <AreaChart 
+                    chartTitle="All tasks"
+                />
+            </div>
         )
     }
 }

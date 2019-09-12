@@ -22,7 +22,8 @@ const TaskModel = db.define('task', {
     name: {type: Sequelize.STRING, field: 'name'},
     description: {type: Sequelize.STRING, field: 'description'},
     createdAt: {type: Sequelize.DATE, field: 'createdAt'},
-    updatedAt: {type: Sequelize.DATE, field: 'updatedAt'}
+    updatedAt: {type: Sequelize.DATE, field: 'updatedAt'},
+    closedAt: {type: Sequelize.DATE, field: 'closedAt'}
 })
 
 const RelatedTaskModel = db.define('relatedtask', {
