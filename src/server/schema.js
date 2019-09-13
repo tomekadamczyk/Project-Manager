@@ -200,7 +200,13 @@ const PriorityType = new GraphQLObjectType({
     name: 'Priority',
     fields: () => ({
         id: { type: GraphQLInt },
-        name: { type: GraphQLString}
+        name: { type: GraphQLString},
+        tasks: {
+            type: new GraphQLList(TaskType),
+            resolve(status) {
+                return status.getTasks();
+            }
+        }
     })
 })
 
