@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Chart from "react-apexcharts";
 import styled from 'styled-components';
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
 import Spinner from '../../UI/Spinner/Spinner';
 import ApexCharts from 'apexcharts'
 
@@ -13,23 +12,13 @@ const Area = styled(Chart)`
 `;
 
 
-const GET_STATUSES = gql`
-query Status {
-    statuses {
-        name,
-        tasks {
-            name
-        }
-    }
-}`;
-
 
 const CHART_OPTIONS = {
     options: {
         labels: [],
         series: [],
         title: {
-            text: 'Tasks statuses',
+            text: null,
         },
         legend: {
             show: true,
@@ -67,9 +56,10 @@ class AreaChart extends Component {
     }
 
     render() {
+        CHART_OPTIONS.options.title.text = this.props.chartTitle;
         return(
             <>
-            <Query query={GET_STATUSES} onCompleted={(data) => {
+            <Query query={this.props.graphQLQuery} onCompleted={(data) => {
                 this.fillLabelsAndSeries(data.statuses)}
             }>
                 {({loading, error, data, refetch}) => {
@@ -78,7 +68,7 @@ class AreaChart extends Component {
                     console.log(this.state)
                     return(
                         <>
-                        <Chart options={CHART_OPTIONS.options} series={CHART_OPTIONS.options.series} type="donut" width="400" />
+                        <Chart options={CHART_OPTIONS.options} series={CHART_OPTIONS.options.series} type={this.props.type} width="400" />
                         </>
                     )
                 }}
