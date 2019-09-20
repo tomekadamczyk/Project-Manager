@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
+import Constants from '../../../../../constants/constants';
 
 const Card = styled.div`
     border: 1px solid #ddd;
     background: #fff;
     border-radius: 5px;
-    height: 100px;
+    height: 120px;
     padding: 10px;
     margin-bottom: 10px;
     box-shadow: 1px 1px 6px 1px #ccc;
@@ -30,9 +31,8 @@ const Label = styled.div`
 
 const Label1 = styled(NavLink)`
     border-radius: 5px;
-    background: green;
+    color: green;
     padding: 2px 5px;
-    color: #fff;
     font-size: 12px;
     position: absolute;
     bottom: 10px;
@@ -42,6 +42,7 @@ const Label1 = styled(NavLink)`
 
     &:hover {
         background: blue;
+        color: #fff;
     }
 `;
 
@@ -63,11 +64,11 @@ const dragstart_handler = (ev) => {
    }
 
 const KanbanCard = (props) => {
-    
+    const labelBackgroundColor = Constants.PriorityColors[props.priority.toLowerCase()];
     return (
         <Card id={props.id} draggable onDragStart={(ev) => dragstart_handler(ev)}>
             <Name to={'/tasks/' + props.id}>{props.name}</Name>
-            <Label>{props.priority}</Label>
+            <Label style={{background: labelBackgroundColor}}>{props.priority}</Label>
             <Label1 to={'/projects/' + props.projectId}>{props.project}</Label1>
         </Card>
     )
