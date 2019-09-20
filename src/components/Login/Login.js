@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AUTH_TOKEN } from '../../constants/constants'
+import Constants from '../../constants/constants';
 import styled from 'styled-components';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -179,7 +179,7 @@ class Login extends Component {
     }
 
     _saveUserData = token => {
-        localStorage.setItem(AUTH_TOKEN, token)
+        localStorage.setItem(Constants.AUTH_TOKEN, token)
     }
 }
 
