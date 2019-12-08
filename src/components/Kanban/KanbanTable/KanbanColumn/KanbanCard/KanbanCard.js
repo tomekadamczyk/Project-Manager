@@ -65,11 +65,15 @@ const dragstart_handler = (ev) => {
 
 const KanbanCard = (props) => {
     const labelBackgroundColor = Constants.PriorityColors[props.priority.toLowerCase()];
+    let projectNameLabel = props.project;
+    if(projectNameLabel.length > 15) {
+        projectNameLabel = `${projectNameLabel.substring(0, 15)}...`;
+    }
     return (
         <Card id={props.id} draggable onDragStart={(ev) => dragstart_handler(ev)}>
             <Name to={'/tasks/' + props.id}>{props.name}</Name>
             <Label style={{background: labelBackgroundColor}}>{props.priority}</Label>
-            <Label1 to={'/projects/' + props.projectId}>{props.project}</Label1>
+            <Label1 to={'/projects/' + props.projectId}>{projectNameLabel}</Label1>
         </Card>
     )
 
