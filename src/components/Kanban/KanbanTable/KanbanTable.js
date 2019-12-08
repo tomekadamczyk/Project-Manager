@@ -40,7 +40,6 @@ const KanbanTable = (props) => {
     return (
             <Query query={GET_STATUSES}>
                 {({loading, error, data}) => {
-                    console.log(data.statuses)
                     if (loading) return <Spinner />;
                     if (error) return <p>Błąd w pobieraniu tabeli</p>;
 

@@ -65,7 +65,6 @@ class AreaChart extends Component {
                 {({loading, error, data, refetch}) => {
                     if(loading) return <Spinner/>;
                     if(error) return <p>Nie mogę pobrać zadań></p>;
-                    console.log(this.state)
                     return(
                         <>
                         <Chart options={CHART_OPTIONS.options} series={CHART_OPTIONS.options.series} type={this.props.type} width="400" />
