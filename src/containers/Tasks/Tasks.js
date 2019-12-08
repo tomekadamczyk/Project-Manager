@@ -59,9 +59,9 @@ class Tasks extends Component {
 
                             return(
                                 <>
-                                    {data.tasks.map(task => {
+                                    {data.tasks.map((task, index) => {
                                         return <TaskRow key={task.id}
-                                        id={task.id} 
+                                        id={index + 1} 
                                         name={task.name}
                                         project={task.projectsId.name}
                                         status={task.statusId.name}

@@ -61,9 +61,9 @@ class Projects extends Component {
 
                             return(
                                 <>
-                                    {data.projects.map(project => {
+                                    {data.projects.map((project, index) => {
                                         return <ProjectRow key={project.id}
-                                        id={project.id} 
+                                        id={index + 1} 
                                         name={project.name}
                                         tasks={project.tasks.length}
                                         status={project.statusId.name}
