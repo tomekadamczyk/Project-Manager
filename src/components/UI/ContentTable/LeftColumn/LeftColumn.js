@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-    width: 47%;
+    width: 60%;
     padding-right: 10px;
 `;
 

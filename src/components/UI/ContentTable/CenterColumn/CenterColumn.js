@@ -8,7 +8,7 @@ const Wrapper = styled.div`
     @media (min-width: 1024px) {
         border-top: none;
         border-left: 1px solid #ddd;
-        width: 35%;
+        width: 22%;
     }
 `;
 
