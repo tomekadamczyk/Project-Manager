@@ -10,7 +10,7 @@ const Wrapper = styled.div`
         padding-top: 0;
         border-top: none;
         border-left: 1px solid #ddd;
-        width: 10%;
+        width: 18%;
     }
 `;
 
