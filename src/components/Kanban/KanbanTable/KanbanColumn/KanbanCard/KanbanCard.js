@@ -66,8 +66,9 @@ const dragstart_handler = (ev) => {
 const KanbanCard = (props) => {
     const labelBackgroundColor = Constants.PriorityColors[props.priority.toLowerCase()];
     let projectNameLabel = props.project;
-    if(projectNameLabel.length > 15) {
-        projectNameLabel = `${projectNameLabel.substring(0, 15)}...`;
+    const acceptedProjectNameLabelLength = 13;
+    if(projectNameLabel.length > acceptedProjectNameLabelLength) {
+        projectNameLabel = `${projectNameLabel.substring(0, acceptedProjectNameLabelLength)}...`;
     }
     return (
         <Card id={props.id} draggable onDragStart={(ev) => dragstart_handler(ev)}>
