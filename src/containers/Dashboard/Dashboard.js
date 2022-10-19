@@ -60,7 +60,12 @@ class Dashboard extends Component {
         return (
             <>
             <RowMultiple>
-                <div>
+                    <AreaChart 
+                        chartTitle="All tasks"
+                        graphQLQuery={GET_STATUSES}
+                        type="donut"
+                    />
+                {/* <div>
                     <AreaChart 
                         chartTitle="All tasks"
                         graphQLQuery={GET_STATUSES}
@@ -82,7 +87,7 @@ class Dashboard extends Component {
                         graphQLQuery={GET_STATUSES}
                         type="donut"
                     />
-                </div>
+                </div> */}
             </RowMultiple>
             </>
         )

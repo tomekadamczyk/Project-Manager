@@ -1,17 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { InMemoryCache, defaultDataIdFromObject } from 'apollo-cache-inmemory';
+import ReactDOM from "react-dom/client";
+import {
+  BrowserRouter
+} from "react-router-dom";
 import './index.css';
 import App from './App';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloProvider, ApolloClient, InMemoryCache,  defaultDataIdFromObject } from '@apollo/client';
 import * as serviceWorker from './serviceWorker';
 
 const cache = new InMemoryCache({
     dataIdFromObject: object => {
       switch (object.__typename) {
-        case !null: return object.key; // use `key` as the primary key
         default: return defaultDataIdFromObject(object); // fall back to default handling
       }
     }
@@ -21,16 +20,19 @@ const client = new ApolloClient({
     uri: "http://localhost:4000/graphql",
     cache
 })
-console.log(cache)
+
 const app = (
-    <ApolloProvider client={client}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </ApolloProvider>
+    <React.StrictMode>
+        <ApolloProvider client={client}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </ApolloProvider>
+    </React.StrictMode>
 )
 
-ReactDOM.render(app, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+root.render(app);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
