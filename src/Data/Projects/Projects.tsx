@@ -1,24 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Select from '../../components/UI/Form/Select/Select';
 import { GET_PROJECTS } from 'queries/query/getProjects';
 import { useQuery } from '@apollo/client';
-
-interface Project {
-    id: number;
-    name: string;
-}
-
-interface ProjectsData {
-    projects: Project[];
-}
-
-interface ProjectComponentProps {
-    id?: number;
-    projectId?: number;
-    project?: string;
-    onSelectCallback: (e: any) => void;
-}
+import { ProjectComponentProps, ProjectsData } from './types';
 
 export const Projects = React.forwardRef(({ id, projectId, project, onSelectCallback }: ProjectComponentProps, ref) => {
 
@@ -28,7 +13,7 @@ export const Projects = React.forwardRef(({ id, projectId, project, onSelectCall
     if(error || !data) return <p>Nie mogę pobrać projektów</p>;
 
     return(
-        <Select update={onSelectCallback} ref={ref}>
+        <Select testid='projects-select-options' update={onSelectCallback} ref={ref}>
             {project ? <option value={projectId}>{project}</option> : <option>Wybierz projekt</option>}
             {data.projects.map(item => {
                     

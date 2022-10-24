@@ -1,17 +1,14 @@
-import React from 'react';
 import UnorderedList from '../../UI/List/UnorderedList/UnorderedList';
 import ListElement from '../../UI/List/UnorderedList/ListElement';
 import { useQuery } from '@apollo/client';
 import { GET_PRIORITY } from 'queries/query/getPriorities';
-
-
 interface ListProps {
     priorityID: number;
 }
 
 export function List({ priorityID }: ListProps) {
 
-    const { loading, error, data } = useQuery(GET_PRIORITY, {
+    const { error, data } = useQuery(GET_PRIORITY, {
         variables: {
             id: priorityID
         }

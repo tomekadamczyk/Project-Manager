@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
 import ProjectRow from './ProjectRow';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { GET_ALL_PROJECTS } from 'queries/query/getProjects';
-
-
 class Projects extends Component {
     
     projectSelected = (id) => {

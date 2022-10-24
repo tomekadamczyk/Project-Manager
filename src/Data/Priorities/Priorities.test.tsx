@@ -1,21 +1,21 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import { GET_STATUSES } from 'queries/query/getStatuses';
-import { render, screen, fireEvent, getByTestId, waitFor } from "@testing-library/react";
-import userEvent from '@testing-library/user-event';
+import { GET_PRIORITIES } from 'queries/query/getPriorities';
+import { render, screen } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
-import { Statuses } from "./Statuses";
+import { Priorities } from "./Priorities";
 import { GraphQLError } from "graphql";
+import userEvent from "@testing-library/user-event";
 
 const mocks = {
     request: {
-        query: GET_STATUSES
+        query: GET_PRIORITIES
     },
     result: {
         data: {
-            statuses: [
-                { __typename: "Status", id: 1, name: "Todo" },
-                { __typename: "Status", id: 2, name: "In progress" }
+            priorities: [
+                { __typename: "Priority", id: 1, name: "Normal" },
+                { __typename: "Priority", id: 2, name: "High" }
             ]
         },
         loading: false,
@@ -23,27 +23,27 @@ const mocks = {
     }
 };
 
-describe('should test Statuses render', function() {
-    function updateStatus(e: any) {
+describe('should test Priorities render', function() {
+    function updatePriority(e: any) {
         return jest.fn()
     }
-    let statusRef: React.MutableRefObject<undefined>;
+    let priorityRef: React.MutableRefObject<undefined>;
     beforeEach(() => {
         jest.spyOn(React, 'useRef').mockReturnValue({
             current: null,
         })
-        statusRef = React.useRef()
+        priorityRef = React.useRef()
     })
 
     test("renders without error", async () => {
+        
         render(
             <MockedProvider mocks={[mocks]} addTypename={false}>
-                <Statuses ref={statusRef} onSelectCallback={updateStatus} />
+                <Priorities ref={priorityRef} onSelectCallback={updatePriority} />
             </MockedProvider>
         );
-        
-        expect(await screen.findByText("Wybierz status")).toBeInTheDocument();
-        expect(await screen.findByText("Todo")).toBeInTheDocument();
+    
+        expect(await screen.findByText("Wybierz priorytet")).toBeInTheDocument();
     });
 
     test("render fetch error", async () => {
@@ -53,10 +53,10 @@ describe('should test Statuses render', function() {
         }
         render(
             <MockedProvider mocks={[errorMock]} addTypename={false}>
-                <Statuses ref={statusRef} onSelectCallback={updateStatus} />
+                <Priorities ref={priorityRef} onSelectCallback={updatePriority} />
             </MockedProvider>
         );
-        expect(await screen.findByText("Nie mogę pobrać statusów")).toBeInTheDocument();
+        expect(await screen.findByText("Nie mogę pobrać priorytetów")).toBeInTheDocument();
     });
 
     test("render graphql error", async () => {
@@ -69,26 +69,26 @@ describe('should test Statuses render', function() {
         }
         render(
             <MockedProvider mocks={[errorMock]} addTypename={false}>
-                <Statuses ref={statusRef} onSelectCallback={updateStatus} />
+                <Priorities ref={priorityRef} onSelectCallback={updatePriority} />
             </MockedProvider>
         );
-        expect(await screen.findByText("Nie mogę pobrać statusów")).toBeInTheDocument();
+        expect(await screen.findByText("Nie mogę pobrać priorytetów")).toBeInTheDocument();
     });
 
     test("render status change", async () => {
         render(
             <MockedProvider mocks={[mocks]} addTypename={false}>
-                <Statuses ref={statusRef} onSelectCallback={updateStatus} />
+                <Priorities ref={priorityRef} onSelectCallback={updatePriority} />
             </MockedProvider>
         );
 
-        expect(await screen.findByText("Wybierz status")).toBeInTheDocument();
-        const select = screen.getByTestId('statuses-select-options');
-        await userEvent.selectOptions(select, '2')
+        expect(await screen.findByText("Wybierz priorytet")).toBeInTheDocument();
+        const select = screen.getByTestId('priorities-select-options');
+        await userEvent.selectOptions(select, '1')
         let options = screen.getAllByRole('option') as HTMLOptionElement[]
         
-        expect(options[1].selected).toBeFalsy();
-        expect(options[2].selected).toBeTruthy();
+        expect(options[1].selected).toBeTruthy();
+        expect(options[2].selected).toBeFalsy();
     });
 })
 

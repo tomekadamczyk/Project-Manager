@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import AreaChart from '../../components/Charts/AreaCharts/AreaChart';
 import { List as UrgentTasks } from '../../components/Tasks/ListofTasks/LIstOfTasks';
 import styled from 'styled-components';

@@ -24,14 +24,16 @@ const OptionsContainer = styled.div`
 
 export function AddProject() {
     const statusRef = useRef(null);
+    const priorityRef = useRef(null);
     let statusId: number | null = null;
+    let priorityId: number | null = null;
 
     const [mutateFunction, { data, loading, error }] = useMutation(ADD_PROJECT, {
         variables: {
             // name: this.name.value,
             // description: this.description.value,
             statusId: Number(statusId),
-            // priorityId: Number(this.priorityId.value),
+            priorityId: Number(priorityId),
             // clientId: Number(this.clientId.value)
         }
     });
@@ -48,6 +50,10 @@ export function AddProject() {
         statusId = e.target.value
     }
 
+    function updatePriority(e: any) {
+        priorityId = e.target.value
+    }
+
     return(
         <Form>
             <InputsContainer>
@@ -56,7 +62,7 @@ export function AddProject() {
             </InputsContainer>
             <OptionsContainer>
                 <Statuses ref={statusRef} onSelectCallback={updateStatus} />
-                <Priorities />
+                <Priorities ref={priorityRef} onSelectCallback={updatePriority} />
                 <Clients />
                 <Button click={(e: MouseEvent) => submitProject(e)}>Create new project</Button>
             </OptionsContainer>

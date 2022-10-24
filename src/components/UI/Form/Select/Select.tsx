@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, DetailedHTMLFactory, ForwardedRef, FunctionComponent, ReactNode, SelectHTMLAttributes } from 'react';
+import React, { ChangeEventHandler, DetailedHTMLFactory, ForwardedRef, ReactNode, SelectHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const Area = styled.select`
@@ -35,11 +35,12 @@ interface SelectProps extends DetailedHTMLFactory<SelectHTMLAttributes<HTMLSelec
     update: (arg: ChangeEventHandler<any>) => void;
     children: ReactNode;
     ref: ForwardedRef<unknown>
+    testid: string;
 }
 
-const Select = React.forwardRef(({ update, children }: SelectProps, ref) => {
+const Select = React.forwardRef(({ update, children, testid }: SelectProps, ref) => {
     return(
-        <Area onChange={update} ref={ref}>{children}</Area>
+        <Area data-testid={testid} onChange={update} ref={ref}>{children}</Area>
     )
 })
 

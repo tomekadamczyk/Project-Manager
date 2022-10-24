@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {graphql, Query} from 'react-apollo';
-import gql from "graphql-tag";
 import Spinner from '../../components/UI/Spinner/Spinner';
 import { Statuses } from '../../Data/Statuses/Statuses';
 import { Priorities } from '../../Data/Priorities/Priorities';
@@ -14,7 +13,6 @@ import Input from '../../components/UI/Form/Input/Input';
 import { UPDATE_FULL_TASK } from 'queries/mutation/updateTask';
 import { GET_TASK_BY_ID } from 'queries/query/getTasks';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
-
 class FullTask extends Component {
     constructor(props) {
         super(props);

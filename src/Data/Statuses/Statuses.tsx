@@ -7,26 +7,23 @@ import { StatusesData, StatusesVariables, StatusComponentProps } from './types';
 
 export const Statuses = React.forwardRef(({ id, statusId, status, onSelectCallback }: StatusComponentProps, ref) => {
 
-    const { loading, error, data } = useQuery<StatusesData, StatusesVariables>(GET_STATUSES, {
-        variables: { id },
-    });
+    const { loading, error, data } = useQuery<StatusesData, StatusesVariables>(GET_STATUSES);
 
     if(loading) return <Spinner />;
     if(error || !data) return <p>Nie mogę pobrać statusów</p>;
 
     return(
-        <Select update={onSelectCallback} ref={ref}>
+        <Select testid='statuses-select-options' update={onSelectCallback} ref={ref}>
             {status ? <option value={statusId}>{status}</option> : <option>Wybierz status</option>}
-            {data.statuses.map(item => {
-                    
-                if(item.id === statusId && item.name === status) {
+            {data.statuses ? data.statuses.map(item => {
+                if(item.id === statusId) {
                     return null;
                 }
                 else {
                     return <option key={item.id} value={item.id}>{item.name}</option>
                 }
                 
-            })}
+            }) : null}
         </Select>
     )
 }) 

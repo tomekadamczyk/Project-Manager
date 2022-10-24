@@ -1,26 +1,22 @@
 import React from 'react';
-import {Query} from 'react-apollo';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Select from '../../components/UI/Form/Select/Select';
 import { GET_PRIORITIES } from 'queries/query/getPriorities';
 import { useQuery } from '@apollo/client';
+import { PrioritiesData, PriorityComponentProps } from './types'
 
-export const Priorities = React.forwardRef((props, ref) => {
-
-    const { loading, error, data } = useQuery(GET_PRIORITIES, {
-        variables: {
-            id: props.url
-        }
-    });
+export const Priorities = React.forwardRef(({ id, priorityId, priority, onSelectCallback }: PriorityComponentProps, ref) => {
+    const { loading, error, data } = useQuery<PrioritiesData>(GET_PRIORITIES);
 
     if(loading) return <Spinner />;
     if(error) return <p>Nie mogę pobrać priorytetów</p>;
+    if(!data) return <p>Brak priorytetów do wyświetlenia</p>;
 
     return(
-        <Select update={props.updatePriority} ref={ref}>
-            <option value={props.priorityId}>{props.priority}</option>
+        <Select testid='priorities-select-options' update={onSelectCallback} ref={ref}>
+            {priority ? <option value={priorityId}>{priority}</option> : <option>Wybierz priorytet</option>}
             {data.priorities.map(priority => {
-                if(priority.id === props.priorityId && priority.name === props.priority) {
+                if(priority.id === priorityId) {
                     return null;
                 }
                 else {

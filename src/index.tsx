@@ -17,20 +17,6 @@ const app = (
     </React.StrictMode>
 )
 
-const statuses = client.query({
-  query: gql`
-    query GetStatuses {
-      statuses {
-        id,
-        name
-      }
-    }
-  `
-}).then(res => {
-  console.log('statuses', res);
-  
-})
-
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(app);
 
