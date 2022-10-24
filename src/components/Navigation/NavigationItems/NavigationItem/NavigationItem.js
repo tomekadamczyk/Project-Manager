@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const NavItem = styled.div`
     padding: 11px 36px;
@@ -19,7 +19,7 @@ const NavItem = styled.div`
 const NavigationItem = (props) => {
     return (
         <NavItem>
-            <NavLink onClick={props.closeMenu} to={props.link} exact={props.exact}>{props.children}</NavLink>
+            <Link onClick={props.closeMenu} to={props.link} exact={props.exact}>{props.children}</Link>
         </NavItem>
     )
 }

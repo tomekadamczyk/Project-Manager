@@ -1,35 +1,35 @@
 import React from 'react';
 import ReactDOM from "react-dom/client";
-import {
-  BrowserRouter
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import './index.css';
 import App from './App';
-import { ApolloProvider, ApolloClient, InMemoryCache,  defaultDataIdFromObject } from '@apollo/client';
+import { ApolloProvider, gql } from '@apollo/client';
 import * as serviceWorker from './serviceWorker';
-
-const cache = new InMemoryCache({
-    dataIdFromObject: object => {
-      switch (object.__typename) {
-        default: return defaultDataIdFromObject(object); // fall back to default handling
-      }
-    }
-});
-
-const client = new ApolloClient({
-    uri: "http://localhost:4000/graphql",
-    cache
-})
+import { client } from 'config/apolloClient';
 
 const app = (
     <React.StrictMode>
-        <ApolloProvider client={client}>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </ApolloProvider>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ApolloProvider>
     </React.StrictMode>
 )
+
+const statuses = client.query({
+  query: gql`
+    query GetStatuses {
+      statuses {
+        id,
+        name
+      }
+    }
+  `
+}).then(res => {
+  console.log('statuses', res);
+  
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(app);

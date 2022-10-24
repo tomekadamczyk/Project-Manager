@@ -17,9 +17,15 @@ const Area = styled.textarea`
     }
 `;
 
-const TextArea = React.forwardRef((props, ref) => {
+interface TextAreaPros {
+    placeholder: string;
+    updateDescription?: (arg?: any) => void;
+    defaultValue?: string;
+}
+
+const TextArea = React.forwardRef(({ updateDescription, placeholder, defaultValue}: TextAreaPros, ref) => {
     return(
-        <Area onBlur={props.updateDescription} type="text" placeholder={props.placeholder} defaultValue={props.defaultValue} ref={ref}/>
+        <Area onBlur={updateDescription} type="text" placeholder={placeholder} defaultValue={defaultValue} ref={ref}/>
     )
 })
 

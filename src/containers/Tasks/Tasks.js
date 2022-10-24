@@ -8,29 +8,7 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import TaskRow from './TaskRow';
 import Spinner from '../../components/UI/Spinner/Spinner';
-
-const GET_TASKS = gql`
-    query Tasks {
-        tasks {
-            id,
-            name,
-            projectsId {,
-                id,
-                name
-            },
-            statusId {
-                id,
-                name
-            },
-            priorityId {
-                id,
-                name
-            }
-        }
-    }
-`;
-
-
+import { GET_ALL_TASKS } from 'queries/query/getTasks';
 class Tasks extends Component {
     
     taskSelected = (id) => {
@@ -52,7 +30,7 @@ class Tasks extends Component {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    <Query query={GET_TASKS}>
+                    <Query query={GET_ALL_TASKS}>
                         {({loading, error, data, refetch}) => {
                             if(loading) return <TableRow><TableCell><Spinner/></TableCell></TableRow>;
                             if(error) return <TableRow><TableCell>Nie mogę pobrać zadań</TableCell></TableRow>;

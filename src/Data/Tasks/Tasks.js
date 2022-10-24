@@ -1,18 +1,8 @@
 import React from 'react';
 import {Query} from 'react-apollo';
-import gql from "graphql-tag";
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Select from '../../components/UI/Form/Select/Select';
-
-
-const GET_TASKS = gql`
-    query Tasks {
-        tasks {
-            id,
-            name
-        }
-    }
-`;
+import { GET_TASKS } from 'queries/query/getTasks';
 
 const Tasks = React.forwardRef((props, ref) => {
     return (

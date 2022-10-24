@@ -1,17 +1,6 @@
-import React, { Component } from 'react';
 import Chart from "react-apexcharts";
-import styled from 'styled-components';
-import { Query } from "react-apollo";
 import Spinner from '../../UI/Spinner/Spinner';
-import ApexCharts from 'apexcharts'
-import { DocumentNode } from 'graphql';
-import { useQuery } from '@apollo/client';
-
-const Area = styled(Chart)`
-    width: 100%;
-    padding: 5px;
-    background: #f9f9f9;
-`;
+import { TypedDocumentNode, useQuery } from '@apollo/client';
 
 interface ChartOptions {
     options: {
@@ -53,36 +42,35 @@ const CHART_OPTIONS: ChartOptions = {
     }
 }
 
-interface AreaChartProps {
+interface AreaChartProps<T> {
     chartTitle: string;
-    graphQLQuery: DocumentNode;
+    graphQLQuery: TypedDocumentNode<T>;
     type: "line" | "area" | "bar" | "histogram" | "pie" | "donut" |
     "radialBar" | "scatter" | "bubble" | "heatmap" | "candlestick" | "radar";
 }
 
-function AreaChart({ chartTitle, graphQLQuery, type }: AreaChartProps) {
 
-    function fillLabelsAndSeries(data: any) {
-        const labels: string[] = [];
-        const series: any[] = [];
-        
-        for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-                const element = data[key];
-                const tasksAmount = element.tasks.length;
-                series.push(tasksAmount);
-            }
+function fillLabelsAndSeries(data: any) {
+    const labels: string[] = [];
+    const series: any[] = [];
+    
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            const element = data[key];
+            const tasksAmount = element.tasks.length;
+            series.push(tasksAmount);
         }
-        data.forEach((item: any) => {
-            labels.push(item.name)
-        });
-
-        CHART_OPTIONS.options.labels = labels;
-        CHART_OPTIONS.options.series = series;
-        
     }
+    data.forEach((item: any) => {
+        labels.push(item.name)
+    });
 
-    CHART_OPTIONS.options.title.text = chartTitle;
+    CHART_OPTIONS.options.labels = labels;
+    CHART_OPTIONS.options.series = series;
+}
+
+function AreaChart<T extends { statuses: object }>({ chartTitle, graphQLQuery, type }: AreaChartProps<T>) {
+
     const { loading, error } = useQuery(graphQLQuery, {
         onCompleted: (data) => {
             fillLabelsAndSeries(data.statuses)
@@ -91,6 +79,8 @@ function AreaChart({ chartTitle, graphQLQuery, type }: AreaChartProps) {
 
     if(loading) return <Spinner/>;
     if(error) return <p>Nie mogę pobrać zadań</p>;
+
+    CHART_OPTIONS.options.title.text = chartTitle;
 
     return <Chart options={CHART_OPTIONS.options} series={CHART_OPTIONS.options.series} type={type} width="400" />
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const NavItem = styled.div`
     padding: 7px 20px;
@@ -23,7 +23,7 @@ const NavItem = styled.div`
 const SubmenuItem = (props) => {
     return (
         <NavItem>
-            <NavLink to={props.link} exact={props.exact}>{props.children}</NavLink>
+            <Link to={props.link} >{props.children}</Link>
         </NavItem>
     )
 }

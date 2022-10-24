@@ -8,29 +8,8 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import ProjectRow from './ProjectRow';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { GET_ALL_PROJECTS } from 'queries/query/getProjects';
 
-const GET_PROJECTS = gql`
-    query Projects {
-        projects {
-            id,
-            name,
-            tasks {
-                name
-            },
-            statusId {,
-                id,
-                name
-            },
-            priorityId {
-                id,
-                name
-            },
-            clientId {
-                name
-            },
-        }
-    }
-`;
 
 class Projects extends Component {
     
@@ -54,7 +33,7 @@ class Projects extends Component {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    <Query query={GET_PROJECTS}>
+                    <Query query={GET_ALL_PROJECTS}>
                         {({loading, error, data, refetch}) => {
                             if(loading) return <TableRow><TableCell><Spinner/></TableCell></TableRow>;
                             if(error) return <TableRow><TableCell>Nie mogę pobrać projektów</TableCell></TableRow>;

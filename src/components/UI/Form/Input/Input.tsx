@@ -18,9 +18,15 @@ const Area = styled.input`
     }
 `;
 
-const Input = React.forwardRef((props, ref) => {
+interface InputProps {
+    placeholder: string;
+    blur?: (arg?: any) => void;
+    defaultValue?: string;
+}
+
+const Input = React.forwardRef(({ blur, placeholder, defaultValue}: InputProps, ref) => {
     return(
-        <Area onBlur={props.blur} type="text" placeholder={props.placeholder} defaultValue={props.defaultValue} ref={ref}/>
+        <Area onBlur={blur} type="text" placeholder={placeholder} defaultValue={defaultValue} ref={ref}/>
     )
 })
 

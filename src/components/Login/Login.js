@@ -8,39 +8,15 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '../UI/Button/Button';
 import Validator from '../Validator/Validator';
 
-import {Query, Mutation, graphql, compose} from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import gql from "graphql-tag";
-import { async } from 'q';
+import { ADD_USER } from 'queries/mutation/addUser';
+import { LOGIN } from 'queries/mutation/login';
 
 const SIGNUP_MUTATION = gql`
     mutation SignupMutation($email: String!, $password: String!) {
         signup(email: $email, password: $password) {
         token
-        }
-    }
-`;
-
-
-const LOGIN_MUTATION = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      name
-    }
-  }
-`
-
-const getUserId = () => {
-    console.log(LOGIN_MUTATION)
-    
-}
-
-getUserId()
-
-
-const addUserMutation = gql`
-    mutation addUser ($name: String!, $email: String!, $password: String!) {
-        addUser(name: $name, email: $email, password: $password){
-            name
         }
     }
 `;
@@ -60,9 +36,6 @@ const Wrapper = styled.div`
 const WithMargin = styled(FormControl)`
     margin: 20px 0 30px!important;
 `;
-
-
-
 class Login extends Component {
 
     state = {
@@ -184,6 +157,6 @@ class Login extends Component {
 }
 
 export default compose(
-    graphql(addUserMutation, {name: 'AddUser'}),
-    graphql(LOGIN_MUTATION, {name: 'LoginMutation'})
+    graphql(ADD_USER, {name: 'AddUser'}),
+    graphql(LOGIN, {name: 'LoginMutation'})
 )(Login);

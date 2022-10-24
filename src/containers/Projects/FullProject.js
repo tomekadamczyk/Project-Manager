@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {graphql, Query} from 'react-apollo';
-import gql from "graphql-tag";
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Statuses from '../../Data/Statuses/Statuses';
-import Priorities from '../../Data/Priorities/Priorities';
+import { Statuses } from '../../Data/Statuses/Statuses';
+import { Priorities } from '../../Data/Priorities/Priorities';
 import ContentTable from '../../components/UI/ContentTable/ContentTable';
 import LeftColumn from '../../components/UI/ContentTable/LeftColumn/LeftColumn';
 import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterColumn';
@@ -14,50 +13,9 @@ import InfoBox from '../../components/InfoBox/InfoBox';
 import {NavLink} from 'react-router-dom';
 import TextArea from '../../components/UI/Form/Textarea/Textarea';
 import Input from '../../components/UI/Form/Input/Input';
+import { UPDATE_PROJECT } from 'queries/mutation/updateProject';
+import { GET_PROJECT_BY_ID } from 'queries/query/getProjects';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
-
-// GRAPHQL QUERIES
-const updateProjectMutation = gql`
-    mutation updateProject($id: Int!, $name: String, $description: String, $statusId: Int, $priorityId: Int) {
-        updateProject(id: $id, name: $name, description: $description, statusId: $statusId, priorityId: $priorityId) {
-            name,
-            description,
-            statusId {
-                name
-            },
-            priorityId {
-                name
-            }
-        }
-    }
-`;
-
-const GET_PROJECT = gql`
-    query Project ($id: Int!){
-        project (id: $id){
-            id,
-            name,
-            tasks {
-                id,
-                name
-            },
-            description,
-            statusId {
-                id,
-                name
-            },
-            priorityId {
-                id,
-                name
-            },
-            clientId {
-                name
-            }
-        }
-    }
-`;
-
-
 class FullProject extends Component {
     constructor(props) {
         super(props);
@@ -184,7 +142,7 @@ class FullProject extends Component {
     }
         return (
             <Query 
-                query={GET_PROJECT} 
+                query={GET_PROJECT_BY_ID} 
                 variables={{id: Number(this.props.match.params.id)}}
                 onCompleted={data => this.setData(data.project.name, data.project.description, data.project.statusId.name, data.project.priorityId.name)}>
                 {({loading, error, data, refetch} ) => {
@@ -221,8 +179,7 @@ class FullProject extends Component {
     }
 }
 
-
-export default graphql(updateProjectMutation, {
+export default graphql(UPDATE_PROJECT, {
     name: 'UpdateProject',
     options: {
         refetchQueries: [

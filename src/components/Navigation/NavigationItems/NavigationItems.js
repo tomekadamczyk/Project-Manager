@@ -13,7 +13,7 @@ const NavigationItems = (props) => {
 
     return (
         <Nav>
-            <NavigationItem closeMenu={props.closeMenu} link="/" exact>Dashboard</NavigationItem>
+            <NavigationItem closeMenu={props.closeMenu} link="/" exact="true">Dashboard</NavigationItem>
             <NavigationItem closeMenu={props.closeMenu} link="/projects" >Projects</NavigationItem>
             <NavigationItem closeMenu={props.closeMenu} link="/kanban" >Kanban</NavigationItem>
             <NavigationItem closeMenu={props.closeMenu} link="/tasks" >Tasks</NavigationItem>

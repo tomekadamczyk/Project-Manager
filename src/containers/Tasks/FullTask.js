@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {graphql, Query} from 'react-apollo';
 import gql from "graphql-tag";
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Statuses from '../../Data/Statuses/Statuses';
-import Priorities from '../../Data/Priorities/Priorities';
+import { Statuses } from '../../Data/Statuses/Statuses';
+import { Priorities } from '../../Data/Priorities/Priorities';
 import ContentTable from '../../components/UI/ContentTable/ContentTable';
 import LeftColumn from '../../components/UI/ContentTable/LeftColumn/LeftColumn';
 import CenterColumn from '../../components/UI/ContentTable/CenterColumn/CenterColumn';
@@ -11,47 +11,9 @@ import RightColumn from '../../components/UI/ContentTable/RightColumn/RightColum
 import InfoBox from '../../components/InfoBox/InfoBox';
 import TextArea from '../../components/UI/Form/Textarea/Textarea';
 import Input from '../../components/UI/Form/Input/Input';
+import { UPDATE_FULL_TASK } from 'queries/mutation/updateTask';
+import { GET_TASK_BY_ID } from 'queries/query/getTasks';
 //import Backdrop from '../../components/UI/Backdrop/Backdrop';
-
-// GRAPHQL QUERIES
-const updateTaskMutation = gql`
-    mutation updateTask($id: Int!, $name: String, $description: String, $statusId: Int, $priorityId: Int) {
-        updateTask(id: $id, name: $name, description: $description, statusId: $statusId, priorityId: $priorityId) {
-            name,
-            description,
-            statusId {
-                name
-            },
-            priorityId {
-                id,
-                name
-            }
-        }
-    }
-`;
-
-const GET_TASK = gql`
-    query Task ($id: Int!){
-        task (id: $id){
-            id,
-            name,
-            description,
-            statusId {
-                id,
-                name
-            },
-            priorityId {
-                id,
-                name
-            },
-            projectsId {,
-                id,
-                name
-            }
-        }
-    }
-`;
-
 
 class FullTask extends Component {
     constructor(props) {
@@ -170,7 +132,7 @@ class FullTask extends Component {
         }
         return (
             <Query 
-                query={GET_TASK} 
+                query={GET_TASK_BY_ID} 
                 variables={{id: Number(this.props.match.params.id)}} 
                 onCompleted={data => this.setData(data.task.name, data.task.description, data.task.statusId.name, data.task.priorityId.name)}>
                 {({loading, error, data, refetch} ) => {
@@ -201,8 +163,7 @@ class FullTask extends Component {
     }
 }
 
-
-export default graphql(updateTaskMutation, {
+export default graphql(UPDATE_FULL_TASK, {
     name: 'UpdateTask',
     options: {
         refetchQueries: [

@@ -1,5 +1,5 @@
 import React from 'react';
-import KanbanTable from '../../components/Kanban/KanbanTable/KanbanTable';
+import { KanbanTable } from '../../components/Kanban/KanbanTable/KanbanTable';
 
 export function Kanban() {
 
