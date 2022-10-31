@@ -36,11 +36,12 @@ interface SelectProps extends DetailedHTMLFactory<SelectHTMLAttributes<HTMLSelec
     children: ReactNode;
     ref: ForwardedRef<unknown>
     testid: string;
+    defaultValue?: string;
 }
 
-const Select = React.forwardRef(({ update, children, testid }: SelectProps, ref) => {
+const Select = React.forwardRef(({ update, children, testid, defaultValue, ...props }: SelectProps, ref) => {
     return(
-        <Area data-testid={testid} onChange={update} ref={ref}>{children}</Area>
+        <Area {...props} data-testid={testid} onChange={update} ref={ref}>{children}</Area>
     )
 })
 

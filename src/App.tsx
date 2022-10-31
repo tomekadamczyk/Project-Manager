@@ -8,7 +8,7 @@ import { Dashboard } from './containers/Dashboard/Dashboard';
 import { AddProject } from './components/Projects/AddProject';
 import FullProject from './containers/Projects/FullProject';
 import FullTask from './containers/Tasks/FullTask';
-import { AddTask } from './components/Tasks/AddTask';
+import { AddTask } from './components/Tasks/AddTask/AddTask';
 import { Kanban } from './containers/Kanban/Kanban';
 import Login from './components/Login/Login';
 

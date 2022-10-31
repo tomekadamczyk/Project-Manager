@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 const Area = styled.textarea`
@@ -19,13 +19,13 @@ const Area = styled.textarea`
 
 interface TextAreaPros {
     placeholder: string;
-    updateDescription?: (arg?: any) => void;
+    onChangeCallback?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
     defaultValue?: string;
 }
 
-const TextArea = React.forwardRef(({ updateDescription, placeholder, defaultValue}: TextAreaPros, ref) => {
+const TextArea = React.forwardRef(({ onChangeCallback, placeholder, defaultValue}: TextAreaPros, ref) => {
     return(
-        <Area onBlur={updateDescription} type="text" placeholder={placeholder} defaultValue={defaultValue} ref={ref}/>
+        <Area onBlur={onChangeCallback} type="text" placeholder={placeholder} defaultValue={defaultValue} ref={ref}/>
     )
 })
 

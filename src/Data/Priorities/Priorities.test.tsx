@@ -83,7 +83,7 @@ describe('should test Priorities render', function() {
         );
 
         expect(await screen.findByText("Wybierz priorytet")).toBeInTheDocument();
-        const select = screen.getByTestId('priorities-select-options');
+        const select = screen.getByRole('combobox');
         await userEvent.selectOptions(select, '1')
         let options = screen.getAllByRole('option') as HTMLOptionElement[]
         

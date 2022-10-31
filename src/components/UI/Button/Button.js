@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const Element = styled.button`
@@ -14,11 +13,19 @@ const Element = styled.button`
     &:hover {
         background: #339933;
     }
+
+    &.loading {
+        background: #fa4;
+    }
+
+    &:disabled {
+        background: #fff;
+    }
 `;
 
 const Button = (props) => {
     return (
-        <Element onClick={props.click}>{props.children}</Element>
+        <Element {...props} onClick={props.click}>{props.children}</Element>
     )
 }
 

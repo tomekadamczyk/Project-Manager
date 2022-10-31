@@ -1,13 +1,24 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import { GET_STATUSES } from 'queries/query/getStatuses';
-import { render, screen, fireEvent, getByTestId, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
-import { MockedProvider } from "@apollo/client/testing";
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { Statuses } from "./Statuses";
 import { GraphQLError } from "graphql";
+import { StatusesData } from './types';
 
-const mocks = {
+type TypeWithTypename<T> = {
+    [Property in keyof T]: T[Property] extends (infer ElementType)[] ? (ElementType & { __typename: string})[] : never;
+};
+
+interface Mock<T> extends MockedResponse {
+    result?: {
+        data: TypeWithTypename<T>;
+    }
+}
+
+const mocks: Mock<StatusesData> = {
     request: {
         query: GET_STATUSES
     },
@@ -18,8 +29,6 @@ const mocks = {
                 { __typename: "Status", id: 2, name: "In progress" }
             ]
         },
-        loading: false,
-        networkStatus: 7
     }
 };
 
@@ -83,7 +92,7 @@ describe('should test Statuses render', function() {
         );
 
         expect(await screen.findByText("Wybierz status")).toBeInTheDocument();
-        const select = screen.getByTestId('statuses-select-options');
+        const select = screen.getByRole('combobox', { name: 'Wybierz status z listy'});
         await userEvent.selectOptions(select, '2')
         let options = screen.getAllByRole('option') as HTMLOptionElement[]
         

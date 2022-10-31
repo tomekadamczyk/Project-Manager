@@ -13,8 +13,8 @@ export const Projects = React.forwardRef(({ id, projectId, project, onSelectCall
     if(error || !data) return <p>Nie mogę pobrać projektów</p>;
 
     return(
-        <Select testid='projects-select-options' update={onSelectCallback} ref={ref}>
-            {project ? <option value={projectId}>{project}</option> : <option>Wybierz projekt</option>}
+        <Select defaultValue="choose" testid='projects-select-options' update={onSelectCallback} ref={ref}>
+            {project ? <option value={projectId}>{project}</option> : <option value="choose">Wybierz projekt</option>}
             {data.projects.map(item => {
                     
                 if(item.id === projectId && item.name === project) {

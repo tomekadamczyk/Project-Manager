@@ -1,3 +1,5 @@
+import { ForwardedRef } from "react";
+
 export interface Status {
     id: number;
     name: string;
@@ -16,4 +18,5 @@ export interface StatusComponentProps {
     statusId?: number;
     status?: string;
     onSelectCallback: (e: any) => void;
+    ref: ForwardedRef<unknown>;
 }

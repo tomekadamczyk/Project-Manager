@@ -1,22 +1,21 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import { GET_STATUSES } from 'queries/query/getStatuses';
 import { render, screen } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
-import { Projects } from "./Projects";
+import { Clients } from "./Clients";
 import { GraphQLError } from "graphql";
-import { GET_PROJECTS } from "queries/query/getProjects";
 import userEvent from "@testing-library/user-event";
+import { GET_CLIENTS } from "queries/query/getClient";
 
 const mocks = {
     request: {
-        query: GET_PROJECTS
+        query: GET_CLIENTS
     },
     result: {
         data: {
-            projects: [
-                { __typename: "Project", id: 1, name: "Projekt 1" },
-                { __typename: "Project", id: 2, name: "Projekt 2" }
+            clients: [
+                { __typename: "Client", id: 1, name: "Klient 1" },
+                { __typename: "Client", id: 2, name: "Klient 2" }
             ]
         },
         loading: false,
@@ -24,27 +23,27 @@ const mocks = {
     }
 };
 
-describe('should test Projects render', function() {
+describe('should test Clients render', function() {
     function updateProject(e: any) {
         return jest.fn()
     }
-    let projectRef: React.MutableRefObject<undefined>;
+    let clientsRef: React.MutableRefObject<undefined>;
     beforeEach(() => {
         jest.spyOn(React, 'useRef').mockReturnValue({
             current: null,
         })
-        projectRef = React.useRef()
+        clientsRef = React.useRef()
     })
 
     test("renders without error", async () => {
         render(
             <MockedProvider mocks={[mocks]} addTypename={false}>
-                <Projects ref={projectRef} onSelectCallback={updateProject} />
+                <Clients ref={clientsRef} onSelectCallback={updateProject} />
             </MockedProvider>
         );
     
-        expect(await screen.findByText("Wybierz projekt")).toBeInTheDocument();
-        expect(await screen.findByText("Projekt 1")).toBeInTheDocument();
+        expect(await screen.findByText("Wybierz klienta")).toBeInTheDocument();
+        expect(await screen.findByText("Klient 1")).toBeInTheDocument();
     });
 
     test("render fetch error", async () => {
@@ -54,10 +53,10 @@ describe('should test Projects render', function() {
         }
         render(
             <MockedProvider mocks={[errorMock]} addTypename={false}>
-                <Projects ref={projectRef} onSelectCallback={updateProject} />
+                <Clients ref={clientsRef} onSelectCallback={updateProject} />
             </MockedProvider>
         );
-        expect(await screen.findByText("Nie mogę pobrać projektów")).toBeInTheDocument();
+        expect(await screen.findByText("Nie mogę pobrać klientów")).toBeInTheDocument();
     });
 
     test("render graphql error", async () => {
@@ -70,20 +69,20 @@ describe('should test Projects render', function() {
         }
         render(
             <MockedProvider mocks={[errorMock]} addTypename={false}>
-                <Projects ref={projectRef} onSelectCallback={updateProject} />
+                <Clients ref={clientsRef} onSelectCallback={updateProject} />
             </MockedProvider>
         );
-        expect(await screen.findByText("Nie mogę pobrać projektów")).toBeInTheDocument();
+        expect(await screen.findByText("Nie mogę pobrać klientów")).toBeInTheDocument();
     });
 
     test("render status change", async () => {
         render(
             <MockedProvider mocks={[mocks]} addTypename={false}>
-                <Projects ref={projectRef} onSelectCallback={updateProject} />
+                <Clients ref={clientsRef} onSelectCallback={updateProject} />
             </MockedProvider>
         );
 
-        expect(await screen.findByText("Wybierz projekt")).toBeInTheDocument();
+        expect(await screen.findByText("Wybierz klienta")).toBeInTheDocument();
         const select = screen.getByRole('combobox');
         await userEvent.selectOptions(select, '1')
         let options = screen.getAllByRole('option') as HTMLOptionElement[]

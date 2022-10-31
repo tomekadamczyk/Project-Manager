@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, FormEvent, useRef } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, FormEvent, useRef } from 'react';
 import { Statuses } from '../../Data/Statuses/Statuses';
 import TextArea from '../UI/Form/Textarea/Textarea';
 import Input from '../UI/Form/Input/Input';
@@ -7,65 +7,124 @@ import Button from '../UI/Button/Button';
 import { ADD_PROJECT } from 'queries/mutation/addProject';
 import { Priorities } from 'Data/Priorities/Priorities';
 import { Clients } from 'Data/Clients/Clients';
-import { useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
+import { errorsDictionary, ErrorType } from 'config/ErrorMessages/AddTaskMessages';
+import { ErrorInine } from 'components/ErrorInline/ErrorInline.component';
+import { useError } from 'hooks/useError';
 
 const Form = styled.form`
-margin: 20px 0;
-display: flex;
-justify-content: center;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
 `;
-const InputsContainer = styled.div`
-width: 45%;
 
+const InputsContainer = styled.div`
+    width: 75%;
 `;
 const OptionsContainer = styled.div`
+    width: 25%;
 `;
 
+const Container = styled.div`
+    padding: 0 15%;
+`;
+
+interface AddProps {
+    name: string;
+    description: string;
+    statusId: number;
+    priorityId: number;
+    clientId: number;
+}
 
 export function AddProject() {
+    const {error, getError} = useError();
     const statusRef = useRef(null);
     const priorityRef = useRef(null);
-    let statusId: number | null = null;
-    let priorityId: number | null = null;
+    const clientRef = useRef(null);
 
-    const [mutateFunction, { data, loading, error }] = useMutation(ADD_PROJECT, {
-        variables: {
-            // name: this.name.value,
-            // description: this.description.value,
-            statusId: Number(statusId),
-            priorityId: Number(priorityId),
-            // clientId: Number(this.clientId.value)
-        }
+    const AddProjectkDataRef = useRef<AddProps>({
+        name: '',
+        description: '',
+        statusId: 0,
+        priorityId: 0,
+        clientId: 0
     });
+    const [mutateFunction, { loading }] = useMutation(ADD_PROJECT);
 
 
-    function submitProject(e: MouseEvent) {
+    async function submitProject(e: MouseEvent) {
         e.preventDefault();
-        console.log(statusId);
         
-        // mutateFunction()
-    }  
-
-    function updateStatus(e: any) {
-        statusId = e.target.value
+        try {
+            await mutateFunction({
+                variables: {
+                    name: AddProjectkDataRef.current.name,
+                    description: AddProjectkDataRef.current.description,
+                    statusId: Number(AddProjectkDataRef.current.statusId),
+                    clientId: Number(AddProjectkDataRef.current.clientId),
+                    priorityId: Number(AddProjectkDataRef.current.priorityId)
+                }
+            });  
+            getError(undefined)
+        } catch(e) {
+            getError(e as ApolloError)
+        }
     }
 
-    function updatePriority(e: any) {
-        priorityId = e.target.value
+    function updateRef(e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>, key: keyof AddProps) {
+        AddProjectkDataRef.current = {
+            ...AddProjectkDataRef.current,
+            [key]: e.target.value
+        }
     }
 
     return(
+        <Container>
+        <h1>Dodaj projekt</h1>
         <Form>
             <InputsContainer>
-                <Input placeholder="Project name" />
-                <TextArea placeholder="Project description"></TextArea>
+                <Input onChangeCallback={e => updateRef(e, 'name')} placeholder="Project name" />
+                <TextArea onChangeCallback={e => updateRef(e, 'description')} placeholder="Project description" ></TextArea>
             </InputsContainer>
             <OptionsContainer>
-                <Statuses ref={statusRef} onSelectCallback={updateStatus} />
-                <Priorities ref={priorityRef} onSelectCallback={updatePriority} />
-                <Clients />
-                <Button click={(e: MouseEvent) => submitProject(e)}>Create new project</Button>
+                <div>
+                    <Statuses ref={statusRef} onSelectCallback={e => updateRef(e, 'statusId')} />
+                    {error === errorsDictionary[ErrorType.STATUS_ID_CANNOT_BE_NULL].message ? 
+                        <ErrorInine>{errorsDictionary[ErrorType.STATUS_ID_CANNOT_BE_NULL].error}</ErrorInine> 
+                    : null}
+                    {error === errorsDictionary[ErrorType.STATUS_FOREIGN_KEY_CONSTRAINT_FAILS_2].message ? 
+                        <ErrorInine>{errorsDictionary[ErrorType.STATUS_FOREIGN_KEY_CONSTRAINT_FAILS_2].error}</ErrorInine> 
+                    : null}
+                    
+                </div>
+                <div>
+                    <Priorities ref={priorityRef} onSelectCallback={(e) => updateRef(e, 'priorityId')} />
+                    {error === errorsDictionary[ErrorType.PRIORITY_ID_CANNOT_BE_NULL].message ? 
+                        <ErrorInine>{errorsDictionary[ErrorType.PRIORITY_ID_CANNOT_BE_NULL].error}</ErrorInine> 
+                    : null}
+                    {error === errorsDictionary[ErrorType.PRIORITY_FOREIGN_KEY_CONSTRAINT_FAILS_2].message ? 
+                        <ErrorInine>{errorsDictionary[ErrorType.PRIORITY_FOREIGN_KEY_CONSTRAINT_FAILS_2].error}</ErrorInine> 
+                    : null}
+                </div>
+                <div>
+                    <Clients ref={clientRef} onSelectCallback={(e) => updateRef(e, 'clientId')} />
+                    {error === errorsDictionary[ErrorType.CLIENT_ID_NOT_PROVIDED].message ? 
+                        <ErrorInine>{errorsDictionary[ErrorType.CLIENT_ID_NOT_PROVIDED].error}</ErrorInine> 
+                    : null}
+                    {error === errorsDictionary[ErrorType.CLIENT_FOREIGN_KEY_CONSTRAINT_FAILS].message ? 
+                        <ErrorInine>{errorsDictionary[ErrorType.CLIENT_FOREIGN_KEY_CONSTRAINT_FAILS].error}</ErrorInine> 
+                    : null}
+                    
+                </div>
+                <Button 
+                    aria-label="Przycisk Dodaj projekt" 
+                    className={loading ? 'loading' : undefined}
+                    disabled={loading}
+                    click={(e: MouseEvent) => submitProject(e)}
+                >Create new project</Button>
             </OptionsContainer>
         </Form>
+        </Container>
     )
 }

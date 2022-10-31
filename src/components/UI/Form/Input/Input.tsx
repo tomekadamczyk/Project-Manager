@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
 
@@ -20,13 +20,13 @@ const Area = styled.input`
 
 interface InputProps {
     placeholder: string;
-    blur?: (arg?: any) => void;
     defaultValue?: string;
+    onChangeCallback: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = React.forwardRef(({ blur, placeholder, defaultValue}: InputProps, ref) => {
+const Input = React.forwardRef(({ placeholder, defaultValue, onChangeCallback}: InputProps, ref) => {
     return(
-        <Area onBlur={blur} type="text" placeholder={placeholder} defaultValue={defaultValue} ref={ref}/>
+        <Area onBlur={onChangeCallback} type="text" placeholder={placeholder} defaultValue={defaultValue} ref={ref}/>
     )
 })
 

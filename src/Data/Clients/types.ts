@@ -1,18 +1,18 @@
 import React, { ForwardedRef } from "react";
 
-export interface Project {
+export interface Client {
     id: number;
     name: string;
 }
 
-export interface ProjectsData {
-    projects: Project[];
+export interface ClientsData {
+    clients: Client[];
 }
 
-export interface ProjectComponentProps {
+export interface ClientComponentProps {
     id?: number;
-    projectId?: number;
-    project?: string;
+    clientId?: number;
+    client?: string;
     onSelectCallback: (e: any) => void;
     ref: ForwardedRef<unknown>;
 }
