@@ -92,7 +92,7 @@ export function AddTask() {
             <h1>Dodaj zadanie</h1>
             <Form>
                 <InputsContainer>
-                    <Input onChangeCallback={e => updateRef(e, 'name')} placeholder="Task name" />
+                    <Input testid='add-task-name' onChangeCallback={e => updateRef(e, 'name')} placeholder="Task name" />
                     <TextArea onChangeCallback={e => updateRef(e, 'description')} placeholder="Task description" ></TextArea>
                     
                     {/* <Checkbox id="addRelation" name="Assign relation to another task" ref={input => this.checkbox = input} update={(e) => this.checkboxUpdate(e)}/>

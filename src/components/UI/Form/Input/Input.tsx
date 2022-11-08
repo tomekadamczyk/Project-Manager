@@ -21,12 +21,13 @@ const Area = styled.input`
 interface InputProps {
     placeholder: string;
     defaultValue?: string;
+    testid: string;
     onChangeCallback: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = React.forwardRef(({ placeholder, defaultValue, onChangeCallback}: InputProps, ref) => {
+const Input = React.forwardRef(({ testid, placeholder, defaultValue, onChangeCallback}: InputProps, ref) => {
     return(
-        <Area onBlur={onChangeCallback} type="text" placeholder={placeholder} defaultValue={defaultValue} ref={ref}/>
+        <Area data-testid={testid} onBlur={onChangeCallback} type="text" placeholder={placeholder} defaultValue={defaultValue} ref={ref}/>
     )
 })
 

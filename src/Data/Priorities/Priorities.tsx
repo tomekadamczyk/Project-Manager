@@ -13,7 +13,7 @@ export const Priorities = React.forwardRef(({ id, priorityId, priority, onSelect
     if(!data) return <p>Brak priorytetów do wyświetlenia</p>;
 
     return(
-        <Select testid='priorities-select-options' update={onSelectCallback} ref={ref}>
+        <Select defaultValue={priorityId ? priorityId.toString() : 'choose'} testid='priorities-select-options' update={onSelectCallback} ref={ref}>
             {priority ? <option value={priorityId}>{priority}</option> : <option>Wybierz priorytet</option>}
             {data.priorities.map(priority => {
                 if(priority.id === priorityId) {

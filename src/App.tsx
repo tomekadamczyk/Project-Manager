@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import Layout from './containers/Layout/Layout';
-import Projects from './containers/Projects/Projects';
+import { GetProjects } from './containers/Projects/GetProjects/GetProjects';
 import Clients from './containers/Clients/Clients';
 import Tasks from './containers/Tasks/Tasks';
 import { Dashboard } from './containers/Dashboard/Dashboard';
 import { AddProject } from './components/Projects/AddProject';
-import FullProject from './containers/Projects/FullProject';
+import { Project } from './containers/Projects/Project/Project';
 import FullTask from './containers/Tasks/FullTask';
 import { AddTask } from './components/Tasks/AddTask/AddTask';
 import { Kanban } from './containers/Kanban/Kanban';
@@ -30,8 +30,8 @@ class App extends Component {
       <Route path="/tasks/:id" element={<FullTask/>} />
       <Route path="/tasks" element={<Tasks/>} />
       <Route path="/projects/add-project" element={<AddProject/>} />
-      <Route path="/projects/:id" element={<FullProject/>} />
-      <Route path="/projects" element={<Projects/>} />
+      <Route path="/projects/:id" element={<Project/>} />
+      <Route path="/projects" element={<GetProjects />} />
       <Route path="/clients" element={<Clients/>} />
       <Route path="/" index element={<Dashboard/>} />
     </Routes>

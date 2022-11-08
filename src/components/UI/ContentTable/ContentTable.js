@@ -9,6 +9,12 @@ const Wrapper = styled.div`
     @media (min-width: 1024px) {
         flex-direction: row;
     }
+
+    @media (min-width: 1400px) {
+        max-width: 90%;
+        margin: auto;
+        flex-direction: row;
+    }
 `;
 
 const ContentTable = (props) => {

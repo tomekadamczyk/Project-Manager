@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled.ul`
+const Wrapper =  styled.ul`
     padding: 0;
     list-style-type: none;
 
@@ -13,7 +13,7 @@ const Wrapper = styled.ul`
 
 const UnorderedList = (props) => {
     return (
-        <Wrapper>
+        <Wrapper style={props.style}>
             {props.children}
         </Wrapper>
     )

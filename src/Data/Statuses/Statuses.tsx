@@ -13,7 +13,7 @@ export const Statuses = React.forwardRef(({ id, statusId, status, onSelectCallba
     if(error || !data) return <p>Nie mogę pobrać statusów</p>;
 
     return(
-        <Select aria-label="Wybierz status z listy" testid='statuses-select-options' update={onSelectCallback} ref={ref}>
+        <Select defaultValue={statusId ? statusId.toString() : 'choose'} aria-label="Wybierz status z listy" testid='statuses-select-options' update={onSelectCallback} ref={ref}>
             {status ? <option value={statusId}>{status}</option> : <option>Wybierz status</option>}
             {data.statuses ? data.statuses.map(item => {
                 if(item.id === statusId) {

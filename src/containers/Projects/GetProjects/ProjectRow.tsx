@@ -1,7 +1,8 @@
-import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
+import { SingleProjectDetails } from '../types';
 
 const LinkedCell = styled(TableCell)`
     cursor: pointer;
@@ -28,16 +29,18 @@ const Row = styled(TableRow)`
     }
 `;
 
-const ProjectRow = (props) => {
+
+const ProjectRow = ({ id, client, name, priority, status, tasks }: SingleProjectDetails) => {
 
     return (
         <Row>
-            <TableCell>{props.id}</TableCell>
-            <LinkedCell onClick={props.clicked}>{props.name} <i className="fas fa-angle-right"></i></LinkedCell>
-            <TableCell>{props.tasks ? props.tasks : <span>No assigned tasks</span>}</TableCell>
-            <TableCell>{props.status}</TableCell>
-            <TableCell>{props.priority}</TableCell>
-            <TableCell>{props.client}</TableCell>
+            <TableCell>{id}</TableCell>
+            <LinkedCell><Link to={`/projects/${id}`}>{name}</Link> <i className="fas fa-angle-right"></i></LinkedCell>
+              
+            <TableCell>{tasks ? tasks : <span>No assigned tasks</span>}</TableCell>
+            <TableCell>{status}</TableCell>
+            <TableCell>{priority}</TableCell>
+            <TableCell>{client}</TableCell>
         </Row>
     )
 

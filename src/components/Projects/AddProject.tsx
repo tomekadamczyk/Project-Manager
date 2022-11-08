@@ -84,7 +84,7 @@ export function AddProject() {
         <h1>Dodaj projekt</h1>
         <Form>
             <InputsContainer>
-                <Input onChangeCallback={e => updateRef(e, 'name')} placeholder="Project name" />
+                <Input testid="add-project-name" onChangeCallback={e => updateRef(e, 'name')} placeholder="Project name" />
                 <TextArea onChangeCallback={e => updateRef(e, 'description')} placeholder="Project description" ></TextArea>
             </InputsContainer>
             <OptionsContainer>

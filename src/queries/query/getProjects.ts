@@ -1,19 +1,25 @@
 import gql from "graphql-tag";
 
+export const PROJECT_BASE_FRAGMENT = gql`
+    fragment ProjectIdAndName on Project {
+        id,
+        name
+    }
+`;
+
 export const GET_PROJECTS = gql`
     query Projects {
         projects {
-            id,
-            name
+            ...ProjectIdAndName
         }
     }
+    ${PROJECT_BASE_FRAGMENT}
 `;
 
 export const GET_PROJECT_BY_ID = gql`
     query Project ($id: Int!){
         project (id: $id){
-            id,
-            name,
+            ...ProjectIdAndName,
             tasks {
                 id,
                 name
@@ -32,13 +38,13 @@ export const GET_PROJECT_BY_ID = gql`
             }
         }
     }
+    ${PROJECT_BASE_FRAGMENT}
 `;
 
 export const GET_ALL_PROJECTS = gql`
     query Projects {
         projects {
-            id,
-            name,
+            ...ProjectIdAndName,
             tasks {
                 name
             },
@@ -55,4 +61,5 @@ export const GET_ALL_PROJECTS = gql`
             },
         }
     }
+    ${PROJECT_BASE_FRAGMENT}
 `;
