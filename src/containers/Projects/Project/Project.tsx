@@ -67,11 +67,13 @@ export function Project() {
     if(!data) return <p>Brak danych projektu</p>;
 
     async function onChangeCallback(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, key: keyof UpdateProps) {
-        updateRef(e, key)
+        updateRef(e, key);
+        await updateProject();
     }
 
     async function onSelectCallback(e: ChangeEvent<HTMLSelectElement>, key: keyof UpdateProps) {
         updateRef(e, key);
+        await updateProject();
     }
     
     return (
@@ -79,7 +81,6 @@ export function Project() {
             
             <div style={{position: 'absolute', left: 50, top: 10}}>{updateLoading ? 'update loading' : null}</div>
             <LeftColumn>
-                <h2>Project name {data.project.name}</h2>
                 <Input 
                     testid="project-name-input"
                     onChangeCallback={e => onChangeCallback(e, 'name')} 
