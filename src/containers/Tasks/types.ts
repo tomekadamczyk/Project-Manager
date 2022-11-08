@@ -33,3 +33,25 @@ export interface SingleTaskRowDetails extends TaskBasicInfo {
     priority: string;
     project: string;
 }
+
+export interface SingleTask {
+    task: {
+        id: number;
+        name: string;
+        description: string,
+        statusId: TaskStatusDetails,
+        priorityId: TaskPriorityDetails,
+        projectsId: TaskProjectDetails
+    }
+}
+
+export interface GetTaskVariables {
+    id: number;
+}
+
+export interface UpdateTaskProps {
+    name: string;
+    description: string;
+    statusId: number;
+    priorityId: number;
+}

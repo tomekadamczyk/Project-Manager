@@ -31,7 +31,7 @@ export function GetTasks() {
             <TableBody>
                 {data.tasks.map((task, index) => {
                     return <TaskRow key={task.id}
-                    id={index + 1} 
+                    id={task.id} 
                     name={task.name}
                     project={task.projectsId.name}
                     status={task.statusId.name}

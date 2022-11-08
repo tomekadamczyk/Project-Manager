@@ -1,21 +1,13 @@
-import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import Input from "components/UI/Form/Input/Input";
 import TextArea from "components/UI/Form/Textarea/Textarea";
 import UnorderedList from "components/UI/List/UnorderedList/UnorderedList";
 import ListElement from "components/UI/List/UnorderedList/ListElement";
-import { GET_PROJECT_BY_ID } from "queries/query/getProjects";
 import { Link, useParams } from "react-router-dom";
 import styled from 'styled-components';
-import { GetProjectMutationVariables, SingleProject } from "../types";
 import ContentTable from "components/UI/ContentTable/ContentTable";
 import { Statuses } from "Data/Statuses/Statuses";
 import { Priorities } from "Data/Priorities/Priorities";
-import { UPDATE_PROJECT } from "queries/mutation/updateProject";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { getOperationName } from "apollo-utilities";
-import { useError } from "hooks/useError";
-import Button from "components/UI/Button/Button";
-import { UpdateProjectButton } from "./UpdateProjectButton";
+import { ChangeEvent, useRef } from "react";
 import { UpdateProps } from "./types";
 import { useUpdateProjectMutation } from "./hooks/useUpdateProjectMutation";
 import { useGetProjectQuery } from "./hooks/useGetProjectQuery";
@@ -24,7 +16,6 @@ const LeftColumn = styled.div`
     width: 45%;
     padding-right: 10px;
 `;
-
 
 const CenterColumn = styled.div`
     padding: 0 20px;
@@ -108,7 +99,7 @@ export function Project() {
                         {data.project.tasks.map(task => {
                             return (
                                 <ListElement key={task.id}>
-                                    <Link style={{color: "gray"}} to={`/tasks/${id}`}>{task.name ? task.name : '(Brak nazwy)'}</Link>
+                                    <Link style={{color: "gray"}} to={`/tasks/${task.id}`}>{task.name ? task.name : '(Brak nazwy)'}</Link>
                                 </ListElement>
                             )
                         })}
