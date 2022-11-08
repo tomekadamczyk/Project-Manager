@@ -4,7 +4,7 @@ import TextArea from "components/UI/Form/Textarea/Textarea";
 import UnorderedList from "components/UI/List/UnorderedList/UnorderedList";
 import ListElement from "components/UI/List/UnorderedList/ListElement";
 import { GET_PROJECT_BY_ID } from "queries/query/getProjects";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import { GetProjectMutationVariables, SingleProject } from "../types";
 import ContentTable from "components/UI/ContentTable/ContentTable";
@@ -49,6 +49,10 @@ const RightColumn = styled.div`
     }
 `;
 
+function validateIsSame<T>(currentValue: T, comparedValue: T): boolean {
+    return currentValue === comparedValue;
+}
+
 export function Project() {
     let { id } = useParams();
 
@@ -66,12 +70,14 @@ export function Project() {
     if(fetchError) return <p>Nie mogę pobrać danych projektu</p>;
     if(!data) return <p>Brak danych projektu</p>;
 
-    async function onChangeCallback(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, key: keyof UpdateProps) {
+    async function onPropsChangeCallback(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, key: keyof UpdateProps): Promise<void> {
         updateRef(e, key);
-        await updateProject();
+        if(!validateIsSame(UpdateProjectkDataRef.current[key], data?.project[key] as any)) {
+            await updateProject();
+        }
     }
 
-    async function onSelectCallback(e: ChangeEvent<HTMLSelectElement>, key: keyof UpdateProps) {
+    async function onSelectCallback(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, key: keyof UpdateProps): Promise<void> {
         updateRef(e, key);
         await updateProject();
     }
@@ -83,13 +89,13 @@ export function Project() {
             <LeftColumn>
                 <Input 
                     testid="project-name-input"
-                    onChangeCallback={e => onChangeCallback(e, 'name')} 
+                    onChangeCallback={e => onPropsChangeCallback(e, 'name')} 
                     defaultValue={data.project.name} 
                     placeholder={data.project.name || ''} 
                 />
 
                 <TextArea 
-                    onChangeCallback={e => onChangeCallback(e, 'description')} 
+                    onChangeCallback={e => onPropsChangeCallback(e, 'description')} 
                     defaultValue={data.project.description}  
                     placeholder={data.project.description || ''}
                 />
@@ -102,11 +108,7 @@ export function Project() {
                         {data.project.tasks.map(task => {
                             return (
                                 <ListElement key={task.id}>
-                                    {task.name ?
-                                        task.name
-                                        :
-                                        <span style={{fontSize: 10, color: "gray"}}>Brak nazwy</span>
-                                    }
+                                    <Link style={{color: "gray"}} to={`/tasks/${id}`}>{task.name ? task.name : '(Brak nazwy)'}</Link>
                                 </ListElement>
                             )
                         })}
@@ -131,21 +133,6 @@ export function Project() {
 
                 <h3>Client</h3>
                 <p>{data.project.clientId.name}</p>
-                <Button role="submit" click={updateProject}>Wyślij</Button>
-                {/* {id ? 
-                    <UpdateProjectButton 
-                        id={id} 
-                        variables={{
-                            id: Number(id),
-                            name: UpdateProjectkDataRef.current.name,
-                            description: UpdateProjectkDataRef.current.description,
-                            statusId: Number(UpdateProjectkDataRef.current.statusId),
-                            priorityId: Number(UpdateProjectkDataRef.current.priorityId)
-                        }} 
-                    /> 
-                : 
-                    null
-                } */}
 
             </RightColumn>
         </ContentTable>

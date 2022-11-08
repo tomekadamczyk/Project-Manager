@@ -8,6 +8,7 @@ import { schema } from "../../../config/schema";
 import { UpdateProps } from "./types";
 import { Project } from "./Project";
 import * as ApolloClient from '@apollo/client';
+import { act } from "react-dom/test-utils";
 
 // const mockedUseQuery = jest.fn().mockResolvedValue({
 //     loading: false,
@@ -34,6 +35,16 @@ import * as ApolloClient from '@apollo/client';
 //     }
 // })
 
+jest.mock('react-router-dom', () => {
+    const router = jest.requireActual('react-router-dom')
+    return {
+        ...router,
+        useParams: () => ({
+            id: 1
+        })
+    }
+})
+
 jest.mock("Data/Statuses/Statuses");
 jest.mock("Data/Priorities/Priorities");
 
@@ -59,7 +70,7 @@ describe('should test Projects render', function() {
         jest.restoreAllMocks()
     })
 
-    test('1', async () => {
+    test('should fetch data correctly', async () => {
 
         const resolvers = {
             Query: {
@@ -113,6 +124,9 @@ describe('should test Projects render', function() {
         );
 
         expect(useQuery).toHaveBeenCalled()
+        expect(await screen.findByText('loading')).toBeInTheDocument(); 
+        await waitForElementToBeRemoved(() => screen.queryByText(/loading/i))
+        expect(screen.queryByText('loading')).not.toBeInTheDocument();
         
     })
 
@@ -177,7 +191,6 @@ describe('should test Projects render', function() {
     })
 
     test('update on name change', async () => {
-            
         const resolvers = {
             Query: {
                 project: (_: unknown, { id }: { id: number }) => store.get('Project', id)
@@ -230,9 +243,12 @@ describe('should test Projects render', function() {
         const nameInput = await screen.findByTestId('project-name-input');
         await userEvent.clear(nameInput);
         await userEvent.type(nameInput, '1ew');
-        await nameInput.blur()
-            
-        expect(await screen.findByText('update loading')).toBeInTheDocument();
+        
+        act(() => {
+            nameInput.blur()
+        })
+        
+        expect(await screen.findByText('update loading')).toBeInTheDocument(); 
         await waitForElementToBeRemoved(() => screen.queryByText(/update loading/i))
         expect(await screen.findByTestId('project-name-input')).toHaveValue('1ew');
     })

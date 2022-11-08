@@ -1,7 +1,8 @@
-import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import styled from 'styled-components';
+import { SingleTaskRowDetails } from './types';
+import { Link } from 'react-router-dom';
 
 const LinkedCell = styled(TableCell)`
     cursor: pointer;
@@ -29,18 +30,16 @@ const Row = styled(TableRow)`
     }
 `;
 
-const TaskRow = (props) => {
+export const TaskRow = ({ id, name, priority, project, status }: SingleTaskRowDetails) => {
 
     return (
         <Row>
-            <TableCell>{props.id}</TableCell>
-            <LinkedCell onClick={props.clicked}>{props.name} <i className="fas fa-angle-right"></i></LinkedCell>
-            <TableCell>{props.project}</TableCell>
-            <TableCell>{props.status}</TableCell>
-            <TableCell>{props.priority}</TableCell>
+            <TableCell>{id}</TableCell>
+            <LinkedCell><Link to={`/tasks/${id}`}>{name}</Link> <i className="fas fa-angle-right"></i></LinkedCell>
+            <TableCell>{project}</TableCell>
+            <TableCell>{status}</TableCell>
+            <TableCell>{priority}</TableCell>
         </Row>
     )
 
 }
-
-export default TaskRow;

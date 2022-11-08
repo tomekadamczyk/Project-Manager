@@ -86,7 +86,7 @@ const SpinnerIcon = styled.div`
 
 const Spinner = () => {
     return (
-        <SpinnerIcon />
+        <SpinnerIcon data-testid="spinner" />
     )
 }
 

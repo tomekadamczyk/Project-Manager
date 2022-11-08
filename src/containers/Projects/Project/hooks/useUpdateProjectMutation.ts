@@ -9,7 +9,7 @@ export function useUpdateProjectMutation(id: string|undefined, ref: React.Mutabl
 
     const [mutateFunction, { loading: updateLoading }] = useMutation(UPDATE_PROJECT);
 
-    async function runMutation({variables}: {variables: any}) {
+    async function runMutation({variables}: {variables: any}): Promise<void> {
         if(id) {
             try {
                 await mutateFunction({
@@ -17,7 +17,6 @@ export function useUpdateProjectMutation(id: string|undefined, ref: React.Mutabl
                     refetchQueries: [
                         { query: GET_PROJECT_BY_ID, variables: { id: Number(id) } }
                     ],
-                    awaitRefetchQueries: true,
                 })
                 
                 getError(undefined)
@@ -27,7 +26,7 @@ export function useUpdateProjectMutation(id: string|undefined, ref: React.Mutabl
         }
     }
 
-    async function updateProject() {
+    async function updateProject(): Promise<void> {
         await runMutation({
             variables: {
                 id: Number(id),

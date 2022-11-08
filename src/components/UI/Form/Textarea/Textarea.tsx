@@ -10,6 +10,7 @@ const Area = styled.textarea`
     background: #f0f0f0;
     margin-top: 20px;
     transition: background .3s, border .3s linear .3s;
+    border: 1px solid transparent;
 
     &:focus {
         background: #fff;

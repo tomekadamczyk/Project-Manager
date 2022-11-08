@@ -10,6 +10,7 @@ const Area = styled.input`
     background: #f0f0f0;
     display: block;
     transition: background .3s, border .3s linear .3s;
+    border: 1px solid transparent;
 
     &:focus {
         background: #fff;

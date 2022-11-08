@@ -18,7 +18,7 @@ export function useGetProjectQuery(id: string | undefined, ref: React.MutableRef
             ref.current.statusId = data.project.statusId.id;
             ref.current.priorityId = data.project.priorityId.id;
         }
-    }, [data])
+    }, [data, ref])
 
     function updateRef(e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>, key: keyof UpdateProps) {
         ref.current = {
