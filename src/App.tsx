@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { Routes, Route, Outlet, Link } from "react-router-dom";
-import Layout from './containers/Layout/Layout';
-import { GetProjects } from './containers/Projects/GetProjects/GetProjects';
-import Clients from './containers/Clients/Clients';
-import { GetTasks } from './containers/Tasks/GetTasks/GetTasks';
-import { Dashboard } from './containers/Dashboard/Dashboard';
-import { AddProject } from './components/Projects/AddProject';
-import { Project } from './containers/Projects/Project/Project';
-import { Task } from './containers/Tasks/Task/Task';
-import { AddTask } from './components/Tasks/AddTask/AddTask';
-import { Kanban } from './containers/Kanban/Kanban';
-import Login from './components/Login/Login';
+import { Component } from 'react';
+import { Routes, Route } from "react-router-dom";
+import Layout from './modules/App/containers/Layout/Layout';
+import { GetProjects } from './modules/Projects/containers/GetProjects/GetProjects';
+import Clients from './modules/Clients/Clients';
+import { GetTasks } from './modules/Tasks/containers/GetTasks/GetTasks';
+import { Dashboard } from './modules/App/containers/Dashboard/Dashboard';
+import { AddProject } from './modules/Projects/containers/AddProject/AddProject';
+import { Project } from './modules/Projects/containers/Project/Project';
+import { Task } from './modules/Tasks/containers/Task/Task';
+import { AddTask } from './modules/Tasks/containers/AddTask/AddTask';
+import { Kanban } from './modules/App/containers/Kanban/Kanban';
+import Login from 'modules/App/components/Login/Login';
 
 class App extends Component {
   state = {

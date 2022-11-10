@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 import { ApolloProvider, gql } from '@apollo/client';
 import * as serviceWorker from './serviceWorker';
-import { client } from 'config/apolloClient';
+import { client } from 'modules/App/config/apolloClient';
 
 const app = (
     <React.StrictMode>
