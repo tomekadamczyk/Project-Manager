@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Sidemenu from '../../components/Navigation/Sidemenu/Sidemenu';
 import styled from 'styled-components';
 import Header from '../../components/Header/Header';
+import { Toaster } from 'modules/App/components/Toaster/Toaster';
 
 const Main = styled.main`
     width: calc(100% - 65px);
@@ -36,6 +37,7 @@ class Layout extends Component {
             </Sidemenu>
                 <Header></Header>
             <Main className={this.state.backdropInVisible ? 'toHide' : ''}>
+            <Toaster />
                 {this.props.children}
             </Main>
            </>

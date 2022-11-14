@@ -1,5 +1,5 @@
 import { ApolloError } from "@apollo/client"
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { formatApolloError } from "utils/formatApolloError"
 
 export const useError = () => {

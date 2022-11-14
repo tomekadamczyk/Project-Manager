@@ -55,3 +55,46 @@ export interface UpdateTaskProps {
     statusId: number;
     priorityId: number;
 }
+
+export interface AddTaskProps {
+    name: string;
+    description: string;
+    statusId: number;
+    projectId: number;
+    priorityId: number;
+}
+
+export class TaskClass {
+
+    constructor(
+        private readonly id: number,
+        private name: string,
+        private description: string,
+        private statusId: TaskStatusDetails,
+        private priorityId: TaskPriorityDetails,
+        private projectsId: TaskProjectDetails
+    ) {
+        
+    }
+
+    get properties(): SingleTask {
+        return {
+            task: {
+                id: this.id,
+                name: this.name,
+                description: this.description,
+                statusId: this.statusId,
+                priorityId: this.priorityId,
+                projectsId: this.projectsId
+            }
+        }
+    }
+
+    set status(newStatusId: number) {
+        this.statusId.id = newStatusId
+    }
+
+    changeStatus(newStatusId: number) {
+        this.status = newStatusId;
+    }
+}

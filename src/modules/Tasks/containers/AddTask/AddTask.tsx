@@ -5,14 +5,13 @@ import TextArea from 'modules/App/components/UI/Form/Textarea/Textarea';
 import Input from 'modules/App/components/UI/Form/Input/Input';
 import Button from 'modules/App/components/UI/Button/Button';
 import { Projects } from 'modules/Projects/components/SelectProjects/Projects';
-import { ApolloError, useMutation } from '@apollo/client';
 import { Statuses } from 'modules/Statuses/components/SelectStatuses/Statuses';
 import { Priorities } from 'modules/Priorities/components/SelectPriorities/Priorities';
-import { ADD_TASK } from 'queries/mutation/addTask';
 import { errorsDictionary, ErrorType } from 'modules/App/config/ErrorMessages/AddTaskMessages';
 import { useError } from 'modules/App/hooks/useError';
 import { ErrorInine } from 'modules/App/components/ErrorInline/ErrorInline.component';
-
+import { AddTaskProps } from 'modules/Tasks/types';
+import { useAddTaskMutation } from '../../hooks/useAddTaskMutation';
 
 const Form = styled.form`
     margin: 20px 0;
@@ -30,53 +29,27 @@ const Container = styled.div`
     padding: 0 15%;
 `;
 
-interface AddProps {
-    name: string;
-    description: string;
-    statusId: number;
-    projectId: number;
-    priorityId: number;
-}
-
 
 export function AddTask() {
-    const {error, getError} = useError();
+    const { error } = useError();
     const statusRef = useRef(null);
     const projectRef = useRef(null);
     const priorityRef = useRef(null);
     // const [showTasks, setShowTasks]= useState(true);
     
-    const AddTaskDataRef = useRef<AddProps>({
+    const AddTaskDataRef = useRef<AddTaskProps>({
         name: '',
         description: '',
         statusId: 0,
         projectId: 0,
         priorityId: 0
     });
+    const { submitTask, loading } = useAddTaskMutation(AddTaskDataRef)
 
-    function updateRef(e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>, key: keyof AddProps) {
+    function updateRef(e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>, key: keyof AddTaskProps) {
         AddTaskDataRef.current = {
             ...AddTaskDataRef.current,
             [key]: e.target.value
-        }
-    }
-
-    const [mutateFunction, { loading }] = useMutation<AddProps, AddProps>(ADD_TASK);
-    async function submitTask(e: MouseEvent) {
-        e.preventDefault();
-        try {
-            await mutateFunction({
-                variables: {
-                    name: AddTaskDataRef.current.name,
-                    description: AddTaskDataRef.current.description,
-                    statusId: Number(AddTaskDataRef.current.statusId),
-                    projectId: Number(AddTaskDataRef.current.projectId),
-                    priorityId: Number(AddTaskDataRef.current.priorityId)
-                }
-            });  
-            getError(undefined)
-        } catch(e) {
-            getError(e as ApolloError)
         }
     }
     // checkboxUpdate = (e) => {

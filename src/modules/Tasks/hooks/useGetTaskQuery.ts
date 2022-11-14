@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { GetProjectMutationVariables } from "modules/Projects/types";
 import { GET_TASK_BY_ID } from "queries/query/getTasks";
 import { ChangeEvent, useEffect } from "react";
-import { UpdateTaskProps, SingleTask } from "../../../types";
+import { UpdateTaskProps, SingleTask } from "../types";
 
 export function useGetTaskQuery(id: string | undefined, ref: React.MutableRefObject<UpdateTaskProps>) {
     const { loading, error: fetchError, data } = useQuery<SingleTask, GetProjectMutationVariables>(GET_TASK_BY_ID, {
@@ -20,6 +20,7 @@ export function useGetTaskQuery(id: string | undefined, ref: React.MutableRefObj
         }
     }, [data, ref])
 
+
     function updateRef(e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>, key: keyof UpdateTaskProps) {
         ref.current = {
             ...ref.current,
@@ -28,7 +29,7 @@ export function useGetTaskQuery(id: string | undefined, ref: React.MutableRefObj
     }
     
     return {
-        data,
+        task: data?.task,
         fetchError,
         loading,
         updateRef

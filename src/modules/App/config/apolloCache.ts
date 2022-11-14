@@ -5,5 +5,5 @@ export const cache = new InMemoryCache({
       switch (object.__typename) {
         default: return defaultDataIdFromObject(object);
       }
-    }
+    },
 });
