@@ -36,17 +36,13 @@ export function Task() {
     async function onPropsChangeCallback(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, key: keyof UpdateTaskProps): Promise<void> {
         updateRef(e, key);
         if(!validateIsSame(UpdateTaskDataRef.current[key], (task as any)[key] as any)) {
-            await updateTask({
-                onCompletedMessage: `${key} zadania ${id} zmieniony`
-            });
+            await updateTask();
         }
     }
 
     async function onSelectCallback(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, key: keyof UpdateTaskProps): Promise<void> {
         updateRef(e, key);
-        await updateTask({
-            onCompletedMessage: `${key} zadania ${id} zmieniony`
-        });
+        await updateTask();
     }
     
     return(
