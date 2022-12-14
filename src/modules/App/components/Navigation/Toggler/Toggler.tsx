@@ -65,11 +65,16 @@ const Button = styled.div`
     }
 `;
 
-const Toggler = (props) => {
+interface TogglerProps {
+    isMenuOpened: boolean;
+    openMenu: (state: boolean) => void;
+}
+
+const Toggler = ({ isMenuOpened, openMenu}: TogglerProps) => {
 
     return (
-        <TogglerWrapper className={props.isMenuOpened ? 'active' : ''} onClick={props.openMenu}>
-            <Button className={props.isMenuOpened ? 'active' : ''} />
+        <TogglerWrapper className={isMenuOpened ? 'active' : ''} onClick={openMenu}>
+            <Button className={isMenuOpened ? 'active' : ''} />
         </TogglerWrapper>
     )
 }

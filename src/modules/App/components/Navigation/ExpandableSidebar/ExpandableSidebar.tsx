@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { ReactNode, useEffect, useState } from "react";
 import styled from 'styled-components';
 import Toggler from '../Toggler/Toggler';
-import NavigationItems from '../NavigationItems/NavigationItems';
-import NavigationIcons from '../NavigationItems/NavigationIcons/NavigationIcons';
 import Backdrop from '../../UI/Backdrop/Backdrop';
+
+interface ExpandableSidebarProps {
+    navIcons: ReactNode;
+    navItems: ReactNode;
+}
 
 const Container = styled.aside`
     height: 100vh;
@@ -19,6 +22,7 @@ const BasicColumn = styled.div`
     z-index: 9002;
     position: relative;
 `;
+
 
 const SlidingColumn = styled.div`
     height: 100%
@@ -39,25 +43,25 @@ const SlidingColumn = styled.div`
     }
 `;
 
-const Sidemenu = (props) => {
-    let backdrop = null;
+export function ExpandableSidebar({ navIcons, navItems }: ExpandableSidebarProps) {
 
-    if(props.opened) {
-        backdrop = <Backdrop menuOpened={props.opened} closeMenu={props.open}/>;
+    const [backdropInVisible, setBackdropInVisible] = useState(false);
+
+    function toggleMenuState() {
+        setBackdropInVisible(prev => !prev)
     }
 
     return (
         <Container>
-        {backdrop}
             <BasicColumn>
-                <Toggler isMenuOpened={props.opened} openMenu={props.open} />
-                <NavigationIcons />
+                <Toggler isMenuOpened={backdropInVisible} openMenu={toggleMenuState} />
+                { navIcons }
             </BasicColumn>
-            <SlidingColumn className={props.opened ? 'active' : ''}>
-                <NavigationItems closeMenu={props.open}></NavigationItems>
+            
+            <SlidingColumn onClick={toggleMenuState} className={backdropInVisible ? 'active' : ''}>
+                { navItems }
             </SlidingColumn>
+            {backdropInVisible ? <Backdrop menuOpened={backdropInVisible} closeMenu={toggleMenuState} /> : null}
         </Container>
     )
 }
-
-export default Sidemenu;

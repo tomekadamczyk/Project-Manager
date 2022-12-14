@@ -3,7 +3,7 @@ import NavigationIcon from './NavigationIcon/NavigationIcon';
 import SubmenuItems from '../../Submenu/SubmenuItems/SubmenuItems';
 
 
-const NavigationIcons = (props) => {
+const NavigationIcons = () => {
     
     return (
         <>
