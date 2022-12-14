@@ -1,5 +1,6 @@
 import React, { ChangeEvent } from 'react';
 import styled from 'styled-components';
+import DOMPurify from 'dompurify'; 
 
 
 const Area = styled.input`
@@ -27,8 +28,14 @@ interface InputProps {
 }
 
 const Input = React.forwardRef(({ testid, placeholder, defaultValue, onChangeCallback}: InputProps, ref) => {
+
+    function callb(e: ChangeEvent<HTMLInputElement>) {
+          const sanitizedBlog=DOMPurify.sanitize(e.target.value)
+        e.target.value = sanitizedBlog
+        onChangeCallback(e);
+    }
     return(
-        <Area data-testid={testid} onBlur={onChangeCallback} type="text" placeholder={placeholder} defaultValue={defaultValue} ref={ref}/>
+        <Area data-testid={testid} onBlur={callb} type="text" placeholder={placeholder} defaultValue={defaultValue} ref={ref}/>
     )
 })
 

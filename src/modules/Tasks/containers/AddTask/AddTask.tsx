@@ -13,7 +13,7 @@ import { ErrorInine } from 'modules/App/components/ErrorInline/ErrorInline.compo
 import { AddTaskProps } from 'modules/Tasks/types';
 import { useAddTaskMutation } from '../../hooks/useAddTaskMutation';
 
-const Form = styled.form`
+const Form = styled.div`
     margin: 20px 0;
     display: flex;
     justify-content: center;
@@ -29,6 +29,10 @@ const Container = styled.div`
     padding: 0 15%;
 `;
 
+const userMap = new Map();
+userMap.set(1, { name: 'Tomek'})
+userMap.set(2, { name: 'Tomek2'})
+userMap.set(3, { name: 'Tomek3'})
 
 export function AddTask() {
     const { error } = useError();
@@ -44,13 +48,14 @@ export function AddTask() {
         projectId: 0,
         priorityId: 0
     });
-    const { submitTask, loading } = useAddTaskMutation(AddTaskDataRef)
+    const { submitTask, loading, abort } = useAddTaskMutation(AddTaskDataRef)
 
     function updateRef(e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>, key: keyof AddTaskProps) {
         AddTaskDataRef.current = {
             ...AddTaskDataRef.current,
             [key]: e.target.value
         }
+        
     }
     // checkboxUpdate = (e) => {
     //     console.log(this.state.showTasks)
@@ -59,7 +64,6 @@ export function AddTask() {
     // }
 
     // const tasks = <AllTasks ref={input => this.tasks = input} />;
-    
     return(
         <Container>
             <h1>Dodaj zadanie</h1>
@@ -97,8 +101,12 @@ export function AddTask() {
                         aria-label="Przycisk Dodaj zadanie" 
                         className={loading ? 'loading' : undefined} 
                         click={submitTask}
-                        disabled={loading}
+                        // disabled={loading}
                     >Create new task</Button>
+                    <Button 
+                        aria-label="Abort" 
+                        click={abort}
+                    >Abort</Button>
                 </OptionsContainer>
             </Form>
         </Container>

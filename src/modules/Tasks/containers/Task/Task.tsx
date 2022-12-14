@@ -5,8 +5,8 @@ import Input from "modules/App/components/UI/Form/Input/Input";
 import TextArea from "modules/App/components/UI/Form/Textarea/Textarea";
 import { Priorities } from "modules/Priorities/components/SelectPriorities/Priorities";
 import { Statuses } from "modules/Statuses/components/SelectStatuses/Statuses";
-import { ChangeEvent, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useParams, useLocation, Link } from "react-router-dom";
 import { UpdateTaskProps } from "../../types";
 import { useGetTaskQuery } from "../../hooks/useGetTaskQuery";
 import { useUpdateTaskMutation } from "../../hooks/useUpdateTaskMutation";
@@ -24,11 +24,9 @@ export function Task() {
         statusId: 0,
         priorityId: 0
     });
-
-
     const { task, fetchError, loading, updateRef } = useGetTaskQuery(id, UpdateTaskDataRef);
     const { updateTask } = useUpdateTaskMutation(id, UpdateTaskDataRef);
-
+    
     if(loading) return <p>loading</p>;
     if(fetchError) return <p>Nie mogę pobrać danych zadania</p>;
     if(!task) return <p>Brak danych zadania</p>;
@@ -48,7 +46,6 @@ export function Task() {
     return(
         <ContentTable>
             {/* {this.updateInformation ? <InfoBox updateTask={props.updateTask} info={this.updateInformation}></InfoBox> : null} */}
-
             <LeftColumn>
                 <h2>Task {task.name}</h2>
                 <Input 

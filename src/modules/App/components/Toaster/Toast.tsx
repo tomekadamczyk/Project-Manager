@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Transition, TransitionStatus } from "react-transition-group";
+import { Transition, TransitionGroup, CSSTransition } from "react-transition-group";
 import { CloseButton } from "../Button/CloseButton";
 import { MappedToStatus, ToastComponentProps } from "./types";
-
 
 export const Colors: MappedToStatus = {
     success: '#03ae35',
@@ -18,36 +17,39 @@ const StatusLabel: MappedToStatus = {
 
 const transitions = {
     entering: {
-        display: 'block'
+        opacity: 1,
     },
     entered: {
         opacity: 1,
-        display: 'block'
     },
     exiting: {
         opacity: 0,
-        display: 'block'
     },
     exited: {
-        opacity: '0',
-        display: 'none'
+        opacity: 0,
     },
-    unmounted: undefined
+    unmounted: { opacity: 0 }
 };
 
 export function Toast({ toast, index, onTimesClick }: ToastComponentProps) {
     const { msg, type } = toast;
     const [transitionState, setTransitionState] = useState(false)
-    
 
     useEffect(() => {
-        setTransitionState(!transitionState)
+        let mounted = false;
+        setTransitionState(true)
+
+        return () => {
+            if(mounted) {
+                setTransitionState(false)
+            }
+            mounted = true;
+        }
     }, [])
 
     return(
         <Transition 
             in={transitionState} 
-            out={!transitionState} 
             timeout={index * 300}
         >
             {state => (
@@ -60,7 +62,7 @@ export function Toast({ toast, index, onTimesClick }: ToastComponentProps) {
                 </div>
             )}
         </Transition>
-        )
+    )
 }
 
 const styles = {
@@ -78,11 +80,10 @@ const styles = {
         borderWidth: 1,
         borderColor: 'lightgray',
         background: 'white',
-        transition: 'all 1s',
+        transition: `opacity ${300}ms ease-in-out`,
         borderRadius: 5,
         borderLeftWidth: 7,
         boxShadow: '1px 13px 19px -13px rgba(184, 184, 184, 1)',
-        opacity: 0,
-        display: 'none'
+        opacity: 0
     }
 }

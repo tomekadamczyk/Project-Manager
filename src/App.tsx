@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route } from "react-router-dom";
 import Layout from './modules/App/containers/Layout/Layout';
 import { GetProjects } from './modules/Projects/containers/GetProjects/GetProjects';
@@ -12,17 +12,15 @@ import { AddTask } from './modules/Tasks/containers/AddTask/AddTask';
 import { Kanban } from './modules/App/containers/Kanban/Kanban';
 import Login from 'modules/App/components/Login/Login';
 
-class App extends Component {
-  state = {
-    authenticated: true
-  }
+export function App() {
+  const [isAuthenticated, setAuthenticated] = useState(true);
 
-  onAuthenticate = () => {
-    this.setState({authenticated: true})
+  function onAuthenticate() {
+    setAuthenticated(true)
   }
-
-  render() {
-    const loggedUser = 
+  
+  return (
+    isAuthenticated ?
     <Layout>
     <Routes>
       <Route path="/kanban" element={<Kanban />} />
@@ -35,14 +33,10 @@ class App extends Component {
       <Route path="/clients" element={<Clients/>} />
       <Route path="/" index element={<Dashboard/>} />
     </Routes>
-  </Layout>;
-  const notLoggedIn = <Route path="/login" element={<Routes><Login onAuthenticate={this.onAuthenticate} authenticated={this.state.authenticated}/></Routes>} />;
-    return (
-      <div>
-        {this.state.authenticated ? loggedUser : notLoggedIn}
-      </div>
-    );
-  }
+  </Layout>
+  :
+  <Routes>
+    <Route path="/login" element={<Login onAuthenticate={onAuthenticate} authenticated={isAuthenticated}/>} />
+  </Routes>
+  )
 }
-
-export default App;

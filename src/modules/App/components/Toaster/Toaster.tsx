@@ -8,10 +8,7 @@ export function Toaster({ timeout }: Partial<ToasterTimerProps>) {
 
     const toasts = useGetToasts();
     const { removeLastToast, removeToast } = useToastsMutations();
-
-    const operations = {
-        removeLastToast
-    }
+    const operations = { removeLastToast }
     
     useToasterTimer({ toasts, operations, timeout });
 

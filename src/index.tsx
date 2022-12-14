@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import './index.css';
-import App from './App';
-import { ApolloProvider, gql } from '@apollo/client';
+import { App } from './App';
+import { ApolloProvider } from '@apollo/client';
 import * as serviceWorker from './serviceWorker';
 import { client } from 'modules/App/config/apolloClient';
 

@@ -10,9 +10,11 @@ const timeStartLink = new ApolloLink((operation, forward) => {
 
   return forward(operation).map(data => {
     
-    if(data.data) {
+    if(data.data && !(data as any).errors) {
       Object.keys(data.data).forEach(key => {
-        renderToast(key);
+        if(data.data![key] !== null) {
+          renderToast(key);
+        }
       })
     }
     return data
