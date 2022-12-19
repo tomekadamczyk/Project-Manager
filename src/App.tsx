@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from './modules/App/containers/Layout/Layout';
 import { GetProjects } from './modules/Projects/containers/GetProjects/GetProjects';
 import Clients from './modules/Clients/Clients';
-import { GetTasks } from './modules/Tasks/containers/GetTasks/GetTasks';
+import { GetTasksContainer } from './modules/Tasks/containers/GetTasks/GetTasksContainer';
 import { Dashboard } from './modules/App/containers/Dashboard/Dashboard';
 import { AddProject } from './modules/Projects/containers/AddProject/AddProject';
 import { Project } from './modules/Projects/containers/Project/Project';
@@ -26,7 +26,7 @@ export function App() {
       <Route path="/kanban" element={<Kanban />} />
       <Route path="/tasks/add-task" element={<AddTask/>} />
       <Route path="/tasks/:id" element={<Task />} />
-      <Route path="/tasks" element={<GetTasks />} />
+      <Route path="/tasks" element={<GetTasksContainer />} />
       <Route path="/projects/add-project" element={<AddProject/>} />
       <Route path="/projects/:id" element={<Project/>} />
       <Route path="/projects" element={<GetProjects />} />

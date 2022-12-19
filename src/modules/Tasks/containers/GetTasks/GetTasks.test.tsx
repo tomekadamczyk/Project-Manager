@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { createMockStore, Ref } from "@graphql-tools/mock";
 import { render } from "modules/App/config/render";
 import { schema } from "modules/App/config/schema";
-import { GetTasks } from "./GetTasks";
+import { GetTasksContainer } from "./GetTasksContainer";
 import * as ApolloClient from '@apollo/client';
 
 const store = createMockStore({ schema })
@@ -52,7 +52,7 @@ describe('should test Tasks render', function() {
 
         render(
             <BrowserRouter>
-                <GetTasks />
+                <GetTasksContainer />
             </BrowserRouter>,
             { resolvers }
         )
@@ -76,7 +76,7 @@ describe('should test Tasks render', function() {
 
         render(
             <BrowserRouter>
-                <GetTasks />
+                <GetTasksContainer />
             </BrowserRouter>,
             { resolvers }
         )
@@ -96,7 +96,7 @@ describe('should test Tasks render', function() {
 
         render(
             <BrowserRouter>
-                <GetTasks />
+                <GetTasksContainer />
             </BrowserRouter>,
             { resolvers }
         )

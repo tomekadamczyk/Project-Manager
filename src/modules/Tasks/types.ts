@@ -28,6 +28,15 @@ export interface TasksData {
     tasks: Task[];
 }
 
+export interface TasksPaginated {
+    totalCount: number;
+    edges: Task[];
+}
+
+export interface PaginatedTasksData {
+    tasksPaginated: TasksPaginated;
+}
+
 export interface SingleTaskRowDetails extends TaskBasicInfo {
     status: string;
     priority: string;

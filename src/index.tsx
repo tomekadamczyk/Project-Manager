@@ -8,13 +8,13 @@ import * as serviceWorker from './serviceWorker';
 import { client } from 'modules/App/config/apolloClient';
 
 const app = (
-    <React.StrictMode>
+    // <React.StrictMode>
       <ApolloProvider client={client}>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </ApolloProvider>
-    </React.StrictMode>
+    // </React.StrictMode>
 )
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
