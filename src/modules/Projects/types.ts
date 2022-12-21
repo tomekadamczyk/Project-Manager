@@ -41,6 +41,13 @@ export interface SingleProjectDetails extends ProjectBasicInfo {
     client: string;
 }
 
+export interface ProjectsPaginated {
+    projectsPaginated: {
+        totalCount: number;
+        edges: Project[];
+    }
+}
+
 export interface ProjectsData {
     projects: Project[];
 }

@@ -3,7 +3,7 @@ import { ChangeEvent } from 'react';
 import Spinner from 'modules/App/components/UI/Spinner/Spinner';
 import Select from '../../../App/components/UI/Form/Select/Select'
 import { DocumentNode, useQuery } from '@apollo/client';
-import { useFilterQueryParams } from 'modules/App/components/Pagination/usePaginations';
+import { useFilterQueryParam } from 'modules/App/hooks/useFilterQueryParam';
 
 export function Filter({ query, filterKey }: { query: DocumentNode, filterKey: string }) {
     const { loading, error, data } = useQuery(query, {
@@ -12,7 +12,7 @@ export function Filter({ query, filterKey }: { query: DocumentNode, filterKey: s
         }
     });
     
-    const { filters, onFilterClick } = useFilterQueryParams();
+    const { filters, onFilterClick } = useFilterQueryParam();
     const existingFilter = Object.keys(filters).find(key => key === filterKey);
 
     if(loading) return <Spinner />;

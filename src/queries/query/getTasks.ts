@@ -77,9 +77,9 @@ export const GET_TASK_BY_ID = gql`
     }
 `;
 
-export const GET_FILTER_BY_TASK = (group: string) => gql`
+export const GET_FILTERS = (filterQueryName: string, group: string) => gql`
     query statusFilters($group: String!) {
-        taskFilters(group: $group) {
+        ${filterQueryName}Filters(group: $group) {
             filter: ${group} {
                 id,
                 name

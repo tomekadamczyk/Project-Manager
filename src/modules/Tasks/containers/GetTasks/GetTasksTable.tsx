@@ -9,14 +9,17 @@ import Spinner from 'modules/App/components/UI/Spinner/Spinner';
 import { Pagination } from 'modules/App/components/Pagination/Pagination';
 import { GET_TASKS_PAGINATED } from 'queries/query/getTasks';
 import { useQuery } from '@apollo/client';
-import { PaginatedTasksData } from '../../types';
-import { useFilterQueryParams, useGetWithSearchParams, useGetWithSortParams } from 'modules/App/components/Pagination/usePaginations';
+import { PaginatedTasksData, Task } from '../../types';
 import { MouseEvent } from 'react';
+import { usePageParam } from 'modules/App/hooks/usePageParam';
+import { useLimitParam } from 'modules/App/hooks/useLImitParam';
+import { useSortParam } from 'modules/App/hooks/useSortParam';
+import { useFilterQueryParam } from 'modules/App/hooks/useFilterQueryParam';
 
 interface GetTasksQueryVariables {
     offset: number;
     limit: number;
-    orderBy: { name: 'desc' | 'asc' } | null;
+    orderBy: any
     filter: any;
 }
 
@@ -50,16 +53,25 @@ function HeaderWithActions({ title, actionUp, actionDown }: { title: string; act
     )
 }
 
+const TaskTableLabels = {
+    id: 'ID',
+    name: 'Zadanie',
+    status: 'Status',
+    priotity: 'Priorytet',
+    project: 'Projekt'
+}
+
 export function GetTasksTable() {
-    const { pageQueryVariable, pageSearchQueryParam, limitQueryVariable, onPageSet, onResultsLimitChange, onSortChange } = useGetWithSearchParams();
-    const { orderByVariablesObject, onSortClick } = useGetWithSortParams(['name', 'statusId'])
-    const { filters } = useFilterQueryParams();
+    const { pageQueryVariable, pageSearchQueryParam, onPageSet} = usePageParam();
+    const { limitQueryVariable } = useLimitParam();
+    const { sort, onSortClick } = useSortParam()
+    const { filters } = useFilterQueryParam();
     
     const { loading, error, data } = useQuery<PaginatedTasksData, GetTasksQueryVariables>(GET_TASKS_PAGINATED, {
         variables: {
             offset: pageQueryVariable * limitQueryVariable,
             limit: limitQueryVariable, 
-            orderBy: orderByVariablesObject,
+            orderBy: sort,
             filter: filters
         },
     });
@@ -76,7 +88,7 @@ export function GetTasksTable() {
                         <TableCell>Lp</TableCell>
                         <TableCell>
                             <HeaderWithActions 
-                                title='Task' 
+                                title={TaskTableLabels.name}
                                 actionUp={{
                                     name: "name",
                                     value: "asc",
@@ -89,10 +101,10 @@ export function GetTasksTable() {
                                 }}
                             />
                         </TableCell>
-                        <TableCell>Project</TableCell>
+                        <TableCell>{TaskTableLabels.project}</TableCell>
                         <TableCell>
                             <HeaderWithActions 
-                                title='Status' 
+                                title={TaskTableLabels.status}
                                 actionUp={{
                                     name: "statusId",
                                     value: "asc",
@@ -104,7 +116,7 @@ export function GetTasksTable() {
                                     action: onSortClick
                                 }}
                             /></TableCell>
-                        <TableCell>Priority</TableCell>
+                        <TableCell>{TaskTableLabels.priotity}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

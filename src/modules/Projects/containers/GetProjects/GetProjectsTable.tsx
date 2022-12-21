@@ -13,17 +13,8 @@ import { useLimitParam } from "modules/App/hooks/useLImitParam";
 import { useSortParam } from "modules/App/hooks/useSortParam";
 import { useFilterQueryParam } from "modules/App/hooks/useFilterQueryParam";
 import { Pagination } from "modules/App/components/Pagination/Pagination";
-import { Filters } from "modules/Tasks/components/filters/FIlters";
-import { Limit } from "modules/Tasks/components/Limit/Limit";
-import { GetProjectsTable } from "./GetProjectsTable";
-  
-const projectFilters = [
-    { key: 'priorityId', label: 'Priorytet' },
-    { key: 'statusId', label: 'Status' },
-    { key: 'clientId', label: 'Klient' }
-]
 
-export const GetProjects = () => {
+export const GetProjectsTable = () => {
     const { pageQueryVariable, pageSearchQueryParam, onPageSet} = usePageParam();
     const { limitQueryVariable } = useLimitParam();
     const { sort, onSortClick } = useSortParam()
@@ -44,11 +35,46 @@ export const GetProjects = () => {
 
     return(
         <>
-            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'end', marginBottom: 40}}>
-                <Filters type="project" filters={projectFilters} />
-                <Limit />
+        <Table>
+            <TableHead>
+                <TableRow>
+                    <TableCell>Lp</TableCell>
+                    <TableCell>Project</TableCell>
+                    <TableCell>Tasks</TableCell>
+                    <TableCell>Status</TableCell>
+                    <TableCell>Priority</TableCell>
+                    <TableCell>Client</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {data.projectsPaginated.edges.map((project, index) => {
+                    return <ProjectRow key={project.id}
+                        id={project.id} 
+                        name={project.name}
+                        tasks={project.tasks.length}
+                        status={project.statusId.name}
+                        priority={project.priorityId.name}
+                        client={project.clientId.name}
+                    />
+                })}
+            </TableBody>
+        </Table>
+
+
+        <div style={{position: 'relative'}}>
+            <div style={{position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: 10}}>
+                <Pagination 
+                    operations={{
+                        onPageSet
+                    }} 
+                    data={{
+                        totalCount: data.projectsPaginated.totalCount,
+                        currentPage: pageSearchQueryParam === 0 ? 1 : pageSearchQueryParam,
+                        pageSize: limitQueryVariable
+                    }}
+                />
             </div>
-            <GetProjectsTable />
+        </div>
         </>
     )
 }

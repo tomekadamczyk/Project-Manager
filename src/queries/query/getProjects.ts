@@ -63,3 +63,30 @@ export const GET_ALL_PROJECTS = gql`
     }
     ${PROJECT_BASE_FRAGMENT}
 `;
+
+
+export const GET_PROJECTS_PAGINATED = gql`
+    query ProjectsPaginated($offset: Int!, $limit: Int!, $orderBy: ProjectOrderByInput, $filter: ProjectFilterByInput) {
+        projectsPaginated(offset: $offset, limit: $limit, orderBy: $orderBy, filter: $filter) {
+            totalCount,
+            edges {
+                ...ProjectIdAndName,
+                tasks {
+                    name
+                },
+                statusId {,
+                    id,
+                    name
+                },
+                priorityId {
+                    id,
+                    name
+                },
+                clientId {
+                    name
+                },
+            }
+        }
+    }
+    ${PROJECT_BASE_FRAGMENT}
+`;
