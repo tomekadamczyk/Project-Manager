@@ -73,8 +73,8 @@ export function KanbanColumn({ id, name, tasks}: Status) {
             name={task.name} 
             priority={task.priorityId.name} 
             description={task.description} 
-            project={task.projectsId.name} 
-            projectId={task.projectsId.id}/>
+            project={task.projectId.name} 
+            projectId={task.projectId.id}/>
         })}
     </Column>
     )

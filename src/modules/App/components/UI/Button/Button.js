@@ -19,13 +19,13 @@ const Element = styled.button`
     }
 
     &:disabled {
-        background: #fff;
+        background: #ccc;
     }
 `;
 
 const Button = (props) => {
     return (
-        <Element {...props} onClick={props.click}>{props.children}</Element>
+        <Element {...props} disabled={props.disabled} onClick={props.onClick}>{props.children}</Element>
     )
 }
 

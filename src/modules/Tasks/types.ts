@@ -21,7 +21,7 @@ export interface TaskProjectDetails {
 export interface Task extends TaskBasicInfo {
     statusId: TaskStatusDetails;
     priorityId: TaskPriorityDetails;
-    projectsId: TaskProjectDetails
+    projectId: TaskProjectDetails
 }
 
 export interface TasksData {
@@ -50,7 +50,7 @@ export interface SingleTask {
         description: string,
         statusId: TaskStatusDetails,
         priorityId: TaskPriorityDetails,
-        projectsId: TaskProjectDetails
+        projectId: TaskProjectDetails
     }
 }
 
@@ -81,7 +81,7 @@ export class TaskClass {
         private description: string,
         private statusId: TaskStatusDetails,
         private priorityId: TaskPriorityDetails,
-        private projectsId: TaskProjectDetails
+        private projectId: TaskProjectDetails
     ) {
         
     }
@@ -94,7 +94,7 @@ export class TaskClass {
                 description: this.description,
                 statusId: this.statusId,
                 priorityId: this.priorityId,
-                projectsId: this.projectsId
+                projectId: this.projectId
             }
         }
     }

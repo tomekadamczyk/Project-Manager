@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 const Area = styled.select`
     margin-right: 15px;
-    margin-bottom: 15px;
     padding: 6px 10px;
 
     background-color: white;
@@ -38,11 +37,12 @@ interface SelectProps extends DetailedHTMLFactory<SelectHTMLAttributes<HTMLSelec
     testid: string;
     defaultValue?: string;
     value?: string;
+    name?: string;
 }
 
-const Select = React.forwardRef(({ update, children, testid, defaultValue, value, ...props }: SelectProps, ref) => {
+const Select = React.forwardRef(({ update, children, testid, defaultValue, value, name, ...props }: SelectProps, ref) => {
     return(
-        <Area {...props} value={value} data-testid={testid} onChange={update} ref={ref}>{children}</Area>
+        <Area {...props} value={value} data-testid={testid} name={name} onChange={update} ref={ref}>{children}</Area>
     )
 })
 

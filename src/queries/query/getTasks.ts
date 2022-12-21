@@ -15,7 +15,7 @@ export const GET_ALL_TASKS = gql`
         tasks {
             id,
             name,
-            projectsId {,
+            projectId {,
                 id,
                 name
             },
@@ -32,13 +32,13 @@ export const GET_ALL_TASKS = gql`
 `;
 
 export const GET_TASKS_PAGINATED = gql`
-    query TasksPaginated($offset: Int!, $limit: Int!) {
-        tasksPaginated(offset: $offset, limit: $limit) {
+    query TasksPaginated($offset: Int!, $limit: Int!, $orderBy: LinkOrderByInput, $filter: TaskFilterByInput) {
+        tasksPaginated(offset: $offset, limit: $limit, orderBy: $orderBy, filter: $filter) {
             totalCount,
             edges {
                 id,
                 name,
-                projectsId {
+                projectId {
                     id,
                     name
                 },
@@ -69,7 +69,18 @@ export const GET_TASK_BY_ID = gql`
                 id,
                 name
             },
-            projectsId {,
+            projectId {,
+                id,
+                name
+            }
+        }
+    }
+`;
+
+export const GET_FILTER_BY_TASK = (group: string) => gql`
+    query statusFilters($group: String!) {
+        taskFilters(group: $group) {
+            filter: ${group} {
                 id,
                 name
             }

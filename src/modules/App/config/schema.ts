@@ -61,7 +61,7 @@ const typeDefs = `
         projectId: Int
         statusId: Status
         priorityId: Priority
-        projectsId: Project
+        projectId: Project
     }
 
     type Query {

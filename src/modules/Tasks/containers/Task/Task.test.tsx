@@ -20,7 +20,7 @@ describe('should test Tasks render', function() {
         store.set(tasksRef, 'description', 'description')
         store.set(tasksRef, 'statusId', { id: 1, name: "Status 1" })
         store.set(tasksRef, 'priorityId', { id: 1, name: "Priorytet 1" })
-        store.set(tasksRef, 'projectsId', { name: "Projekt 1" })
+        store.set(tasksRef, 'projectId', { name: "Projekt 1" })
     })
 
     afterEach(() => {
@@ -48,8 +48,8 @@ describe('should test Tasks render', function() {
                     const priorityRef = store.get(obj, 'priorityId') as Ref;
                     return ({ id: store.get(priorityRef, 'id'), name: store.get(priorityRef, 'name')})
                 },
-                projectsId: (obj: Ref) => {
-                    const projectsRef = store.get(obj, 'projectsId') as Ref;
+                projectId: (obj: Ref) => {
+                    const projectsRef = store.get(obj, 'projectId') as Ref;
                     return ({ id: store.get(projectsRef, 'id'), name: store.get(projectsRef, 'name')})
                 }
             }

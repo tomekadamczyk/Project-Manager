@@ -48,7 +48,7 @@ export const GET_KANBAN_STATUSES = gql`
                     id,
                     name
                 },
-                projectsId {
+                projectId {
                     id,
                     name
                 }
