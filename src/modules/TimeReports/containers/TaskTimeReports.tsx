@@ -46,8 +46,6 @@ export function TaskTimeReports() {
             <div>
                 <h1>Czas zaraportowany - {formatTime(summarizeDuration())}</h1>
                 <button style={style.button} onClick={goBack}>Back</button>
-                {/* <button style={style.button} onClick={th}>Call throttle</button>
-                <button style={style.button} onClick={debounded_log}>Call debounce</button> */}
                 <button style={style.button} onClick={setOrder}>Set order</button>
                 {list}
             </div>
