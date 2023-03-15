@@ -43,14 +43,20 @@ export interface SingleTaskRowDetails extends TaskBasicInfo {
     project: string;
 }
 
+export interface TaskTimeReport {
+    duration: number;
+    createdAt: number;
+}
+
 export interface SingleTask {
     task: {
         id: number;
         name: string;
-        description: string,
-        statusId: TaskStatusDetails,
-        priorityId: TaskPriorityDetails,
-        projectId: TaskProjectDetails
+        description: string;
+        statusId: TaskStatusDetails;
+        priorityId: TaskPriorityDetails;
+        projectId: TaskProjectDetails;
+        timeReports: TaskTimeReport[];
     }
 }
 
@@ -81,7 +87,8 @@ export class TaskClass {
         private description: string,
         private statusId: TaskStatusDetails,
         private priorityId: TaskPriorityDetails,
-        private projectId: TaskProjectDetails
+        private projectId: TaskProjectDetails,
+        private timeReports: TaskTimeReport[]
     ) {
         
     }
@@ -94,7 +101,8 @@ export class TaskClass {
                 description: this.description,
                 statusId: this.statusId,
                 priorityId: this.priorityId,
-                projectId: this.projectId
+                projectId: this.projectId,
+                timeReports: this.timeReports
             }
         }
     }
