@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Transition, TransitionGroup, CSSTransition } from "react-transition-group";
+import { Transition } from "react-transition-group";
 import { CloseButton } from "../Button/CloseButton";
 import { MappedToStatus, ToastComponentProps } from "./types";
 
@@ -12,7 +12,7 @@ export const Colors: MappedToStatus = {
 const StatusLabel: MappedToStatus = {
     success: 'Sukces',
     warning: 'Ostrzeżenie',
-    error: 'Bład'
+    error: 'Błąd'
 }
 
 const transitions = {
