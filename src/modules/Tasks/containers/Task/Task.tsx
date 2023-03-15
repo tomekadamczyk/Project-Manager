@@ -5,11 +5,12 @@ import Input from "modules/App/components/UI/Form/Input/Input";
 import TextArea from "modules/App/components/UI/Form/Textarea/Textarea";
 import { Priorities } from "modules/Priorities/components/SelectPriorities/Priorities";
 import { Statuses } from "modules/Statuses/components/SelectStatuses/Statuses";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { ChangeEvent, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { UpdateTaskProps } from "../../types";
 import { useGetTaskQuery } from "../../hooks/useGetTaskQuery";
 import { useUpdateTaskMutation } from "../../hooks/useUpdateTaskMutation";
+import { TimeTracker } from "modules/Tasks/components/TimeTracker/TimeTracker";
 
 function validateIsSame<T>(currentValue: T, comparedValue: T): boolean {
     return currentValue === comparedValue;
@@ -76,6 +77,7 @@ export function Task() {
                     priorityId={task.priorityId.id} 
                     priority={task.priorityId.name} />
 
+                <TimeTracker taskId={Number(id)} />
             </RightColumn>
             
         </ContentTable>
