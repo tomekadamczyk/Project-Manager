@@ -1,4 +1,3 @@
-
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,48 +8,18 @@ import Spinner from 'modules/App/components/UI/Spinner/Spinner';
 import { Pagination } from 'modules/App/components/Pagination/Pagination';
 import { GET_TASKS_PAGINATED } from 'queries/query/getTasks';
 import { useQuery } from '@apollo/client';
-import { PaginatedTasksData, Task } from '../../types';
-import { MouseEvent } from 'react';
+import { PaginatedTasksData } from '../../types';
 import { usePageParam } from 'modules/App/hooks/usePageParam';
 import { useLimitParam } from 'modules/App/hooks/useLImitParam';
 import { useSortParam } from 'modules/App/hooks/useSortParam';
 import { useFilterQueryParam } from 'modules/App/hooks/useFilterQueryParam';
+import { HeaderWithActions } from 'modules/Tasks/components/HeaderWithActions';
 
 interface GetTasksQueryVariables {
     offset: number;
     limit: number;
     orderBy: any
     filter: any;
-}
-
-interface Action { value: string, name: string, action: (e: MouseEvent<HTMLButtonElement>) => void };
-
-
-function HeaderWithActions({ title, actionUp, actionDown }: { title: string; actionUp: Action; actionDown: Action; }) {
-
-    return (
-        <div style={{display: 'flex', alignItems: 'center'}}>
-            <div style={{marginRight: 10}}>{title}</div>
-            <div style={{display: 'flex', flexDirection: 'column'}}>
-                <button 
-                    style={{ background: '#fff', borderColor: 'transparent', padding: 0, lineHeight: '8px', cursor: 'pointer' }} 
-                    value={actionUp.value} 
-                    name={actionUp.name} 
-                    onClick={actionUp.action}
-                >
-                    <i style={{pointerEvents: 'none', lineHeight: '8px'}} className="fas fa-angle-up"></i>
-                </button>
-                <button 
-                    style={{ background: '#fff', borderColor: 'transparent', padding: 0, lineHeight: '8px', cursor: 'pointer' }} 
-                    value={actionDown.value} 
-                    name={actionDown.name} 
-                    onClick={actionDown.action}
-                >
-                    <i style={{pointerEvents: 'none', lineHeight: '8px'}} className="fas fa-angle-down"></i>
-                </button>
-            </div>
-        </div>
-    )
 }
 
 const TaskTableLabels = {
