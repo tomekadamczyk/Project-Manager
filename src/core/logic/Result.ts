@@ -1,5 +1,3 @@
-import { TaskEntity } from "modules/Tasks/Entity/Task.entity";
-
 type ResultState = 'success' | 'error';
 
 export class Result<T> {
@@ -37,7 +35,7 @@ export class Result<T> {
         return new Result<U>('success', undefined, value)
     }
 
-    public static fail<U>(error?: U): Result<U> {
+    public static fail<U>(error?: string): Result<U> {
         return new Result<U>('error', error)
     }
 }
