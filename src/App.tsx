@@ -11,6 +11,7 @@ import { Task } from './modules/Tasks/containers/Task/Task';
 import { AddTask } from './modules/Tasks/containers/AddTask/AddTask';
 import { Kanban } from './modules/App/containers/Kanban/Kanban';
 import Login from 'modules/App/components/Login/Login';
+import { TaskTimeReports } from 'modules/TimeReports/containers/TaskTimeReports';
 
 export function App() {
   const [isAuthenticated, setAuthenticated] = useState(true);
@@ -25,6 +26,7 @@ export function App() {
     <Routes>
       <Route path="/kanban" element={<Kanban />} />
       <Route path="/tasks/add-task" element={<AddTask/>} />
+      <Route path="/tasks/:id/reports" element={<TaskTimeReports />} />
       <Route path="/tasks/:id" element={<Task />} />
       <Route path="/tasks" element={<GetTasksContainer />} />
       <Route path="/projects/add-project" element={<AddProject/>} />
