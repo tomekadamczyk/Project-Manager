@@ -17,7 +17,7 @@ export class TaskName extends ValueObject<NameProps> {
 
     public static create(value: string): Result<TaskName | string> {
         if(value.length < 2) {
-            return Result.fail<string>('Title must have at least length of 2');
+            return Result.fail<TaskName>('Title must have at least length of 2');
         }
         return Result.ok<TaskName>(new TaskName({ value }));
     }
