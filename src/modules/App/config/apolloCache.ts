@@ -1,10 +1,11 @@
 import { InMemoryCache,  defaultDataIdFromObject } from '@apollo/client';
-import { TasksPaginated } from 'modules/Tasks/types';
 
 export const cache = new InMemoryCache({
   dataIdFromObject: object => {
     switch (object.__typename) {
-      default: return defaultDataIdFromObject(object);
+      default: {
+        return defaultDataIdFromObject(object);
+      }
     }
   },
   typePolicies: {
@@ -32,7 +33,7 @@ export const cache = new InMemoryCache({
           //   }
           //   return merged
           // }
-        }
+        },
       }
     }
   }
